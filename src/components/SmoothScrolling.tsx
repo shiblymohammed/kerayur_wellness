@@ -10,7 +10,7 @@ interface SmoothScrollingProps {
 export default function SmoothScrolling({ children }: SmoothScrollingProps) {
   return (
     <ReactLenis root options={{ lerp: 0.1 }}>
-      {/* @ts-ignore - Bypass React 19 ReactNode type mismatch with react-lenis */}
+      {/* @ts-expect-error - Bypass React 19 ReactNode type mismatch with react-lenis */}
       {children}
     </ReactLenis>
   );

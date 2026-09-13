@@ -19,8 +19,8 @@ export default function Navbar() {
       }
     };
 
-    const handleThemeUpdate = (e: any) => {
-      setIsTransparentForce(e.detail.isTransparent);
+    const handleThemeUpdate = (e: Event) => {
+      setIsTransparentForce((e as CustomEvent<{ isTransparent: boolean }>).detail.isTransparent);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

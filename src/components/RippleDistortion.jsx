@@ -148,6 +148,7 @@ const RippleDistortion = ({
   const configRef = useRef({});
   const uniformsRef = useRef(null);
 
+  // eslint-disable-next-line react-hooks/refs
   configRef.current = { brushSize, spread, fade, spacing, clickStrength, trigger, enabled };
 
   useEffect(() => {

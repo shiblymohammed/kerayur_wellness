@@ -62,7 +62,7 @@ export default function TheAwakening() {
       {/* Content Overlay */}
       <div className="relative z-20 text-center px-6 pointer-events-none flex flex-col items-center">
         <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-serif tracking-widest leading-tight mb-8 max-w-5xl drop-shadow-lg">
-          AWAKEN IN<br/>GOD'S OWN COUNTRY
+          AWAKEN IN<br/>GOD&apos;S OWN COUNTRY
         </h1>
         <p className="text-white/90 text-lg md:text-xl font-light tracking-wide max-w-2xl leading-relaxed drop-shadow-md">
           A sanctuary where ancient healing meets untouched nature. Begin your transformation in Kerala.

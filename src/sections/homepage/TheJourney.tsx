@@ -114,7 +114,7 @@ export default function TheJourney() {
           </h2>
           <div className="w-24 h-[2px] bg-[#D4AF37]/60 mb-8 rounded-full"></div>
           <p className="font-light text-lg md:text-2xl leading-relaxed max-w-3xl" style={{ color: '#3D2D20', opacity: 0.85 }}>
-            Every soul seeks a different path to balance. Whether your body calls for profound physical detoxification, your mind thirsts for ancient healing wisdom, or your spirit yearns to explore the sacred landscapes of God's Own Country—your transformation begins here. 
+            Every soul seeks a different path to balance. Whether your body calls for profound physical detoxification, your mind thirsts for ancient healing wisdom, or your spirit yearns to explore the sacred landscapes of God&apos;s Own Country—your transformation begins here. 
             <br/><br/>
             Step into a world where time slows down, and discover the path that was meant for you.
           </p>
