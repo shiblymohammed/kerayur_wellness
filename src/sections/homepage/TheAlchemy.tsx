@@ -1,0 +1,202 @@
+"use client";
+
+import { useRef, useState, useEffect, MouseEvent } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import SectionCutout from '@/components/SectionCutout';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const southCards = [
+  {
+    id: 1,
+    title: "KATHAKALI",
+    desc: "The classical dance drama of the gods.",
+    img: "/section2bg_1.png"
+  },
+  {
+    id: 2,
+    title: "BACKWATERS",
+    desc: "Glide through the emerald veins of Alleppey.",
+    img: "/backwatersBG.jpg"
+  },
+  {
+    id: 3,
+    title: "MUNNAR",
+    desc: "Mist-covered tea estates rolling into infinity.",
+    img: "/munnarBG.jpg"
+  },
+  {
+    id: 4,
+    title: "VARKALA",
+    desc: "Red cliffs diving into the Arabian Sea.",
+    img: "/nattikaBG.jpg"
+  }
+];
+
+export default function TheAlchemy() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const currentScrollRef = useRef(0);
+  const rafRef = useRef<number>(0);
+
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Drag to scroll
+  const handleMouseDown = (e: MouseEvent) => {
+    if (!carouselRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+  };
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDown || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Horizontal parallax + scale + opacity — RAF loop with lerp
+  useEffect(() => {
+    const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+    const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
+
+    const tick = () => {
+      const carousel = carouselRef.current;
+      if (!carousel) { rafRef.current = requestAnimationFrame(tick); return; }
+
+      currentScrollRef.current = lerp(currentScrollRef.current, carousel.scrollLeft, 0.05);
+
+      const viewportW = carousel.offsetWidth;
+
+      imgRefs.current.forEach((img, i) => {
+        const card = cardRefs.current[i];
+        if (!img || !img.parentElement) return;
+        const cardW = img.parentElement.offsetWidth;
+        const cardCenter = i * cardW + cardW / 2;
+        const viewCenter = currentScrollRef.current + viewportW / 2;
+        const relativeOffset = viewCenter - cardCenter;
+
+        gsap.set(img, { x: relativeOffset * 0.35 });
+
+        if (card) {
+          const proximity = Math.abs(relativeOffset) / viewportW;
+          const scale = clamp(1 - proximity * 0.05, 0.96, 1.0);
+          const opacity = clamp(1 - proximity * 0.4, 0.65, 1.0);
+          gsap.set(card, { scale, opacity, transformOrigin: 'center center' });
+        }
+      });
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  // Vertical scroll parallax via ScrollTrigger
+  useGSAP(() => {
+    gsap.fromTo(".parallax-img-south", {
+      yPercent: -20
+    }, {
+      yPercent: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+  });
+
+  return (
+    <section ref={sectionRef} id="thealchemy" className="w-full bg-[#FAF9F6] relative flex flex-col pt-0 pb-0 z-20">
+      
+      {/* Cutout Transition */}
+      <div className="w-full relative z-50 pointer-events-none flex justify-center -mt-[15vw]">
+        <SectionCutout 
+          fillColor="#2A1A1A"
+          imageUrl="/southSideart.png"
+          imageOpacity={0.5}
+          className="w-[120vw] min-w-[1400px]"
+          svgClassName="-scale-y-110"
+          contentClassName="absolute top-[50%] -translate-y-1/2 text-center px-8 w-full max-w-[80vw] mx-auto flex flex-col items-center gap-4"
+        >
+          <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-serif text-[#FAF9F6] tracking-widest leading-tight whitespace-pre-line drop-shadow-lg">
+            {"THE\nALCHEMY"}
+          </h2>
+          <p className="text-white/80 font-light text-sm md:text-base max-w-md">
+            Transformation and refinement through focused discipline and timeless wisdom.
+          </p>
+        </SectionCutout>
+      </div>
+
+      {/* Carousel */}
+      <div 
+        ref={carouselRef}
+        className="w-full flex gap-0 overflow-x-auto hide-scrollbar cursor-grab active:cursor-grabbing -mt-[18vw] relative z-10"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
+        {southCards.map((card, i) => (
+          <div 
+            key={card.id}
+            ref={el => { cardRefs.current[i] = el; }}
+            className="relative shrink-0 w-[70vw] md:w-[38vw] h-[120vh] md:h-[140vh] overflow-hidden group select-none bg-black/20"
+          >
+            {/* Background — div with background-size:cover guarantees full coverage */}
+            <div
+              ref={el => { imgRefs.current[i] = el as unknown as HTMLImageElement; }}
+              className="parallax-img-south absolute pointer-events-none"
+              style={{
+                top: '-25%', left: '-50%',
+                width: '200%', height: '150%',
+                backgroundImage: `url(${card.img})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            />
+
+            {/* Gradient scrim */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+
+            {/* Card Content — centered */}
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-8 md:px-12 pointer-events-none drop-shadow-2xl gap-5">
+              <h3 className="text-5xl md:text-6xl lg:text-[5rem] font-serif text-white tracking-widest leading-none">
+                {card.title}
+              </h3>
+              <p className="text-white/80 font-light text-sm md:text-base max-w-[220px] leading-relaxed">
+                {card.desc}
+              </p>
+              <button className="mt-2 px-6 py-2 border border-white/60 rounded-full text-xs uppercase tracking-widest text-white backdrop-blur-sm hover:bg-white hover:text-black transition-colors pointer-events-auto">
+                EXPLORE ↗
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom Mask */}
+      <div className="absolute bottom-0 left-0 w-full z-50 pointer-events-none flex justify-center translate-y-[2vw]">
+        <img 
+          src="/sectioncutoutWhite.avif" 
+          alt="Section Transition" 
+          className="w-[120vw] min-w-[1400px] h-auto object-cover" 
+        />
+      </div>
+
+    </section>
+  );
+}
