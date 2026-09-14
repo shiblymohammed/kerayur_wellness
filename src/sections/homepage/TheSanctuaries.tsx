@@ -159,7 +159,7 @@ export default function TheSanctuaries() {
 
           {/* Mask layer — determines section height, sits on top */}
           <img
-            src="/Layer%201.png"
+            src="/Layer%201.svg"
             alt="Sanctuary 1 Mask"
             className="relative w-full h-auto block pointer-events-none z-[2]"
           />
@@ -220,7 +220,7 @@ export default function TheSanctuaries() {
 
           {/* Mask layer */}
           <img
-            src="/Layer%202.png"
+            src="/Layer%202.svg"
             alt="Sanctuary 2 Mask"
             className="relative w-full h-auto block pointer-events-none z-[2]"
           />
@@ -228,13 +228,6 @@ export default function TheSanctuaries() {
 
       </div>
 
-      {/* Bottom edge mask */}
-      <img
-        src="/sectioncutoutWhite.avif"
-        alt=""
-        aria-hidden="true"
-        className="absolute bottom-0 left-0 w-full z-10 pointer-events-none select-none"
-      />
     </section>
   );
 }

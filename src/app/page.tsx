@@ -5,12 +5,11 @@ import TheAlchemy from '@/sections/homepage/TheAlchemy';
 import TheJourney from '@/sections/homepage/TheJourney';
 import TheSanctuaries from '@/sections/homepage/TheSanctuaries';
 import TheVillage from '@/sections/homepage/TheVillage';
-import TheVoices from '@/sections/homepage/TheVoices';
 import ThePortal from '@/sections/homepage/ThePortal';
 
 export default function Home() {
   return (
-    <main className="w-full flex flex-col overflow-hidden">
+    <main className="w-full flex flex-col">
       <TheAwakening />
       
       {/* Overlapping Container for fade-in transition */}
@@ -23,7 +22,6 @@ export default function Home() {
       <TheJourney />
       <TheSanctuaries />
       <TheVillage />
-      <TheVoices />
       <ThePortal />
     </main>
   );
