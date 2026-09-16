@@ -279,7 +279,7 @@ export default function Section4Treatments() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
           {groups.map((g, i) => (
             <div
-              key={g.id || i}
+              key={g.num || i}
               ref={el => { cardsRef.current[i] = el; }}
               className="group relative bg-white/55 hover:bg-white/85 border border-[#4A533E]/08 hover:border-[#4A533E]/18
                 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-[0_8px_32px_rgba(47,54,39,0.08)]"
