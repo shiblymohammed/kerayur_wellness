@@ -2,228 +2,231 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import dynamic from 'next/dynamic';
-
-// Dynamically import — WebGL must not run on the server
-const RippleDistortion = dynamic(() => import('@/components/RippleDistortion'), { ssr: false });
+import Link from 'next/link';
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function TheSanctuaries() {
   const sectionRef = useRef<HTMLElement>(null);
-  // Refs for the RippleDistortion wrapper divs (for parallax)
-  const para1Ref = useRef<HTMLDivElement>(null);
-  const para2Ref = useRef<HTMLDivElement>(null);
-  // Refs for content overlays — move at a middle speed for depth layering
-  const content1Ref = useRef<HTMLDivElement>(null);
-  const content2Ref = useRef<HTMLDivElement>(null);
-
-  // Smooth mouse tracking state
-  const state = useRef({
-    mouseY: 0,
-    currentMouseY: 0,
-    currentBg1Y: 0,
-    currentBg2Y: 0,
-    currentContentY: 0,
-  });
-  const rafRef = useRef<number>(0);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const card1Ref = useRef<HTMLDivElement>(null);
+  const card2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+    const ctx = gsap.context(() => {
+      // Title Animation
+      gsap.from(titleRef.current?.children || [], {
+        y: 40,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+        }
+      });
 
-    const tick = () => {
-      const s = state.current;
-      const section = sectionRef.current;
-      if (!section) { rafRef.current = requestAnimationFrame(tick); return; }
+      // Card 1 3D Reveal & Parallax
+      gsap.fromTo(card1Ref.current, 
+        { y: 100, opacity: 0, rotateX: 5, scale: 0.95 },
+        {
+          y: 0, opacity: 1, rotateX: 0, scale: 1,
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card1Ref.current,
+            start: "top 85%",
+          }
+        }
+      );
 
-      // Scroll parallax — bg1 moves at 30% scroll speed, bg2 at 18%
-      const rect = section.getBoundingClientRect();
-      const scrollProgress = -rect.top;
-      const targetBg1Y = scrollProgress * 0.30;
-      const targetBg2Y = scrollProgress * 0.18;
+      // Card 2 3D Reveal (Staggered on Desktop)
+      gsap.fromTo(card2Ref.current, 
+        { y: 100, opacity: 0, rotateX: 5, scale: 0.95 },
+        {
+          y: 0, opacity: 1, rotateX: 0, scale: 1,
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card2Ref.current,
+            start: "top 85%",
+          }
+        }
+      );
 
-      s.currentBg1Y = lerp(s.currentBg1Y, targetBg1Y, 0.06);
-      s.currentBg2Y = lerp(s.currentBg2Y, targetBg2Y, 0.06);
+      // Subtle parallax on the map background
+      gsap.to(".map-bg", {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
 
-      // Content parallax — 10% speed (sits between bg and mask)
-      const targetContentY = scrollProgress * 0.10;
-      s.currentContentY = lerp(s.currentContentY, targetContentY, 0.06);
+    }, sectionRef);
 
-      // Mouse parallax (Y only — no X to avoid gap at center seam)
-      s.currentMouseY = lerp(s.currentMouseY, s.mouseY, 0.05);
-
-      if (para1Ref.current) {
-        gsap.set(para1Ref.current, { y: s.currentBg1Y + s.currentMouseY });
-      }
-      if (para2Ref.current) {
-        gsap.set(para2Ref.current, { y: s.currentBg2Y + s.currentMouseY });
-      }
-      if (content1Ref.current) {
-        gsap.set(content1Ref.current, { y: s.currentContentY + s.currentMouseY * 0.4 });
-      }
-      if (content2Ref.current) {
-        gsap.set(content2Ref.current, { y: s.currentContentY + s.currentMouseY * 0.4 });
-      }
-
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => ctx.revert();
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!sectionRef.current) return;
-    const { clientY } = e;
-    const { height, top } = sectionRef.current.getBoundingClientRect();
-    const y = ((clientY - top) / height - 0.5) * 2;
-    state.current.mouseY = y * -12;
-  };
-
-  const handleMouseLeave = () => {
-    state.current.mouseY = 0;
-  };
-
   return (
-    <section
-      id="thesanctuaries"
-      ref={sectionRef}
-      className="w-full relative overflow-hidden"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Top edge mask */}
-      <img
-        src="/sectioncutoutWhite.avif"
-        alt=""
-        aria-hidden="true"
-        className="absolute top-0 left-0 w-full z-10 pointer-events-none select-none"
-        style={{ transform: 'scaleY(-1)' }}
-      />
+    <section ref={sectionRef} id="thesanctuaries" className="w-full relative bg-[#FAF9F6] py-16 md:py-24 lg:py-32 flex flex-col items-center z-10 overflow-hidden">
+      
+      {/* Background Map Overlay with Parallax */}
+      <div className="map-bg absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none opacity-[0.15] mix-blend-multiply flex items-center justify-center z-0">
+        <Image 
+          src="/mapdrawn.svg" 
+          alt="Kerala Map Outline" 
+          fill
+          className="object-cover object-center"
+        />
+      </div>
 
-      <div className="w-full flex">
+      {/* Section Title */}
+      <div ref={titleRef} className="relative z-10 text-center mb-12 md:mb-16 lg:mb-20 px-6 max-w-2xl mx-auto">
+        <span className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#8F9E7B] font-bold mb-4 md:mb-6 block">
+          Our Partnered Properties
+        </span>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2F3627] leading-[1.1] mb-6">
+          The <span className="italic font-light text-[#8F9E7B]">Sanctuaries</span>
+        </h2>
+        <p className="text-[#4A533E]/80 font-light text-sm md:text-base leading-relaxed">
+          Choose the environment that speaks to your healing journey. Two distinct properties, one unified standard of authentic Ayurveda.
+        </p>
+      </div>
 
-        {/* Left Property — Greens Ayurveda */}
-        <div className="relative w-1/2 overflow-hidden">
-
-          {/* RippleDistortion — expanded via layout not CSS scale to keep coordinate mapping correct */}
-          <div
-            ref={para1Ref}
-            className="absolute -top-[25%] -left-[12.5%] w-[125%] h-[150%] will-change-transform"
-          >
-            <RippleDistortion
-              src="https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1600&auto=format&fit=crop"
-              brushSize={60}
-              strength={0.09}
-              swirl={0.8}
-              rings={2}
-              spread={3}
-              fade={2.5}
-              spacing={22}
-              grayscale={false}
-              tint="#2d5a27"
-              tintAmount={0.05}
-              glint={0.2}
-              quality="low"
-              trigger="hover"
-              style={{}}
-            />
-          </div>
-
-          {/* Content overlay — appears through the transparent cutout of the mask */}
-          <div ref={content1Ref} className="absolute inset-0 z-[1] flex flex-col justify-center items-center text-center px-[8%] will-change-transform">
-            {/* Subtle gradient scrim for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
-
-            <div className="relative flex flex-col gap-3">
-              <span className="text-white/60 text-xs tracking-[0.25em] uppercase font-light">
-                Malabar · North Kerala
-              </span>
-              <h2 className="text-white text-3xl xl:text-4xl font-serif leading-snug">
-                Ancient Tradition,<br />Living Practice
-              </h2>
-              <p className="text-white/75 text-sm xl:text-base font-light leading-relaxed max-w-xs">
-                Classical Ayurveda in the heart of a sacred forest. Immersive healing programs and a rhythm of life unchanged for centuries.
-              </p>
-              <a
-                href="/HOTEL-1"
-                className="mt-2 inline-flex items-center gap-2 self-center px-6 py-2.5 border border-white/50 text-white text-xs tracking-widest uppercase rounded-full hover:bg-white hover:text-black transition-all duration-300"
-              >
-                Explore Retreat
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
+      {/* Cards Layout - Responsive Grid */}
+      {/* Mobile: 1 col, Tablet: 1 col max-w, Desktop: 2 cols */}
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+        
+        {/* --- Card 1: HOTEL-1 --- */}
+        <div 
+          ref={card1Ref} 
+          className="relative w-full max-w-2xl mx-auto lg:max-w-none rounded-[2rem] overflow-hidden bg-[#FAF9F6] border border-dashed border-[#8F9E7B] group hover:border-solid hover:border-[#4A533E] hover:shadow-2xl transition-all duration-700 ease-out flex flex-col"
+          style={{ perspective: "1000px" }}
+        >
+          {/* Top: Background Video Container */}
+          <div className="relative w-full aspect-video lg:aspect-[4/3] overflow-hidden bg-[#2F3627]">
+            <div className="absolute inset-0 w-full h-full transform group-hover:scale-110 transition-transform duration-[2s] ease-out">
+              <video
+                src="/videos/hotel-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover opacity-90 mix-blend-lighten"
+              />
+            </div>
+            {/* Minimal overlays */}
+            <div className="absolute top-4 left-4 flex gap-2 transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+              <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-semibold">Beachfront</span>
             </div>
           </div>
 
-          {/* Mask layer — determines section height, sits on top */}
-          <img
-            src="/Layer%201.svg"
-            alt="Sanctuary 1 Mask"
-            className="relative w-full h-auto block pointer-events-none z-[2]"
-          />
+          {/* Bottom: Content Details */}
+          <div className="p-6 md:p-8 lg:p-10 flex flex-col flex-grow relative z-10 bg-[#FAF9F6]">
+            {/* Subtle numbering */}
+            <span className="absolute top-6 right-6 text-4xl font-serif text-[#8F9E7B]/20 italic pointer-events-none group-hover:text-[#8F9E7B]/40 transition-colors duration-500">01</span>
+            
+            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-3 group-hover:text-[#8F9E7B] transition-colors duration-500">
+              HOTEL-1
+            </h3>
+            <p className="text-[#4A533E]/80 text-xs md:text-sm font-light leading-relaxed mb-6 md:mb-8">
+              Authentic healing by the Arabian Sea. Surrender to the rhythmic waves of Nattika Beach and restore your mind, body, and spirit.
+            </p>
+            
+            {/* Extra Details */}
+            <div className="space-y-3 mb-8 flex-grow">
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Premium Coastal Ayurveda</span>
+              </div>
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-75">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-75"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Traditional Panchakarma Therapies</span>
+              </div>
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-150">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-150"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Oceanfront Yoga Pavilion</span>
+              </div>
+            </div>
+            
+            {/* Button */}
+            <Link href="/HOTEL-1" className="relative overflow-hidden inline-flex justify-center w-full items-center gap-3 px-8 py-3.5 md:py-4 bg-[#FAF9F6] border border-[#2F3627] text-[#2F3627] hover:text-[#FAF9F6] text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-all duration-500 group/btn">
+              <span className="relative z-10">Explore Hotel-1</span>
+              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300">
+                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <div className="absolute inset-0 bg-[#2F3627] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
+            </Link>
+          </div>
         </div>
 
-        {/* Right Property — Ayur on the Beach */}
-        <div className="relative w-1/2 overflow-hidden">
-
-          {/* RippleDistortion behind */}
-          <div
-            ref={para2Ref}
-            className="absolute -top-[25%] -left-[12.5%] w-[125%] h-[150%] will-change-transform"
-          >
-            <RippleDistortion
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop"
-              brushSize={65}
-              strength={0.08}
-              swirl={0.6}
-              rings={2}
-              spread={3}
-              fade={4}
-              spacing={14}
-              grayscale={false}
-              tint="#c8a76b"
-              tintAmount={0.07}
-              glint={0.5}
-              quality="low"
-              trigger="hover"
-              style={{}}
-            />
-          </div>
-
-          {/* Content overlay */}
-          <div ref={content2Ref} className="absolute inset-0 z-[1] flex flex-col justify-center items-center text-center px-[8%] will-change-transform">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
-
-            <div className="relative flex flex-col gap-3">
-              <span className="text-white/60 text-xs tracking-[0.25em] uppercase font-light">
-                Nattika · Central Kerala
-              </span>
-              <h2 className="text-white text-3xl xl:text-4xl font-serif leading-snug">
-                Heal Where<br />the Ocean Breathes
-              </h2>
-              <p className="text-white/75 text-sm xl:text-base font-light leading-relaxed max-w-xs">
-                Premium coastal Ayurveda where the tides set your pace. Ocean-front therapies and the quiet luxury of the sea.
-              </p>
-              <a
-                href="/HOTEL-2"
-                className="mt-2 inline-flex items-center gap-2 self-center px-6 py-2.5 border border-white/50 text-white text-xs tracking-widest uppercase rounded-full hover:bg-white hover:text-black transition-all duration-300"
-              >
-                Explore Retreat
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
+        {/* --- Card 2: HOTEL-2 --- */}
+        <div 
+          ref={card2Ref} 
+          className="relative w-full max-w-2xl mx-auto lg:max-w-none rounded-[2rem] overflow-hidden bg-[#FAF9F6] border border-dashed border-[#8F9E7B] group hover:border-solid hover:border-[#4A533E] hover:shadow-2xl transition-all duration-700 ease-out flex flex-col lg:mt-16"
+          style={{ perspective: "1000px" }}
+        >
+          {/* Top: Background Video Container */}
+          <div className="relative w-full aspect-video lg:aspect-[4/3] overflow-hidden bg-[#2F3627]">
+            <div className="absolute inset-0 w-full h-full transform group-hover:scale-110 transition-transform duration-[2s] ease-out">
+              <video
+                src="/videos/greens.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover opacity-90 mix-blend-lighten"
+              />
+            </div>
+            {/* Minimal overlays */}
+            <div className="absolute top-4 left-4 flex gap-2 transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+              <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-semibold">Forest Retreat</span>
             </div>
           </div>
 
-          {/* Mask layer */}
-          <img
-            src="/Layer%202.svg"
-            alt="Sanctuary 2 Mask"
-            className="relative w-full h-auto block pointer-events-none z-[2]"
-          />
+          {/* Bottom: Content Details */}
+          <div className="p-6 md:p-8 lg:p-10 flex flex-col flex-grow relative z-10 bg-[#FAF9F6]">
+            {/* Subtle numbering */}
+            <span className="absolute top-6 right-6 text-4xl font-serif text-[#8F9E7B]/20 italic pointer-events-none group-hover:text-[#8F9E7B]/40 transition-colors duration-500">02</span>
+
+            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-3 group-hover:text-[#8F9E7B] transition-colors duration-500">
+              HOTEL-2
+            </h3>
+            <p className="text-[#4A533E]/80 text-xs md:text-sm font-light leading-relaxed mb-6 md:mb-8">
+              Experience profound healing and immersive Ayurvedic study in the tranquil, forest-like sanctuary of Azhiyur.
+            </p>
+            
+            {/* Extra Details */}
+            <div className="space-y-3 mb-8 flex-grow">
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">In-Depth Study Programs</span>
+              </div>
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-75">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-75"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Clinical Pharmacy & Gardens</span>
+              </div>
+              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-150">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-150"></span>
+                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Authentic Forest Ecosystem</span>
+              </div>
+            </div>
+            
+            {/* Button */}
+            <Link href="/HOTEL-2" className="relative overflow-hidden inline-flex justify-center w-full items-center gap-3 px-8 py-3.5 md:py-4 bg-[#FAF9F6] border border-[#2F3627] text-[#2F3627] hover:text-[#FAF9F6] text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-all duration-500 group/btn">
+              <span className="relative z-10">Explore Hotel-2</span>
+              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300">
+                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <div className="absolute inset-0 bg-[#2F3627] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
+            </Link>
+          </div>
         </div>
 
       </div>

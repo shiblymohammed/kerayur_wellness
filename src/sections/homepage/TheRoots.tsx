@@ -8,30 +8,54 @@ import SectionCutout from '@/components/SectionCutout';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const northCards = [
+const rootsCards = [
   {
     id: 1,
     title: "THEYYAM",
     desc: "Witness the fiery trance of the divine.",
-    img: "/backwatersBG.jpg"
+    img: "/carousel/theyyam.jpeg"
   },
   {
     id: 2,
     title: "KALARIPAYATTU",
     desc: "The ancient martial art of the warriors.",
-    img: "/munnarBG.jpg"
+    img: "/carousel/kalaripppayattu.png"
   },
   {
     id: 3,
     title: "SPICE TRAILS",
     desc: "Walk through the aromatic hills of Wayanad.",
-    img: "/nattikaBG.jpg"
+    img: "/carousel/soice%20trials.jpeg"
   },
   {
     id: 4,
     title: "MALABAR",
     desc: "Discover the untouched beaches of the North.",
-    img: "/section2bg_1.png"
+    img: "/carousel/varkala.jpeg" // Reusing
+  },
+  {
+    id: 5,
+    title: "KATHAKALI",
+    desc: "The classical dance drama of the gods.",
+    img: "/carousel/kathakali.jpeg"
+  },
+  {
+    id: 6,
+    title: "BACKWATERS",
+    desc: "Glide through the emerald veins of Alleppey.",
+    img: "/carousel/backwaters.jpeg"
+  },
+  {
+    id: 7,
+    title: "MUNNAR",
+    desc: "Mist-covered tea estates rolling into infinity.",
+    img: "/carousel/munnar.jpeg"
+  },
+  {
+    id: 8,
+    title: "VARKALA",
+    desc: "Red cliffs diving into the Arabian Sea.",
+    img: "/carousel/varkala.jpeg"
   }
 ];
 
@@ -160,7 +184,7 @@ export default function TheRoots() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {northCards.map((card, i) => (
+        {rootsCards.map((card, i) => (
           <div 
             key={card.id}
             ref={el => { cardRefs.current[i] = el; }}

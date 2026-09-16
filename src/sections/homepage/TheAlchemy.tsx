@@ -8,30 +8,54 @@ import SectionCutout from '@/components/SectionCutout';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const southCards = [
+const treatmentCards = [
   {
     id: 1,
-    title: "KATHAKALI",
-    desc: "The classical dance drama of the gods.",
-    img: "/section2bg_1.png"
+    title: "STRESS & BURNOUT RELIEF",
+    desc: "Regain tranquillity of mind, body, and soul through purification and restoring treatments.",
+    img: "/hotel-1/p1_stress.jpg"
   },
   {
     id: 2,
-    title: "BACKWATERS",
-    desc: "Glide through the emerald veins of Alleppey.",
-    img: "/backwatersBG.jpg"
+    title: "SPINE & NECK CARE",
+    desc: "Specialized care for neck pain and low back pain arising from muscular and neural conditions.",
+    img: "/hotel-1/p2_spine.jpg"
   },
   {
     id: 3,
-    title: "MUNNAR",
-    desc: "Mist-covered tea estates rolling into infinity.",
-    img: "/munnarBG.jpg"
+    title: "THERAPEUTIC & CURATIVE",
+    desc: "A comprehensive, intensive program addressing chronic systemic conditions through deep Ayurvedic protocols.",
+    img: "/hotel-1/p3_curative.jpg"
   },
   {
     id: 4,
-    title: "VARKALA",
-    desc: "Red cliffs diving into the Arabian Sea.",
-    img: "/nattikaBG.jpg"
+    title: "KARKKIDAKA PACKAGE",
+    desc: "Monsoon detoxification to rejuvenate cells, maintain doshic equilibrium, and enhance natural immunity.",
+    img: "/hotel-1/p4_karkkidaka.jpg"
+  },
+  {
+    id: 5,
+    title: "PANCHAKARMA REJUVENATION",
+    desc: "The complete 5-fold detoxification process. Experience the science of internal cleansing.",
+    img: "/room_garden.jpg"
+  },
+  {
+    id: 6,
+    title: "AYURVEDA BEAUTY",
+    desc: "Ancient formulations for skin and hair care using organic herbs and specialized facial massage.",
+    img: "/program_antiaging.jpg"
+  },
+  {
+    id: 7,
+    title: "MARMA & MASSAGE",
+    desc: "Master the fundamental principles of Abhyanga and vital energy cleansing techniques.",
+    img: "/hotel-2/marma_massage.jpg"
+  },
+  {
+    id: 8,
+    title: "CLINICAL YOGA",
+    desc: "A clinical approach to asanas and pranayama, focusing on therapeutic applications for ailments.",
+    img: "/hotel-2/clinical_yoga.jpg"
   }
 ];
 
@@ -150,7 +174,7 @@ export default function TheAlchemy() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {southCards.map((card, i) => (
+        {treatmentCards.map((card, i) => (
           <div 
             key={card.id}
             ref={el => { cardRefs.current[i] = el; }}

@@ -1,239 +1,171 @@
-"use client";
-
+'use client';
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function TheVillage() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const topImgRef = useRef<HTMLImageElement>(null);
-  const centerImgRef = useRef<HTMLImageElement>(null);
-  const bottomImgRef = useRef<HTMLImageElement>(null);
-  const extraBottomImgRef = useRef<HTMLImageElement>(null);
-  const lastMaskedImgRef = useRef<HTMLImageElement>(null);
-  const rafRef = useRef<number>(0);
+const villageCards = [
+  {
+    id: 1,
+    title: "THE ARCHITECTURE",
+    subtitle: "Vastu Shastra & Heritage",
+    desc: "Experience life in heritage homes carved from teak and laterite. Every structure is built in strict harmony with Vastu Shastra, ensuring the free flow of prana (life energy) throughout your living space.",
+    highlights: [
+      "Centuries-old wooden carvings",
+      "Natural laterite stone cooling",
+      "Harmonious energetic alignment"
+    ],
+    img: "/villagesection/Traditional_Kerala_village_house…_20260914053151.jpeg"
+  },
+  {
+    id: 2,
+    title: "THE ARTISANS",
+    subtitle: "Preserving Ancient Craft",
+    desc: "Witness the rhythmic clack of the handloom and the meticulous care of local craftsmen. Our village sustains the livelihood of master weavers, potters, and artisans who preserve centuries-old traditions.",
+    highlights: [
+      "Authentic handloom weaving",
+      "Traditional pottery making",
+      "Supporting local heritage"
+    ],
+    img: "/villagesection/Artisan_weaving_fabric_on_handloom_20260914053142.jpeg"
+  },
+  {
+    id: 3,
+    title: "THE HARVEST",
+    subtitle: "Farm-to-Table Ayurveda",
+    desc: "Nourish your body with organic cuisine spiced with the earth's bounty. Our extensive medicinal gardens and organic farms provide the purest ingredients, prepared strictly according to Ayurvedic wisdom.",
+    highlights: [
+      "Organic vegetable farming",
+      "Medicinal spice gardens",
+      "Ayurvedic culinary mastery"
+    ],
+    img: "/villagesection/Serving_Kerala_village_meal_20260914053136.jpeg"
+  }
+];
 
-  const state = useRef({
-    currentTopY: 0,
-    currentCenterY: 0,
-    currentBottomY: 0,
-    currentExtraBottomY: 0,
-    currentLastMaskedY: 0,
-  });
+export default function TheVillage() {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+    let ctx = gsap.context(() => {
+      const cardContainers = gsap.utils.toArray('.village-card-container') as HTMLElement[];
+      const cards = gsap.utils.toArray('.village-card') as HTMLElement[];
+      
+      // We want to scale down the current card when the NEXT card scrolls over it.
+      // Since they are sticky, they stay in place while scrolling down.
+      cards.forEach((card, i) => {
+        if (i < cards.length - 1) {
+          const nextContainer = cardContainers[i + 1];
+          
+          gsap.to(card, {
+            scale: 0.9,
+            opacity: 0.5,
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextContainer,
+              start: "top bottom",
+              end: "top top",
+              scrub: true,
+            }
+          });
+        }
+        
+        // Internal image parallax
+        const img = card.querySelector('.parallax-img');
+        if (img) {
+          gsap.fromTo(img, 
+            { yPercent: -15, scale: 1.1 },
+            {
+              yPercent: 15,
+              ease: "none",
+              scrollTrigger: {
+                trigger: cardContainers[i],
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+              }
+            }
+          );
+        }
+      });
+      
+    }, containerRef);
 
-    const tick = () => {
-      const s = state.current;
-      const section = sectionRef.current;
-      if (!section) { rafRef.current = requestAnimationFrame(tick); return; }
-
-      const rect = section.getBoundingClientRect();
-      const scrollProgress = -rect.top;
-
-      // Each image moves at a different speed for layered depth effect
-      const targetTopY = scrollProgress * 0.25;
-      const targetCenterY = scrollProgress * 0.15;
-      const targetBottomY = scrollProgress * 0.08;
-      const targetExtraBottomY = scrollProgress * 0.12;
-      const targetLastMaskedY = scrollProgress * 0.18;
-
-      s.currentTopY = lerp(s.currentTopY, targetTopY, 0.06);
-      s.currentCenterY = lerp(s.currentCenterY, targetCenterY, 0.06);
-      s.currentBottomY = lerp(s.currentBottomY, targetBottomY, 0.06);
-      s.currentExtraBottomY = lerp(s.currentExtraBottomY, targetExtraBottomY, 0.06);
-      s.currentLastMaskedY = lerp(s.currentLastMaskedY, targetLastMaskedY, 0.06);
-
-      if (topImgRef.current) gsap.set(topImgRef.current, { y: s.currentTopY });
-      if (centerImgRef.current) gsap.set(centerImgRef.current, { y: s.currentCenterY });
-      if (bottomImgRef.current) gsap.set(bottomImgRef.current, { y: s.currentBottomY });
-      if (extraBottomImgRef.current) gsap.set(extraBottomImgRef.current, { y: s.currentExtraBottomY });
-      if (lastMaskedImgRef.current) gsap.set(lastMaskedImgRef.current, { y: s.currentLastMaskedY });
-
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section 
-      ref={sectionRef}
-      id="thevillage" 
-      className="relative w-full h-[300vh] md:h-[350vh] lg:h-[380vh] min-h-[2400px] md:min-h-[2800px] lg:min-h-[3000px] bg-white"
-    >
-      {/* Background Map SVG - REMOVED */}
-      {/* 
-        RIGHT SIDE STACK (Background) 
-        Container spans full width. Items are absolutely positioned layers.
-      */}
-      {/* Images Container - Positioned below title on mobile/tablet */}
-      <div className="absolute lg:top-0 top-[280px] md:top-[320px] right-0 w-full h-full z-0">
-        
-        {/* Top Image (Masked) */}
-        <div className="absolute -top-[15vh] md:-top-[25vh] lg:-top-[30vh] right-0 w-screen h-[100vh] md:h-[150vh] lg:h-[180vh] overflow-hidden z-10">
+    <section ref={containerRef} id="thevillage" className="w-full relative bg-[#FAF9F6]">
+      
+      {/* Intro block to transition from previous section */}
+      <div className="w-full min-h-[70vh] flex flex-col justify-center items-center text-center px-6 py-24 relative z-0">
+        <span className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#8F9E7B] font-bold mb-6">Beyond the Sanctuary</span>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2F3627] leading-[1.1] max-w-4xl">
+          The Rhythm of the <span className="italic font-light text-[#8F9E7B]">Land</span>
+        </h2>
+        <p className="text-[#4A533E]/70 font-light mt-8 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          Healing extends far beyond the massage table. Step into the vibrant pulse of local Kerala life. Wander through spice gardens, share a smile with the artisans, and taste the earthy richness of organic cuisine.
+        </p>
+      </div>
+
+      {/* The Stacked Cards Section */}
+      <div className="relative z-10 w-full pb-32">
+        {villageCards.map((card, i) => (
           <div 
-            className="w-full h-full absolute inset-0 flex items-center justify-center"
-            style={{
-              transform: "scaleX(-1)",
-              WebkitMaskImage: "url('/sectioncutout.svg')",
-              WebkitMaskSize: "200vw 250%, 180vw 240%, 180vw 240%",
-              WebkitMaskPosition: "center",
-              WebkitMaskRepeat: "no-repeat",
-              maskImage: "url('/sectioncutout.svg')",
-              maskSize: "200vw, 180vw, 180vw",
-              maskPosition: "center",
-              maskRepeat: "no-repeat",
-            }}
+            key={card.id} 
+            className="village-card-container w-full h-screen sticky top-0 flex items-center justify-center px-4 md:px-8 lg:px-12 py-12 md:py-16"
+            style={{ zIndex: i + 10 }}
           >
-            <img 
-              ref={topImgRef}
-              src="/villagesection/Farmer_harvesting_herbs_in_garden_20260914053119.jpeg" 
-              alt="Farmer harvesting herbs in garden"
-              className="w-full h-[105%] object-cover absolute"
-              style={{ top: "-2.5%", transform: "scaleX(-1)" }}
-            />
+            {/* The actual Card */}
+            <div className="village-card w-full h-full max-w-[1400px] bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row relative transform origin-top border border-[#FAF9F6]/20">
+              
+              {/* Left Content */}
+              <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 md:p-16 lg:p-24 flex flex-col justify-center bg-white relative z-10">
+                <span className="text-[#8F9E7B] text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold mb-4 md:mb-6 block">
+                  Chapter {`0${i + 1}`} — {card.subtitle}
+                </span>
+                
+                <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#2F3627] mb-6">
+                  {card.title}
+                </h3>
+                
+                <p className="text-[#4A533E]/80 text-sm md:text-base font-light leading-relaxed mb-8 md:mb-12 max-w-lg">
+                  {card.desc}
+                </p>
+
+                {/* Highlights List */}
+                <div className="space-y-4">
+                  {card.highlights.map((highlight, idx) => (
+                    <div key={idx} className="flex items-center gap-4">
+                      <div className="w-8 h-[1px] bg-[#8F9E7B]"></div>
+                      <span className="text-xs md:text-sm text-[#2F3627] font-medium tracking-wide uppercase">
+                        {highlight}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Image */}
+              <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden bg-[#2F3627]">
+                <div className="absolute inset-0 w-full h-full">
+                  <Image 
+                    src={card.img} 
+                    alt={card.title} 
+                    fill 
+                    className="parallax-img object-cover object-center"
+                  />
+                  {/* Subtle overlay to ensure the image isn't too harsh */}
+                  <div className="absolute inset-0 bg-[#2F3627]/10 mix-blend-multiply"></div>
+                </div>
+              </div>
+
+            </div>
           </div>
-        </div>
-
-        {/* Center Image */}
-        <div className="absolute top-[30vh] md:top-[50vh] lg:top-[70vh] right-0 w-full h-[70vh] md:h-[100vh] lg:h-[130vh] overflow-hidden z-0">
-          <img 
-            ref={centerImgRef}
-            src="/villagesection/Serving_Kerala_village_meal_20260914053136.jpeg" 
-            alt="Serving Kerala village meal"
-            className="w-full h-[105%] object-cover absolute -top-[2.5%]"
-          />
-        </div>
-
-        {/* Bottom Image (Masked) */}
-        <div className="absolute top-[65vh] md:top-[100vh] lg:top-[130vh] right-0 w-screen h-[80vh] md:h-[110vh] lg:h-[140vh] overflow-hidden z-10">
-          <div 
-            className="w-full h-full absolute inset-0"
-            style={{
-              transform: "scaleY(-1)",
-              WebkitMaskImage: "url('/sectioncutout.svg')",
-              WebkitMaskSize: "200vw, 180vw, 180vw",
-              WebkitMaskPosition: "center",
-              WebkitMaskRepeat: "no-repeat",
-              maskImage: "url('/sectioncutout.svg')",
-              maskSize: "200vw, 180vw, 180vw",
-              maskPosition: "center",
-              maskRepeat: "no-repeat",
-            }}
-          >
-            <img 
-              ref={bottomImgRef}
-              src="/villagesection/Artisan_weaving_fabric_on_handloom_20260914053142.jpeg" 
-              alt="Artisan weaving fabric on handloom"
-              className="w-full h-[105%] object-cover absolute -top-[2.5%] block"
-              style={{ transform: "scaleY(-1)" }}
-            />
-          </div>
-        </div>
-
-        {/* Extra Bottom Image */}
-        <div className="absolute top-[100vh] md:top-[150vh] lg:top-[185vh] right-0 w-full h-[80vh] md:h-[110vh] lg:h-[140vh] overflow-hidden z-0">
-          <img 
-            ref={extraBottomImgRef}
-            src="/villagesection/Villagers_smiling_outside_tradit…_20260914053146.jpeg" 
-            alt="Villagers smiling outside traditional house"
-            className="w-full h-[105%] object-cover absolute -top-[2.5%]"
-          />
-        </div>
-
-        {/* Very Bottom Image (Masked) - Overlapping Munnar */}
-        <div className="absolute top-[145vh] md:top-[215vh] lg:top-[265vh] right-0 w-screen h-[95vh] md:h-[130vh] lg:h-[170vh] overflow-hidden z-10">
-          <div 
-            className="w-full h-full absolute inset-0"
-            style={{
-              WebkitMaskImage: "url('/sectioncutout.svg')",
-              WebkitMaskSize: "200vw, 180vw, 180vw",
-              WebkitMaskPosition: "center center",
-              WebkitMaskRepeat: "no-repeat",
-              maskImage: "url('/sectioncutout.svg')",
-              maskSize: "200vw, 180vw, 180vw",
-              maskPosition: "center center",
-              maskRepeat: "no-repeat",
-            }}
-          >
-            <img 
-              ref={lastMaskedImgRef}
-              src="/villagesection/Traditional_Kerala_village_house…_20260914053151.jpeg" 
-              alt="Traditional Kerala village house"
-              className="w-full h-[110%] object-cover absolute -top-[5%]"
-            />
-          </div>
-        </div>
+        ))}
       </div>
-
-      {/* Top-Left Torn Paper Cutout - Desktop Only */}
-      <div className="hidden lg:block absolute -top-24 md:-top-68 -left-10 md:-left-40 w-[180vw] md:w-[130vw] lg:w-[120vw] pointer-events-none z-10 scale-[1.1] md:scale-[1.15] origin-top-left">
-        <img 
-          src="/newcutoutforvillage.svg" 
-          alt="Torn paper background" 
-          className="w-full h-auto object-contain object-top"
-        />
-      </div>
-
-      {/* Mobile & Tablet Title Section */}
-      <div className="lg:hidden relative w-full bg-white z-20 pt-20 pb-12 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto">
-          <span className="text-[#8B7355] text-[10px] md:text-xs tracking-[0.3em] uppercase font-semibold mb-3 block">
-            BEYOND THE SANCTUARY
-          </span>
-          <h2 className="text-[#3D2D20] text-3xl md:text-5xl font-serif leading-tight mb-4">
-            The Rhythm of the Land
-          </h2>
-          <div className="w-10 md:w-12 h-[2px] bg-[#D4AF37]/60 mb-4" />
-          <p className="text-[#5A4A42] text-xs md:text-base font-light leading-relaxed mb-6 max-w-2xl">
-            Healing extends far beyond the massage table. Step into the vibrant pulse of local Kerala life. Wander through spice gardens where your medicines are grown, share a smile with the artisans weaving traditional fabrics, and taste the earthy richness of organic, farm-to-table cuisine prepared with ancient village wisdom. Here, you don't just visit a retreat; you become part of a living, breathing community that has preserved the secrets of wellness for millennia.
-          </p>
-          
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
-            <button className="px-5 md:px-6 py-2 md:py-2.5 bg-[#3D2D20] text-white text-[10px] md:text-xs tracking-widest uppercase rounded-full hover:bg-[#5A4A42] transition-colors">
-              Explore The Community
-            </button>
-            <button className="px-5 md:px-6 py-2 md:py-2.5 border border-[#3D2D20] text-[#3D2D20] text-[10px] md:text-xs tracking-widest uppercase rounded-full hover:bg-[#3D2D20] hover:text-white transition-colors">
-              View Experiences
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Content overlaid precisely on the cutout (Desktop Only) */}
-      <div className="hidden lg:flex absolute top-0 left-0 w-full md:w-[60vw] lg:w-[45vw] h-auto md:h-screen z-20 flex-col justify-start pt-20 md:pt-48 px-6 md:px-16 lg:px-24 pb-8">
-        
-        {/* Text Content */}
-        <div className="relative w-full flex flex-col items-start text-left">
-          <span className="text-[#8B7355] text-[10px] md:text-sm tracking-[0.3em] uppercase font-semibold mb-3 md:mb-4">
-            BEYOND THE SANCTUARY
-          </span>
-          <h2 className="text-[#3D2D20] text-3xl md:text-6xl font-serif leading-tight mb-4 md:mb-6">
-            The Rhythm of the Land
-          </h2>
-          <div className="w-10 md:w-12 h-[2px] bg-[#D4AF37]/60 mb-4 md:mb-6" />
-          <p className="text-[#5A4A42] text-xs md:text-lg font-light leading-relaxed mb-6 md:mb-8 max-w-md">
-            Healing extends far beyond the massage table. Step into the vibrant pulse of local Kerala life. Wander through spice gardens where your medicines are grown, share a smile with the artisans weaving traditional fabrics, and taste the earthy richness of organic, farm-to-table cuisine prepared with ancient village wisdom. Here, you don't just visit a retreat; you become part of a living, breathing community that has preserved the secrets of wellness for millennia.
-          </p>
-          
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 w-full sm:w-auto">
-            <button className="px-5 md:px-6 py-2 md:py-2.5 bg-[#3D2D20] text-white text-[10px] md:text-sm tracking-widest uppercase rounded-full hover:bg-[#5A4A42] transition-colors">
-              Explore The Community
-            </button>
-            <button className="px-5 md:px-6 py-2 md:py-2.5 border border-[#3D2D20] text-[#3D2D20] text-[10px] md:text-sm tracking-widest uppercase rounded-full hover:bg-[#3D2D20] hover:text-white transition-colors">
-              View Experiences
-            </button>
-          </div>
-        </div>
-      </div>
-
     </section>
   );
 }

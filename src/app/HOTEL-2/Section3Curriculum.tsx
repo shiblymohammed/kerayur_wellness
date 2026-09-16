@@ -12,7 +12,7 @@ const courses = [
     id: 'GAMC',
     title: 'Ayurveda Marma Chakra & Massage',
     duration: '2 Weeks',
-    image: '/nattika_sanctuary_1789347634511.jpg',
+    image: '/hotel-2/marma_massage.jpg',
     modules: '14 Modules',
     certification: 'Level 1',
     description: 'Master the fundamental principles of Abhyanga and vital energy cleansing techniques through intense practical sessions.'
@@ -30,7 +30,7 @@ const courses = [
     id: 'GACY',
     title: 'Yoga Clinical & Teachers Training',
     duration: '2 Weeks',
-    image: '/nattika_yoga_1789398597383.jpg',
+    image: '/hotel-2/clinical_yoga.jpg',
     modules: '20 Modules',
     certification: 'Yoga Alliance',
     description: 'A clinical approach to asanas and pranayama, focusing on therapeutic applications for specific ailments.'
