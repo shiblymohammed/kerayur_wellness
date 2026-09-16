@@ -60,8 +60,7 @@ export default function TheVillage() {
           const nextContainer = cardContainers[i + 1];
           
           gsap.to(card, {
-            scale: 0.9,
-            opacity: 0.5,
+            scale: 0.95,
             ease: "none",
             scrollTrigger: {
               trigger: nextContainer,

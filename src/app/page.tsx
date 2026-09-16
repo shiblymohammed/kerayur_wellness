@@ -3,6 +3,7 @@ import TheCanvas from '@/sections/homepage/TheCanvas';
 import TheRoots from '@/sections/homepage/TheRoots';
 import TheAlchemy from '@/sections/homepage/TheAlchemy';
 import TheSanctuaries from '@/sections/homepage/TheSanctuaries';
+import TheCuisine from '@/sections/homepage/TheCuisine';
 import TheVillage from '@/sections/homepage/TheVillage';
 import ThePortal from '@/sections/homepage/ThePortal';
 
@@ -19,6 +20,7 @@ export default function Home() {
       <TheRoots />
       <TheAlchemy />
       <TheSanctuaries />
+      <TheCuisine />
       <TheVillage />
       <ThePortal />
     </main>
