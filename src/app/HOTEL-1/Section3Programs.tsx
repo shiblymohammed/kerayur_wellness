@@ -59,8 +59,10 @@ export default function Section3Programs() {
     let ctx = gsap.context(() => {
       // Calculate how far to scroll the track
       const getScrollAmount = () => {
-        let trackWidth = track.scrollWidth;
-        return -(trackWidth - window.innerWidth + 80); // padding adjustment
+        if (!trackRef.current) return -1;
+        let trackWidth = trackRef.current.scrollWidth;
+        let amount = trackWidth - window.innerWidth + 80;
+        return amount > 0 ? -amount : -1; // Ensure it only scrolls left, and never returns 0
       };
 
       gsap.to(track, {
@@ -69,7 +71,7 @@ export default function Section3Programs() {
         scrollTrigger: {
           trigger: scrollWrapperRef.current,
           start: "top top",
-          end: () => `+=${getScrollAmount() * -1}`,
+          end: () => `+=${Math.abs(getScrollAmount())}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,

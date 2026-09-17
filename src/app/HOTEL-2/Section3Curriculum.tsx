@@ -96,6 +96,7 @@ export default function Section3Curriculum() {
   const bannerImgRef = useRef<HTMLImageElement>(null);
   const galleryContainerRef = useRef<HTMLDivElement>(null);
   const galleryTrackRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -159,16 +160,21 @@ export default function Section3Curriculum() {
       let mm = gsap.matchMedia();
       mm.add("(min-width: 768px)", () => {
         if (galleryContainerRef.current && galleryTrackRef.current) {
-          const trackWidth = galleryTrackRef.current.scrollWidth;
-          const viewportWidth = window.innerWidth;
           
+          const getScrollAmount = () => {
+            if (!galleryTrackRef.current) return 0;
+            const trackWidth = galleryTrackRef.current.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            return -(trackWidth - viewportWidth);
+          };
+
           gsap.to(galleryTrackRef.current, {
-            x: () => -(trackWidth - viewportWidth),
+            x: getScrollAmount,
             ease: "none",
             scrollTrigger: {
               trigger: galleryContainerRef.current,
               start: "top top",
-              end: () => `+=${trackWidth}`,
+              end: () => `+=${galleryTrackRef.current?.scrollWidth || 0}`,
               pin: true,
               scrub: 1,
               invalidateOnRefresh: true,
@@ -176,6 +182,16 @@ export default function Section3Curriculum() {
           });
         }
       });
+
+      // 3. Infinite Marquee for Course Images
+      if (marqueeRef.current) {
+        gsap.to(marqueeRef.current, {
+          xPercent: -50,
+          ease: "none",
+          duration: 30,
+          repeat: -1,
+        });
+      }
     });
 
     return () => ctx.revert();
@@ -341,6 +357,48 @@ export default function Section3Curriculum() {
                 </div>
 
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* -----------------------------
+          PART 3: Course Highlights (Marquee)
+          ----------------------------- */}
+      <div className="w-full bg-[#1A1F16] py-24 overflow-hidden relative border-t border-[#8F9E7B]/10">
+        <div className="text-center mb-12 relative z-10 px-6">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-[#8F9E7B] font-bold block mb-3">Our Legacy</span>
+          <h3 className="text-3xl md:text-5xl font-serif text-[#F3F4ED]">
+            Moments of <span className="italic font-light text-[#8F9E7B]">Mastery</span>
+          </h3>
+        </div>
+        
+        {/* Gradients to fade edges */}
+        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
+
+        {/* Marquee Track (Double the images for seamless loop) */}
+        <div className="flex w-max" ref={marqueeRef}>
+          {[...Array(2)].map((_, arrayIndex) => (
+            <div key={arrayIndex} className="flex gap-6 px-3">
+              {[
+                '/hotel-2/courses/6.png',
+                '/hotel-2/courses/86.png',
+                '/hotel-2/courses/IMG-20180618-WA0052.jpg',
+                '/hotel-2/courses/index3-2.jpg',
+                '/hotel-2/courses/index4-1.jpg',
+                '/hotel-2/courses/index5-2.jpg'
+              ].map((src, index) => (
+                <div key={index} className="relative w-[300px] md:w-[450px] h-[220px] md:h-[300px] rounded-2xl overflow-hidden border border-[#8F9E7B]/20 shrink-0 filter grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer">
+                  <Image
+                    src={src}
+                    alt={`Course Highlight ${index + 1}`}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-black/20 hover:bg-transparent transition-colors duration-700"></div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

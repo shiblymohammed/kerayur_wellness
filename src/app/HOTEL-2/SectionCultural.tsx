@@ -9,33 +9,33 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    title: "Martial Arts & Dance",
-    desc: "Witness the ancient fluid power of Kalaripayattu and the expressive storytelling of Indian Classical Dance, performing arts that are deeply intertwined with Ayurvedic physiology and spiritual discipline.",
-    image: "/hotel-2/cultural_kalaripayattu.jpg", 
+    title: "The Vibrant Theyyam",
+    desc: "Witness the ancient and deeply spiritual Theyyam performance, a visually stunning ritual art form of North Kerala that connects mortals to the divine.",
+    image: "/hotel-2/entertaignment/theyyam.jpg", 
     tag: "Heritage"
   },
   {
-    title: "The Sound of Kerala",
-    desc: "Feel the pulse of tradition with live Chenda Melam, the classical drum music that accompanies temple festivals and awakens the spirit.",
-    image: "/hotel-2/cultural_chenda_melam.jpg",
-    tag: "Music"
-  },
-  {
-    title: "Sacred Spaces",
-    desc: "Experience the profound spirituality of Malabar with guided visits to Lokanarkavu & Parassinikadav Temples, connecting to the divine roots of healing.",
-    image: "/hotel-2/cultural_temple_sacred.jpg", 
+    title: "Sacred Ceremonies",
+    desc: "Experience the profound spirituality of local customs and receive traditional blessings, connecting deeply to the cultural roots of holistic healing.",
+    image: "/hotel-2/entertaignment/bless.jpg",
     tag: "Spiritual"
   },
   {
-    title: "Nature Excursions",
-    desc: "Escape into the lush Western Ghats with a full-day Wayanad trip, and drift along serene backwater boat cruises to harmonize with nature's elements.",
-    image: "/hotel-2/cultural_nature_excursion.jpg", 
+    title: "Historic Temples",
+    desc: "Wander through centuries-old temples, characterized by majestic architecture and serene atmospheres perfect for meditation and introspection.",
+    image: "/hotel-2/entertaignment/Temple.jpg", 
+    tag: "Heritage"
+  },
+  {
+    title: "Mahe Walkway",
+    desc: "Take a calming evening stroll along the beautiful Mahe beach walkway, where the river meets the Arabian sea under breathtaking sunsets.",
+    image: "/hotel-2/entertaignment/Mahe-Beach.jpg", 
     tag: "Nature"
   },
   {
-    title: "Local Life",
-    desc: "Wander through the historic craft village, stroll the beautiful Mahe walkway, and enjoy local cinema and authentic dinners at Thalassery.",
-    image: "/hotel-2/cultural_local_life.jpg", 
+    title: "Coastal Serenity",
+    desc: "Relax and rejuvenate by the pristine local beaches. The rhythmic sound of the waves provides the perfect natural therapy for a quiet mind.",
+    image: "/hotel-2/entertaignment/Beach.jpg", 
     tag: "Community"
   }
 ];

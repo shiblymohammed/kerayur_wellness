@@ -107,7 +107,7 @@ export default function TheCanvas() {
     tl.fromTo(maskContainerRef.current, {
       "--maskSize": "90% auto", 
     }, {
-      "--maskSize": "2000vw", 
+      "--maskSize": "8000vw", // Increased massively for mobile tall aspect ratios
       ease: "power3.in",
       duration: 0.4, 
     }, 0.2); 
@@ -248,14 +248,14 @@ export default function TheCanvas() {
       <div ref={textOverlayBaseRef} className="absolute inset-0 flex flex-col items-center justify-center text-center z-5 pointer-events-none px-6">
         <div className="text-[#333333] flex flex-col items-center">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif tracking-widest leading-tight mb-6 max-w-4xl">
-            WITH YOU AT<br/>EVERY HORIZON
+            NATURE AS THE<br/>ULTIMATE HEALER
           </h2>
           <p className="max-w-2xl text-base md:text-xl leading-relaxed mb-10 font-light opacity-90">
-            We manage travel end to end for individuals and businesses. As your travel partner, we take care of every detail, so you can focus on what really matters.
+            True healing requires the perfect environment. Across the serene backwaters, the pristine coastlines, and the silent altitudes of Kerala, we have curated the ultimate sanctuaries for your Ayurvedic transformation.
           </p>
         </div>
         <button className="px-8 py-3 bg-[#333333] text-white rounded-full font-medium tracking-widest text-sm pointer-events-auto shadow-lg">
-          DISCOVER
+          DISCOVER SANCTUARIES
         </button>
       </div>
 
@@ -321,19 +321,19 @@ export default function TheCanvas() {
           <div ref={textOverlayMaskRef} className="absolute inset-0 flex flex-col items-center justify-center text-center z-20 pointer-events-none px-6">
             <div className="text-white flex flex-col items-center">
               <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif tracking-widest leading-tight mb-6 max-w-4xl">
-                WITH YOU AT<br/>EVERY HORIZON
+                NATURE AS THE<br/>ULTIMATE HEALER
               </h2>
               <p className="max-w-2xl text-base md:text-xl leading-relaxed mb-10 font-light opacity-90">
-                We manage travel end to end for individuals and businesses. As your travel partner, we take care of every detail, so you can focus on what really matters.
+                True healing requires the perfect environment. Across the serene backwaters, the pristine coastlines, and the silent altitudes of Kerala, we have curated the ultimate sanctuaries for your Ayurvedic transformation.
               </p>
             </div>
             <button className="px-8 py-3 bg-white text-black rounded-full font-medium tracking-widest text-sm hover:bg-gray-100 transition-all pointer-events-auto shadow-lg">
-              DISCOVER
+              DISCOVER SANCTUARIES
             </button>
           </div>
 
           {/* New Image Description Text (Structured Editorial Layout) */}
-          <div ref={newTextRef} className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-center pl-16 lg:pl-24 w-full md:w-[60vw]">
+          <div ref={newTextRef} className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-start pt-24 md:pt-0 md:justify-center pl-8 md:pl-16 lg:pl-24 w-full md:w-[60vw]">
             
             {/* Localized Radial Gradient for Left Text Legibility */}
             <div className="fixed bottom-0 left-0 w-[80vw] md:w-[60vw] h-[100vh] bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-black/60 via-black/10 to-transparent -z-20 pointer-events-none opacity-80" />
@@ -342,7 +342,7 @@ export default function TheCanvas() {
             <div className="relative w-full flex flex-col justify-center">
               
               {/* Dynamic Text Container (Title & KERAYUR) */}
-              <div className="relative h-[250px] md:h-[350px] w-full mt-10">
+              <div className="relative h-[200px] md:h-[350px] w-full mt-10">
                 {landscapes.map((l) => (
                   <div 
                     key={l.id} 
@@ -371,7 +371,7 @@ export default function TheCanvas() {
                     {/* 2. BACKGROUND BOTTOM: KERAYUR */}
                     <div className="absolute top-[160px] md:top-[200px] select-none -ml-4 z-10 pointer-events-none">
                       <h1 
-                        className="text-[10rem] md:text-[16rem] lg:text-[24rem] font-light text-transparent opacity-70 leading-none tracking-tighter" 
+                        className="text-[6rem] md:text-[16rem] lg:text-[24rem] font-light text-transparent opacity-70 leading-none tracking-tighter" 
                         style={{ WebkitTextStroke: "1px rgba(255,255,255,0.6)" }}
                       >
                         {l.outlineText || "KERAYUR"}
@@ -409,7 +409,7 @@ export default function TheCanvas() {
           {/* Carousel & Pagination (Bottom Right) */}
           <div 
             ref={carouselRef} 
-            className="absolute bottom-16 right-16 lg:right-24 z-40 flex flex-col items-end gap-10"
+            className="absolute bottom-10 md:bottom-16 right-8 md:right-16 lg:right-24 z-40 flex flex-col items-end gap-6 md:gap-10"
           >
             {/* Localized Radial Gradient for Right Text Legibility */}
             <div className="fixed bottom-0 right-0 w-[60vw] md:w-[40vw] h-[60vh] bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-black/70 via-black/10 to-transparent -z-20 pointer-events-none opacity-80" />
@@ -422,7 +422,7 @@ export default function TheCanvas() {
                   onClick={() => handleSetImage(l.id)}
                   role="button"
                   tabIndex={0}
-                  className="relative group w-44 h-56 lg:w-48 lg:h-64 overflow-hidden cursor-pointer pointer-events-auto"
+                  className="relative group w-28 h-40 md:w-44 md:h-56 lg:w-48 lg:h-64 overflow-hidden cursor-pointer pointer-events-auto"
                 >
                   <div 
                     className="absolute inset-0 bg-center bg-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105"

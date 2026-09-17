@@ -146,19 +146,19 @@ export default function TheAlchemy() {
     <section ref={sectionRef} id="thealchemy" className="w-full bg-[#FAF9F6] relative flex flex-col pt-0 pb-0 z-20">
       
       {/* Cutout Transition */}
-      <div className="w-full relative z-50 pointer-events-none flex justify-center -mt-[15vw]">
-        <SectionCutout 
-          fillColor="#2A1A1A"
-          imageUrl="/southSideart.png"
-          imageOpacity={0.5}
-          className="w-[120vw] min-w-[1400px]"
-          svgClassName="-scale-y-110"
-          contentClassName="absolute top-[50%] -translate-y-1/2 text-center px-8 w-full max-w-[80vw] mx-auto flex flex-col items-center gap-4"
-        >
-          <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-serif text-[#FAF9F6] tracking-widest leading-tight whitespace-pre-line drop-shadow-lg">
+      <div className="w-full relative z-50 pointer-events-none flex justify-center -mt-[20vw] md:-mt-[15vw] lg:-mt-[15vw]">
+          <SectionCutout 
+            fillColor="#2A1A1A"
+            imageUrl="/southSideart.png"
+            imageOpacity={0.5}
+            className="w-[200vw] md:w-[150vw] lg:w-[120vw] lg:min-w-[1400px]"
+            svgClassName="-scale-y-110"
+            contentClassName="absolute top-[50%] -translate-y-1/2 text-center px-4 md:px-8 w-full max-w-[90vw] md:max-w-[80vw] mx-auto flex flex-col items-center gap-2 md:gap-4"
+          >
+          <h2 className="text-xl md:text-4xl lg:text-[5rem] font-serif text-[#FAF9F6] tracking-widest leading-tight whitespace-pre-line drop-shadow-lg">
             {"THE\nALCHEMY"}
           </h2>
-          <p className="text-white/80 font-light text-sm md:text-base max-w-md">
+          <p className="hidden lg:block text-white/80 font-light text-xs md:text-base max-w-xs md:max-w-md">
             Transformation and refinement through focused discipline and timeless wisdom.
           </p>
         </SectionCutout>
@@ -167,7 +167,7 @@ export default function TheAlchemy() {
       {/* Carousel */}
       <div 
         ref={carouselRef}
-        className="w-full flex gap-0 overflow-x-auto hide-scrollbar cursor-grab active:cursor-grabbing -mt-[18vw] relative z-10"
+        className="w-full flex gap-0 overflow-x-auto hide-scrollbar cursor-grab active:cursor-grabbing -mt-[20vw] md:-mt-[15vw] lg:-mt-[18vw] relative z-10"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
@@ -178,7 +178,7 @@ export default function TheAlchemy() {
           <div 
             key={card.id}
             ref={el => { cardRefs.current[i] = el; }}
-            className="relative shrink-0 w-[70vw] md:w-[38vw] h-[120vh] md:h-[140vh] overflow-hidden group select-none bg-black/20"
+            className="relative shrink-0 w-[75vw] md:w-[55vw] lg:w-[38vw] h-[70vh] md:h-[70vh] lg:h-[140vh] overflow-hidden group select-none bg-black/20"
           >
             {/* Background — div with background-size:cover guarantees full coverage */}
             <div
@@ -198,10 +198,10 @@ export default function TheAlchemy() {
 
             {/* Card Content — centered */}
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-8 md:px-12 pointer-events-none drop-shadow-2xl gap-5">
-              <h3 className="text-5xl md:text-6xl lg:text-[5rem] font-serif text-white tracking-widest leading-none">
+              <h3 className="text-3xl md:text-4xl lg:text-[5rem] font-serif text-white tracking-widest leading-none">
                 {card.title}
               </h3>
-              <p className="text-white/80 font-light text-sm md:text-base max-w-[220px] leading-relaxed">
+              <p className="hidden lg:block text-white/80 font-light text-sm md:text-base max-w-[220px] leading-relaxed">
                 {card.desc}
               </p>
               <button className="mt-2 px-6 py-2 border border-white/60 rounded-full text-xs uppercase tracking-widest text-white backdrop-blur-sm hover:bg-white hover:text-black transition-colors pointer-events-auto">
