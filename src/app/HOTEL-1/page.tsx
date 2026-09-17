@@ -8,6 +8,7 @@ import Section2Intro from './Section2Intro';
 import Section3DailyRhythm from './Section3DailyRhythm';
 import Section4Treatments from './Section4Treatments';
 import Section5Programs from './Section5Programs';
+import SectionResortGallery from './SectionResortGallery';
 import Section6Packages from './Section6Packages';
 import Section7Closing from './Section7Closing';
 
@@ -173,6 +174,9 @@ export default function Hotel1Page() {
 
       {/* Section 5: Signature Programs */}
       <Section5Programs />
+
+      {/* Resort Experience Gallery */}
+      <SectionResortGallery />
 
       {/* Section 6: Pricing & Packages */}
       <Section6Packages />

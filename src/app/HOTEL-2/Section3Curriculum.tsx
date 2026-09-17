@@ -97,12 +97,54 @@ export default function Section3Curriculum() {
   const galleryContainerRef = useRef<HTMLDivElement>(null);
   const galleryTrackRef = useRef<HTMLDivElement>(null);
 
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const philosophySlides = [
+    {
+      src: '/nattika_yoga_1789398597383.jpg',
+      tagline: 'The Philosophy',
+      quote: '"Knowledge is the highest \n form of healing."',
+      desc: 'Our academic offerings are designed for the serious seeker.'
+    },
+    {
+      src: '/hotel-2/nutrition cookeryclassroom.jpg',
+      tagline: 'Culinary Wisdom',
+      quote: '"Food becomes medicine \n when prepared with awareness."',
+      desc: 'Learn to prepare Tridoshic meals tailored to individual constitutional imbalances.'
+    },
+    {
+      src: '/hotel-2/Yoga-for-all.jpg',
+      tagline: 'Universal Practice',
+      quote: '"Yoga is the journey of the self, \n through the self, to the self."',
+      desc: 'Embrace a practice that accommodates all levels, bodies, and walks of life.'
+    },
+    {
+      src: '/hotel-2/mediaroom.jpg',
+      tagline: 'Digital Serenity',
+      quote: '"A quiet mind is \n the foundation of true learning."',
+      desc: 'Immerse yourself in our extensive library and media resources.'
+    },
+    {
+      src: '/hotel-2/yoga.jpg',
+      tagline: 'Clinical Yoga',
+      quote: '"Breath is the bridge which \n connects life to consciousness."',
+      desc: 'A clinical approach to asanas and pranayama for specific ailments.'
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % philosophySlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [philosophySlides.length]);
+
   useEffect(() => {
     let ctx = gsap.context(() => {
       // 1. Parallax Banner
       if (bannerRef.current && bannerImgRef.current) {
         gsap.to(bannerImgRef.current, {
-          y: '20%',
+          y: '15%',
           ease: 'none',
           scrollTrigger: {
             trigger: bannerRef.current,
@@ -143,9 +185,9 @@ export default function Section3Curriculum() {
     <section className="relative w-full bg-[#F5F4EF] text-[#2F3627]">
       
       {/* -----------------------------
-          PART 1: The Transition Banner 
+          PART 1: The Transition Banner (Slider)
           ----------------------------- */}
-      <div ref={bannerRef} className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden">
+      <div ref={bannerRef} className="relative w-full h-[100vh] overflow-hidden bg-[#1A1F16]">
         
         {/* Top Asymmetrical Wavy Edge */}
         <div className="absolute top-0 left-0 w-full z-20 pointer-events-none -translate-y-[1px]">
@@ -154,26 +196,61 @@ export default function Section3Curriculum() {
           </svg>
         </div>
 
-        <Image
-          ref={bannerImgRef}
-          src="/nattika_yoga_1789398597383.jpg"
-          alt="Serene Yoga"
-          fill
-          className="object-cover scale-110 origin-top"
-        />
-        {/* Deep Olive Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2F3627]/95 via-[#2F3627]/50 to-[#2F3627]/90 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-[#2F3627]/30"></div>
-        
-        {/* Quote */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="text-sm md:text-base tracking-[0.3em] uppercase text-[#8F9E7B] font-bold mb-6">The Philosophy</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] font-light max-w-4xl leading-[1.3] drop-shadow-lg">
-            "Knowledge is the highest <br className="hidden md:block"/> form of healing."
-          </h2>
+        {/* Parallax Image Slider */}
+        <div ref={bannerImgRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          {philosophySlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                activeSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              <Image
+                src={slide.src}
+                alt={slide.tagline}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Asymmetrical Wavy Edge (different from top) */}
+        {/* Localized Bottom Gradient for text clarity (instead of darkening the whole image) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 pointer-events-none"></div>
+        
+        {/* Slider Content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-32 px-6 text-center z-20">
+          <div className="max-w-4xl transition-all duration-700 transform translate-y-0">
+            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-amber-200 font-bold mb-4">
+              {philosophySlides[activeSlide].tagline}
+            </p>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] font-light leading-[1.3] drop-shadow-lg mb-6 whitespace-pre-line">
+              {philosophySlides[activeSlide].quote}
+            </h2>
+            <p className="text-[#F3F4ED]/80 font-light max-w-lg mx-auto text-sm md:text-base">
+              {philosophySlides[activeSlide].desc}
+            </p>
+          </div>
+
+          {/* Navigation Dots */}
+          <div className="flex gap-3 mt-12">
+            {philosophySlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveSlide(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  activeSlide === index 
+                  ? 'w-8 h-1.5 bg-amber-200' 
+                  : 'w-2 h-1.5 bg-white/40 hover:bg-white/70'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Asymmetrical Wavy Edge */}
         <div className="absolute bottom-0 left-0 w-full z-20 pointer-events-none translate-y-[1px]">
           <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-16 md:h-28 fill-[#F5F4EF]">
             <path d="M0,100 L1440,100 L1440,60 C1250,10 1100,90 880,40 C650,-10 500,80 320,50 C180,30 80,80 0,70 Z"></path>

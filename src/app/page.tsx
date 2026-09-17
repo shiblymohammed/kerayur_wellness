@@ -17,8 +17,8 @@ export default function Home() {
         <TheCanvas />
       </div>
 
-      <TheRoots />
       <TheAlchemy />
+      <TheRoots />
       <TheSanctuaries />
       <TheCuisine />
       <TheVillage />

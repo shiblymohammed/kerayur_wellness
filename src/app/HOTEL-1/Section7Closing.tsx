@@ -7,23 +7,66 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const gridImages = [
+  { src: '/hotel-1/group-in-south-indian-attire.webp', alt: 'Cultural Attire' },
+  { src: '/hotel-1/outdoor-cooking-workshop.webp', alt: 'Outdoor Cooking Workshop' },
+  { src: '/hotel-1/ayur-villas-exterior-dusk-1.webp', alt: 'Villa Exterior Dusk' },
+  { src: '/hotel-1/Ayur-villas-garden-pathway.webp', alt: 'Garden Pathway' },
+  { src: '/hotel-1/resort-building-2_f6a74b5d.webp', alt: 'Resort Architecture' },
+  { src: '/hotel-1/resort-buildings_cbba54e6.webp', alt: 'Resort Buildings' },
+  { src: '/hotel-1/resort-grounds-4_88328010.webp', alt: 'Lush Grounds' },
+  { src: '/hotel-1/resort-guests_78813cf1.webp', alt: 'Guests at Resort' },
+  { src: '/hotel-1/resort-lounge-chairs_fd1e4eb3 on the beach.webp', alt: 'Lounge Chairs on Beach' },
+  { src: '/hotel-1/woman-relaxing-on-beach-2_97e3a87b.webp', alt: 'Relaxing on Beach' },
+];
+
 export default function Section7Closing() {
   const containerRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const poolRef = useRef<HTMLDivElement>(null);
+  const villaRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Gallery Parallax & Reveal
-      const images = galleryRef.current?.querySelectorAll('.gal-img');
-      if (images) {
-        gsap.fromTo(images, 
-          { y: 100, opacity: 0 },
+      // Pool Parallax
+      if (poolRef.current) {
+        gsap.to(poolRef.current.querySelector('img'), {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: poolRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+      }
+
+      // Villa Parallax
+      if (villaRef.current) {
+        gsap.to(villaRef.current.querySelector('img'), {
+          yPercent: 10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: villaRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+      }
+
+      // Grid Images Stagger Reveal
+      const gridItems = galleryRef.current?.querySelectorAll('.grid-img-wrap');
+      if (gridItems && gridItems.length > 0) {
+        gsap.fromTo(gridItems, 
+          { y: 80, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 1.5,
-            stagger: 0.2,
+            duration: 1.2,
+            stagger: 0.1,
             ease: "power3.out",
             scrollTrigger: {
               trigger: galleryRef.current,
@@ -31,28 +74,6 @@ export default function Section7Closing() {
             }
           }
         );
-
-        // Subtle continued parallax on scroll
-        gsap.to(images[1], {
-          y: -50,
-          ease: "none",
-          scrollTrigger: {
-            trigger: galleryRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
-        gsap.to(images[2], {
-          y: -25,
-          ease: "none",
-          scrollTrigger: {
-            trigger: galleryRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
       }
 
       // CTA Reveal
@@ -75,44 +96,86 @@ export default function Section7Closing() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#F3F4ED] text-[#2F3627] pt-32 rounded-t-[3rem] md:rounded-t-[4rem] -mt-12 z-20 overflow-hidden">
+    <section ref={containerRef} className="relative w-full bg-[#F3F4ED] text-[#2F3627] pt-0 rounded-t-[3rem] md:rounded-t-[4rem] -mt-12 z-20 overflow-hidden">
       
-      {/* ─── GALLERY SHOWCASE ─── */}
-      <div ref={galleryRef} className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-32">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 h-auto md:h-[600px]">
-          
-          {/* Image 1: Main Large */}
-          <div className="gal-img relative w-full md:w-[45%] h-[400px] md:h-full rounded-3xl overflow-hidden shadow-2xl">
+      {/* ─── NEW EXPANDED GALLERY ─── */}
+      
+      {/* 1. Full Screen Pool Feature */}
+      <div ref={poolRef} className="relative w-full h-[70vh] md:h-[90vh] overflow-hidden mb-12">
+        <div className="absolute inset-[-10%] w-[120%] h-[120%]">
+          <Image 
+            src="/hotel-1/final_images (1).png" 
+            alt="Expansive Pool" 
+            fill 
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1F16]/80 via-transparent to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 right-0 z-20 p-8 md:p-16 max-w-[1400px] mx-auto text-center md:text-left">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-white/60 font-semibold mb-3 block">
+            Serene Waters
+          </span>
+          <h2 className="text-4xl md:text-6xl font-serif text-white mb-4">
+            The Infinite <span className="italic text-amber-100 font-light">Expanse</span>
+          </h2>
+          <p className="text-sm md:text-base text-white/80 font-light max-w-xl mx-auto md:mx-0">
+            Find your flow in our expansive pools, perfectly situated to capture the coastal breeze and the warmth of the Kerala sun.
+          </p>
+        </div>
+      </div>
+
+      {/* 2. Villa Showcase */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-20">
+        <div ref={villaRef} className="relative w-full h-[50vh] md:h-[70vh] rounded-[2.5rem] overflow-hidden shadow-2xl">
+          <div className="absolute inset-[-10%] w-[120%] h-[120%]">
             <Image 
-              src="/hotel-1/final_images (1).png" 
-              alt="Ayurveda Sanctuary" 
+              src="/hotel-1/final_images (2).png" 
+              alt="Ayurveda Villa" 
               fill 
-              className="object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
+              className="object-cover"
             />
           </div>
-
-          <div className="flex flex-col gap-6 md:gap-10 w-full md:w-[30%] h-[600px] md:h-full">
-            {/* Image 2: Top Small */}
-            <div className="gal-img relative w-full h-[300px] md:h-[45%] rounded-3xl overflow-hidden shadow-xl mt-0 md:mt-12">
-              <Image 
-                src="/hotel-1/final_images (2).png" 
-                alt="Therapeutic details" 
-                fill 
-                className="object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
-              />
-            </div>
-            
-            {/* Image 3: Bottom Medium */}
-            <div className="gal-img relative w-full h-[350px] md:h-[55%] rounded-3xl overflow-hidden shadow-2xl">
-              <Image 
-                src="/hotel-1/final_images (3).png" 
-                alt="Healing environment" 
-                fill 
-                className="object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
-              />
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+          <div className="absolute bottom-8 left-8 right-8 z-20 md:w-1/2">
+            <h3 className="text-3xl md:text-4xl font-serif text-white mb-3">
+              Private Sanctuaries
+            </h3>
+            <p className="text-sm text-white/80 font-light">
+              Experience the tranquility of traditional Kerala architecture. Our villas offer a seamless blend of heritage design and modern comfort, surrounded by lush flora.
+            </p>
           </div>
+        </div>
+      </div>
 
+      {/* 3. Immersive Resort Grid */}
+      <div ref={galleryRef} className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 mb-32">
+        <div className="text-center mb-12">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-[#4A533E]/60 font-semibold block mb-3">
+            Life at Nattika
+          </span>
+          <h3 className="text-3xl md:text-5xl font-serif text-[#2F3627]">
+            Moments of <span className="italic text-[#8F9E7B] font-light">Stillness</span>
+          </h3>
+        </div>
+
+        {/* CSS Columns (Masonry effect) */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+          {gridImages.map((img, idx) => (
+            <div 
+              key={idx} 
+              className="grid-img-wrap relative w-full overflow-hidden rounded-2xl group break-inside-avoid"
+            >
+              <Image 
+                src={img.src} 
+                alt={img.alt} 
+                width={800} 
+                height={1000} 
+                className="w-full h-auto object-cover transform transition-transform duration-[1.5s] group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 z-10" />
+            </div>
+          ))}
         </div>
       </div>
 

@@ -11,31 +11,31 @@ const experiences = [
   {
     title: "Martial Arts & Dance",
     desc: "Witness the ancient fluid power of Kalaripayattu and the expressive storytelling of Indian Classical Dance, performing arts that are deeply intertwined with Ayurvedic physiology and spiritual discipline.",
-    image: "/nattikaBG.jpg", 
+    image: "/hotel-2/cultural_kalaripayattu.jpg", 
     tag: "Heritage"
   },
   {
     title: "The Sound of Kerala",
     desc: "Feel the pulse of tradition with live Chenda Melam, the classical drum music that accompanies temple festivals and awakens the spirit.",
-    image: "/greens_curriculum_1789419901412.jpg",
+    image: "/hotel-2/cultural_chenda_melam.jpg",
     tag: "Music"
   },
   {
     title: "Sacred Spaces",
     desc: "Experience the profound spirituality of Malabar with guided visits to Lokanarkavu & Parassinikadav Temples, connecting to the divine roots of healing.",
-    image: "/mandala_watermark.jpg", 
+    image: "/hotel-2/cultural_temple_sacred.jpg", 
     tag: "Spiritual"
   },
   {
     title: "Nature Excursions",
     desc: "Escape into the lush Western Ghats with a full-day Wayanad trip, and drift along serene backwater boat cruises to harmonize with nature's elements.",
-    image: "/munnarBG.jpg", 
+    image: "/hotel-2/cultural_nature_excursion.jpg", 
     tag: "Nature"
   },
   {
     title: "Local Life",
     desc: "Wander through the historic craft village, stroll the beautiful Mahe walkway, and enjoy local cinema and authentic dinners at Thalassery.",
-    image: "/backwatersBG.jpg", 
+    image: "/hotel-2/cultural_local_life.jpg", 
     tag: "Community"
   }
 ];

@@ -212,15 +212,6 @@ export default function TheAlchemy() {
         ))}
       </div>
 
-      {/* Bottom Mask */}
-      <div className="absolute bottom-0 left-0 w-full z-50 pointer-events-none flex justify-center translate-y-[2vw]">
-        <img 
-          src="/sectioncutoutWhite.avif" 
-          alt="Section Transition" 
-          className="w-[120vw] min-w-[1400px] h-auto object-cover" 
-        />
-      </div>
-
     </section>
   );
 }

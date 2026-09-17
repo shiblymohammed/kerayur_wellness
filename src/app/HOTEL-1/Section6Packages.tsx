@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const resortSlides = [
+  { src: '/hotel-1/resort-bedroom.webp',  label: 'Resort Bedroom',   sub: 'Serene Interiors' },
+  { src: '/hotel-1/resort-bedroom-5.webp', label: 'Deluxe Suite',     sub: 'Premium Comfort' },
+  { src: '/hotel-1/resort-bathroom-4_1bf2e62d.webp', label: 'Private Bathroom', sub: 'Thoughtful Details' },
+];
 
 const pricingData = {
   offSeason: {
@@ -57,12 +63,25 @@ const exclusions = [
 export default function Section6Packages() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const slideWrapperRef = useRef<HTMLDivElement>(null);
   const [isPeak, setIsPeak] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const activeData = isPeak ? pricingData.peakSeason : pricingData.offSeason;
 
+  // Auto-advance slides
+  const goNext = useCallback(() => {
+    setActiveSlide(prev => (prev + 1) % resortSlides.length);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(goNext, 5000);
+    return () => clearInterval(interval);
+  }, [goNext]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Existing package fade-in
       gsap.from(".pkg-fade", {
         opacity: 0,
         y: 30,
@@ -74,6 +93,22 @@ export default function Section6Packages() {
           start: "top 75%",
         }
       });
+
+      // Parallax on the slide image wrapper
+      if (slideWrapperRef.current) {
+        gsap.fromTo(slideWrapperRef.current, {
+          y: '-6%',
+        }, {
+          y: '6%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: slideWrapperRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -88,7 +123,7 @@ export default function Section6Packages() {
 
       <div ref={contentRef} className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex flex-col lg:flex-row gap-16">
         
-        {/* LEFT COLUMN: Intro & Image */}
+        {/* LEFT COLUMN: Intro & Parallax Slideshow */}
         <div className="w-full lg:w-[40%] flex flex-col pkg-fade">
           
           <div className="flex items-center gap-4 mb-6">
@@ -119,17 +154,62 @@ export default function Section6Packages() {
             </p>
           </div>
 
-          <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-            <Image 
-              src="/hotel-1/ayur_villa.jpg" 
-              alt="Ayur Villa Accommodation" 
-              fill 
-              className="object-cover hover:scale-105 transition-transform duration-[2s]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-6 left-6">
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-white">Ayur Villa</span>
-              <p className="text-[10px] text-white/70 tracking-wider">Premium Accommodation</p>
+          {/* ─── PARALLAX IMAGE SLIDESHOW ─── */}
+          <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+
+            {/* Parallax-wrapped images */}
+            <div ref={slideWrapperRef} className="absolute inset-[-12%] w-[124%] h-[124%]">
+              {resortSlides.map((slide, i) => (
+                <Image
+                  key={i}
+                  src={slide.src}
+                  alt={slide.label}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className={`object-cover object-center transition-all duration-[1.2s] ease-in-out ${
+                    i === activeSlide
+                      ? 'opacity-100 scale-100'
+                      : 'opacity-0 scale-105'
+                  }`}
+                  priority={i === 0}
+                />
+              ))}
+            </div>
+
+            {/* Dark gradient for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10 pointer-events-none" />
+
+            {/* Slide caption */}
+            <div className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-6 flex items-end justify-between">
+              <div>
+                <span className="text-xs uppercase tracking-[0.3em] font-semibold text-white block leading-tight">
+                  {resortSlides[activeSlide].label}
+                </span>
+                <p className="text-[10px] text-white/60 tracking-wider mt-0.5">
+                  {resortSlides[activeSlide].sub}
+                </p>
+              </div>
+
+              {/* Slide counter */}
+              <span className="text-[10px] tabular-nums text-white/40 font-mono tracking-widest">
+                {String(activeSlide + 1).padStart(2, '0')}/{String(resortSlides.length).padStart(2, '0')}
+              </span>
+            </div>
+
+            {/* Navigation indicator bars */}
+            <div className="absolute bottom-0 left-0 right-0 z-30 flex gap-1.5 px-6 pb-[2px]">
+              {resortSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveSlide(i)}
+                  className={`h-[2px] flex-1 rounded-full transition-all duration-500 ${
+                    i === activeSlide
+                      ? 'bg-amber-400'
+                      : 'bg-white/20 hover:bg-white/40'
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>

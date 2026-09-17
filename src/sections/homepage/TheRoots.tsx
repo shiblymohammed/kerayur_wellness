@@ -148,7 +148,7 @@ export default function TheRoots() {
   });
 
   return (
-    <section ref={sectionRef} id="theroots" className="w-full bg-[#FAF9F6] relative flex flex-col pt-0 z-10">
+    <section ref={sectionRef} id="theroots" className="w-full bg-[#FAF9F6] relative flex flex-col pt-0 pb-0 z-20">
       
       {/* SVG Cutout Transition */}
       <div 
@@ -223,6 +223,16 @@ export default function TheRoots() {
       </div>
       
       <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
+
+      {/* Bottom Mask */}
+      <div className="absolute bottom-0 left-0 w-full z-50 pointer-events-none flex justify-center translate-y-[2vw]">
+        <img 
+          src="/sectioncutoutWhite.avif" 
+          alt="Section Transition" 
+          className="w-[120vw] min-w-[1400px] h-auto object-cover" 
+        />
+      </div>
+
     </section>
   );
 }

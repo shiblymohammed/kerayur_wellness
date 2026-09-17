@@ -1,7 +1,61 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Stethoscope, Utensils, Wifi, Leaf, BedDouble, Library, CheckCircle2, HeartPulse } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const propertiesData = [
+  {
+    id: 'ashyana',
+    name: 'Ashyana',
+    desc: 'Traditional elegance with modern comforts, offering an intimate wellness experience.',
+    building: '/hotel-2/BUILDING-ASHYANA.jpg',
+    rooms: [
+      { type: 'Single Room', src: '/hotel-2/Ashyana-Single-Room.jpg' }
+    ]
+  },
+  {
+    id: 'shalini',
+    name: 'Shalini',
+    desc: 'Spacious and serene, designed to maximize natural light and airflow for deep relaxation.',
+    building: '/hotel-2/Shalini-Building.jpg',
+    rooms: [
+      { type: 'Single Room', src: '/hotel-2/Shalini-Single-Room.jpg' },
+      { type: 'Double Room', src: '/hotel-2/Shalini-Double-Room.jpg' }
+    ]
+  },
+  {
+    id: 'thaniyas',
+    name: 'Thaniyas',
+    desc: 'Premium heritage accommodations with expansive verandas overlooking the lush tropical gardens.',
+    building: '/hotel-2/thaniyas_building.jpg',
+    rooms: [
+      { type: 'Single Room', src: '/hotel-2/Thanias-Single-Room.jpg' },
+      { type: 'Double Room', src: '/hotel-2/Thanias-Double-Room.jpg' }
+    ]
+  },
+  {
+    id: 'main-block',
+    name: 'Main Block',
+    desc: 'Centrally located with easy access to all therapeutic facilities, dining areas, and lush pathways.',
+    building: '/hotel-2/varantha thaniyas.jpg', // Using this as a representative image
+    rooms: [
+      { type: 'Single Room', src: '/hotel-2/Main-Block-Single-Room.jpg' },
+      { type: 'Double Room', src: '/hotel-2/Main-Block-Double-Room.jpg' }
+    ]
+  },
+  {
+    id: 'akkies',
+    name: 'Akkies',
+    desc: 'A secluded sanctuary offering the utmost privacy for focused and uninterrupted healing journeys.',
+    building: '/hotel-2/BUILDING-AKKIES.jpg',
+    rooms: [] // Shows just the building
+  }
+];
 
 const residentialPackages = [
   { name: 'General 1 & 2', treatments: '1 Treatment / Day', single: 70, sharing: 55, color: 'text-zinc-400' },
@@ -19,6 +73,20 @@ const groupPackages = [
 
 export default function Section4Packages() {
   const [pricingMode, setPricingMode] = useState<'residential' | 'group'>('residential');
+  const [activePropertyId, setActivePropertyId] = useState(propertiesData[0].id);
+  
+  const activeProperty = propertiesData.find(p => p.id === activePropertyId) || propertiesData[0];
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  // Simple fade animation when property changes
+  useEffect(() => {
+    if (galleryRef.current) {
+      gsap.fromTo(galleryRef.current, 
+        { opacity: 0, y: 10 }, 
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [activePropertyId]);
 
   return (
     <section className="w-full bg-[#1A1F16] text-[#F3F4ED] relative z-20 pb-32">
@@ -29,7 +97,7 @@ export default function Section4Packages() {
       {/* -------------------------------------
           PART 1: THE SANCTUARY BENTO (Amenities)
           ------------------------------------- */}
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pt-32 pb-24 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pt-32 pb-12 relative z-10">
         
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Sanctuary</span>
@@ -138,14 +206,97 @@ export default function Section4Packages() {
                 </div>
              </div>
           </div>
-
         </div>
       </div>
 
       {/* -------------------------------------
-          PART 2: THE MENU OF HEALING (Pricing)
+          PART 2: THE ACCOMMODATIONS SHOWCASE
           ------------------------------------- */}
-      <div className="max-w-[1000px] mx-auto px-6 md:px-12 pt-20 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 py-16 relative z-10 border-t border-[#8F9E7B]/10 mt-8">
+        
+        <div className="text-center mb-12">
+          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Residency</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-6">
+            Private <span className="italic font-light text-[#8F9E7B]">Sanctuaries</span>
+          </h2>
+          <p className="text-[#B3C0A4] font-light leading-relaxed max-w-2xl mx-auto">
+            Choose from our beautifully appointed heritage blocks and villas, each designed to harmonize with the surrounding nature.
+          </p>
+        </div>
+
+        {/* Property Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {propertiesData.map((prop) => (
+            <button
+              key={prop.id}
+              onClick={() => setActivePropertyId(prop.id)}
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase transition-all duration-300 border ${
+                activePropertyId === prop.id 
+                ? 'bg-[#8F9E7B] text-[#1A1F16] border-[#8F9E7B] shadow-[0_0_15px_rgba(143,158,123,0.3)]' 
+                : 'bg-transparent text-[#B3C0A4] border-[#8F9E7B]/30 hover:border-[#8F9E7B]/60 hover:text-[#F3F4ED]'
+              }`}
+            >
+              {prop.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Interactive Gallery for Active Property */}
+        <div ref={galleryRef} className="bg-[#2F3627]/20 border border-[#8F9E7B]/20 rounded-3xl p-6 md:p-8 backdrop-blur-md">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            {/* Building Image & Description (Left Side) */}
+            <div className={`col-span-1 flex flex-col ${activeProperty.rooms.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
+              <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden group">
+                <Image 
+                  src={activeProperty.building} 
+                  alt={`${activeProperty.name} Building`} 
+                  fill 
+                  className="object-cover transition-transform duration-[2s] group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="text-3xl font-serif text-white mb-2">{activeProperty.name}</h3>
+                  <p className="text-sm text-white/80 font-light">{activeProperty.desc}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Room Images (Right Side - if available) */}
+            {activeProperty.rooms.length > 0 && (
+              <div className="col-span-1 lg:col-span-5 flex flex-col gap-6 justify-center">
+                <h4 className="text-xs tracking-[0.2em] uppercase text-[#8F9E7B] font-semibold border-b border-[#8F9E7B]/20 pb-2">
+                  Available Room Types
+                </h4>
+                
+                <div className={`grid grid-cols-1 ${activeProperty.rooms.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} gap-6`}>
+                  {activeProperty.rooms.map((room, idx) => (
+                    <div key={idx} className="relative w-full h-[220px] rounded-xl overflow-hidden group border border-white/5">
+                      <Image 
+                        src={room.src} 
+                        alt={`${activeProperty.name} ${room.type}`} 
+                        fill 
+                        className="object-cover transition-transform duration-[2s] group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                        <BedDouble size={16} className="text-[#8F9E7B]" />
+                        <span className="text-sm text-white font-medium">{room.type}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+          </div>
+        </div>
+      </div>
+
+      {/* -------------------------------------
+          PART 3: THE MENU OF HEALING (Pricing)
+          ------------------------------------- */}
+      <div className="max-w-[1000px] mx-auto px-6 md:px-12 pt-16 relative z-10">
         
         <div className="text-center mb-12">
           <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Offering</span>
@@ -191,7 +342,7 @@ export default function Section4Packages() {
           {/* Table Body - Residential */}
           {pricingMode === 'residential' && (
             <div className="flex flex-col">
-              {residentialPackages.map((pkg, i) => (
+               {residentialPackages.map((pkg, i) => (
                 <div key={i} className="grid grid-cols-12 gap-4 px-6 py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
                   <div className="col-span-7 md:col-span-6 flex flex-col">
                     <span className={`text-xl md:text-2xl font-serif mb-1 ${pkg.color}`}>{pkg.name}</span>
@@ -212,7 +363,7 @@ export default function Section4Packages() {
 
           {/* Table Body - Group */}
           {pricingMode === 'group' && (
-            <div className="flex flex-col">
+             <div className="flex flex-col">
               {groupPackages.map((pkg, i) => (
                 <div key={i} className="grid grid-cols-12 gap-4 px-6 py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
                   <div className="col-span-6 md:col-span-4 flex flex-col">
@@ -237,9 +388,15 @@ export default function Section4Packages() {
           <div className="flex-1">
             <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[#8F9E7B] mb-4">Room Upgrades</h4>
             <ul className="space-y-2 text-[#B3C0A4] font-light">
-              <li className="flex justify-between max-w-xs"><span>Standard AC</span> <span>+€10 / day</span></li>
-              <li className="flex justify-between max-w-xs"><span>Deluxe AC</span> <span>+€40 / day</span></li>
-              <li className="flex justify-between max-w-xs"><span>Deluxe Suite</span> <span>+€50 / day</span></li>
+              <li className="flex justify-between max-w-xs hover:text-white transition-colors cursor-pointer group">
+                <span className="border-b border-transparent group-hover:border-white/30">Standard AC</span> <span>+€10 / day</span>
+              </li>
+              <li className="flex justify-between max-w-xs hover:text-white transition-colors cursor-pointer group">
+                <span className="border-b border-transparent group-hover:border-white/30">Deluxe AC</span> <span>+€40 / day</span>
+              </li>
+              <li className="flex justify-between max-w-xs hover:text-white transition-colors cursor-pointer group">
+                <span className="border-b border-transparent group-hover:border-white/30">Deluxe Suite</span> <span>+€50 / day</span>
+              </li>
             </ul>
           </div>
           <div className="flex-1 md:text-right">
