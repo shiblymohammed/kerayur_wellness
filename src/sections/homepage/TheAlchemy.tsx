@@ -109,12 +109,12 @@ export default function TheAlchemy() {
         const viewCenter = currentScrollRef.current + viewportW / 2;
         const relativeOffset = viewCenter - cardCenter;
 
-        gsap.set(img, { x: relativeOffset * 0.35 });
+        gsap.set(img, { x: relativeOffset * 0.45 });
 
         if (card) {
           const proximity = Math.abs(relativeOffset) / viewportW;
-          const scale = clamp(1 - proximity * 0.05, 0.96, 1.0);
-          const opacity = clamp(1 - proximity * 0.4, 0.65, 1.0);
+          const scale = clamp(1 - proximity * 0.12, 0.88, 1.0);
+          const opacity = clamp(1 - proximity * 0.6, 0.4, 1.0);
           gsap.set(card, { scale, opacity, transformOrigin: 'center center' });
         }
       });
@@ -145,17 +145,17 @@ export default function TheAlchemy() {
   return (
     <section ref={sectionRef} id="thealchemy" className="w-full bg-[#FAF9F6] relative flex flex-col pt-0 pb-0 z-20">
       
-      {/* Cutout Transition */}
-      <div className="w-full relative z-50 pointer-events-none flex justify-center -mt-[20vw] md:-mt-[15vw] lg:-mt-[15vw]">
+      {/* Cutout Transition - Desktop Only */}
+      <div className="hidden md:flex w-full relative z-50 pointer-events-none justify-center -mt-[20vw] md:-mt-[15vw] lg:-mt-[15vw] -translate-y-[20vw] md:-translate-y-[10vw] lg:translate-y-0">
           <SectionCutout 
             fillColor="#2A1A1A"
             imageUrl="/southSideart.png"
             imageOpacity={0.5}
-            className="w-[200vw] md:w-[150vw] lg:w-[120vw] lg:min-w-[1400px]"
+            className="w-[280vw] md:w-[180vw] lg:w-[120vw] lg:min-w-[1400px]"
             svgClassName="-scale-y-110"
             contentClassName="absolute top-[50%] -translate-y-1/2 text-center px-4 md:px-8 w-full max-w-[90vw] md:max-w-[80vw] mx-auto flex flex-col items-center gap-2 md:gap-4"
           >
-          <h2 className="text-xl md:text-4xl lg:text-[5rem] font-serif text-[#FAF9F6] tracking-widest leading-tight whitespace-pre-line drop-shadow-lg">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[5rem] font-serif text-[#FAF9F6] tracking-widest leading-tight whitespace-pre-line drop-shadow-lg">
             {"THE\nALCHEMY"}
           </h2>
           <p className="hidden lg:block text-white/80 font-light text-xs md:text-base max-w-xs md:max-w-md">
@@ -164,10 +164,20 @@ export default function TheAlchemy() {
         </SectionCutout>
       </div>
 
+      {/* Mobile Title Area */}
+      <div className="flex md:hidden flex-col items-center text-center px-4 pt-8 pb-4 z-30">
+        <h2 className="text-4xl font-serif text-[#1A2A2A] tracking-widest leading-none">
+          THE ALCHEMY
+        </h2>
+        <p className="text-[#1A2A2A]/70 font-light text-xs mt-2 max-w-[80vw]">
+          Transformation and refinement through focused discipline and timeless wisdom.
+        </p>
+      </div>
+
       {/* Carousel */}
       <div 
         ref={carouselRef}
-        className="w-full flex gap-0 overflow-x-auto hide-scrollbar cursor-grab active:cursor-grabbing -mt-[20vw] md:-mt-[15vw] lg:-mt-[18vw] relative z-10"
+        className="w-full flex gap-0 overflow-x-auto hide-scrollbar cursor-grab active:cursor-grabbing mt-0 md:-mt-[15vw] lg:-mt-[18vw] relative z-10 px-2 md:px-0 snap-x snap-mandatory md:snap-none"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
@@ -178,7 +188,7 @@ export default function TheAlchemy() {
           <div 
             key={card.id}
             ref={el => { cardRefs.current[i] = el; }}
-            className="relative shrink-0 w-[75vw] md:w-[55vw] lg:w-[38vw] h-[70vh] md:h-[70vh] lg:h-[140vh] overflow-hidden group select-none bg-black/20"
+            className="relative shrink-0 w-[92vw] md:w-[55vw] lg:w-[38vw] h-[75vh] md:h-[70vh] lg:h-[140vh] overflow-hidden group select-none bg-black/20 rounded-xl md:rounded-none mr-2 md:mr-0 snap-center md:snap-align-none"
           >
             {/* Background — div with background-size:cover guarantees full coverage */}
             <div
@@ -198,15 +208,12 @@ export default function TheAlchemy() {
 
             {/* Card Content — centered */}
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-8 md:px-12 pointer-events-none drop-shadow-2xl gap-5">
-              <h3 className="text-3xl md:text-4xl lg:text-[5rem] font-serif text-white tracking-widest leading-none">
+              <h3 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-serif text-white tracking-widest leading-none px-4 max-w-full break-words">
                 {card.title}
               </h3>
               <p className="hidden lg:block text-white/80 font-light text-sm md:text-base max-w-[220px] leading-relaxed">
                 {card.desc}
               </p>
-              <button className="mt-2 px-6 py-2 border border-white/60 rounded-full text-xs uppercase tracking-widest text-white backdrop-blur-sm hover:bg-white hover:text-black transition-colors pointer-events-auto">
-                EXPLORE ↗
-              </button>
             </div>
           </div>
         ))}

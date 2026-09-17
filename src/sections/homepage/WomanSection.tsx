@@ -24,6 +24,14 @@ export default function WomanSection() {
         pin: true,             // Pin TheRoots
         pinSpacing: true,      // Add spacing so the next section waits
         scrub: true,
+        onLeave: () => {
+          // Hide TheRoots when it unpins so it doesn't scroll up and cause glitches in the background
+          gsap.set("#theroots", { opacity: 0, visibility: 'hidden' });
+        },
+        onEnterBack: () => {
+          // Show it again when scrolling back up
+          gsap.set("#theroots", { opacity: 1, visibility: 'visible' });
+        }
       }
     });
 
@@ -111,6 +119,7 @@ export default function WomanSection() {
           grayscale={false}
           spacing={17}
           glint={0.5}
+          style={{ width: '100%', height: '100%' }}
         />
       </div>
 
@@ -133,16 +142,28 @@ export default function WomanSection() {
         </div>
       </div>
 
-      {/* Foreground Woman Layer (Anchored Left) */}
-      <div className="absolute top-0 left-0 w-full h-full flex items-end justify-start pointer-events-none z-20" style={{ perspective: "1500px" }}>
-        <div ref={womanRef} className="relative w-full h-full [transform-style:preserve-3d] origin-bottom">
+      {/* Foreground Woman Layer (Anchored Left Bottom) */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20 overflow-visible" style={{ perspective: "1500px" }}>
+        <div ref={womanRef} className="absolute bottom-0 -left-[45%] md:-left-[20%] lg:left-0 w-[160%] md:w-[130%] lg:w-full h-[105%] md:h-[105%] lg:h-full [transform-style:preserve-3d] origin-bottom">
+          
+          {/* Mobile/Tablet Image */}
+          <Image 
+            src="/womanbg/womanmobile.png"
+            alt="Ayurveda Wellness Woman Mobile"
+            fill
+            className="object-contain object-left-bottom drop-shadow-[0_0_50px_rgba(0,0,0,0.5)] lg:hidden"
+            priority
+          />
+
+          {/* Desktop Image */}
           <Image 
             src="/womanbg/woman.png"
             alt="Ayurveda Wellness Woman"
             fill
-            className="object-contain object-bottom md:object-left-bottom drop-shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+            className="hidden lg:block object-contain object-left-bottom drop-shadow-[0_0_50px_rgba(0,0,0,0.5)]"
             priority
           />
+
         </div>
       </div>
     </section>
