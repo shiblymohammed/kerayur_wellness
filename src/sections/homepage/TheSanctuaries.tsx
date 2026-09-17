@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ export default function TheSanctuaries() {
   const titleRef = useRef<HTMLDivElement>(null);
   const card1Ref = useRef<HTMLDivElement>(null);
   const card2Ref = useRef<HTMLDivElement>(null);
+  const [hoveredHotel, setHoveredHotel] = useState<number | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,7 +29,7 @@ export default function TheSanctuaries() {
         }
       });
 
-      // Card 1 3D Reveal & Parallax
+      // Card 1 3D Reveal
       gsap.fromTo(card1Ref.current, 
         { y: 100, opacity: 0, rotateX: 5, scale: 0.95 },
         {
@@ -56,6 +57,27 @@ export default function TheSanctuaries() {
         }
       );
 
+      // Entire Section Reveal (Pinned & Fade)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top", // Trigger exactly when it hits the top
+          end: "+=250%",   // Increased to 250vh for a much slower, graceful fade-in
+          pin: true,
+          pinSpacing: true,
+          scrub: true,
+        }
+      });
+
+      // Start transparent and blurred, then slowly fade into focus without any zoom effect
+      tl.fromTo(sectionRef.current,
+        { opacity: 0, filter: 'blur(30px)' },
+        { opacity: 1, filter: 'blur(0px)', ease: 'none', duration: 1 }
+      );
+      
+      // Add a hold at full opacity before unpinning
+      tl.to({}, { duration: 0.5 });
+
       // Subtle parallax on the map background
       gsap.to(".map-bg", {
         yPercent: 15,
@@ -74,94 +96,99 @@ export default function TheSanctuaries() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="thesanctuaries" className="w-full relative bg-[#FAF9F6] py-16 md:py-24 lg:py-32 flex flex-col items-center z-10 overflow-hidden">
+    <section ref={sectionRef} id="thesanctuaries" className="w-full relative bg-transparent py-16 md:py-24 lg:py-32 flex flex-col items-center z-10 overflow-hidden">
       
+      {/* Global Background Videos (Revealed on Hover) */}
+      <div className={`absolute inset-0 w-full h-full z-0 transition-opacity duration-1000 ease-in-out ${hoveredHotel === 1 ? 'opacity-100' : 'opacity-0'}`}>
+        <video src="/videos/hotel-1.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
+      </div>
+      
+      <div className={`absolute inset-0 w-full h-full z-0 transition-opacity duration-1000 ease-in-out ${hoveredHotel === 2 ? 'opacity-100' : 'opacity-0'}`}>
+        <video src="/videos/greens.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
+      </div>
+
       {/* Background Map Overlay with Parallax */}
-      <div className="map-bg absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none opacity-[0.15] mix-blend-multiply flex items-center justify-center z-0">
+      <div className="map-bg absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none opacity-[0.05] mix-blend-screen flex items-center justify-center z-0">
         <Image 
           src="/mapdrawn.svg" 
           alt="Kerala Map Outline" 
           fill
-          className="object-cover object-center"
+          className="object-cover object-center invert"
         />
       </div>
 
       {/* Section Title */}
-      <div ref={titleRef} className="relative z-10 text-center mb-12 md:mb-16 lg:mb-20 px-6 max-w-2xl mx-auto">
-        <span className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#8F9E7B] font-bold mb-4 md:mb-6 block">
+      <div ref={titleRef} className="relative z-10 text-center mb-12 md:mb-16 lg:mb-20 px-6 max-w-2xl mx-auto drop-shadow-2xl pointer-events-none">
+        <span className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/80 font-bold mb-4 md:mb-6 block">
           Our Partnered Properties
         </span>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2F3627] leading-[1.1] mb-6">
-          The <span className="italic font-light text-[#8F9E7B]">Sanctuaries</span>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.1] mb-6">
+          The <span className="italic font-light text-white/90">Sanctuaries</span>
         </h2>
-        <p className="text-[#4A533E]/80 font-light text-sm md:text-base leading-relaxed">
+        <p className="text-white/80 font-light text-sm md:text-base leading-relaxed">
           Choose the environment that speaks to your healing journey. Two distinct properties, one unified standard of authentic Ayurveda.
         </p>
       </div>
 
       {/* Cards Layout - Responsive Grid */}
-      {/* Mobile: 1 col, Tablet: 1 col max-w, Desktop: 2 cols */}
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+      <div className="relative z-20 w-full max-w-[1000px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start mt-4">
         
         {/* --- Card 1: HOTEL-1 --- */}
         <div 
           ref={card1Ref} 
-          className="relative w-full max-w-2xl mx-auto lg:max-w-none rounded-[2rem] overflow-hidden bg-[#FAF9F6] border border-dashed border-[#8F9E7B] group hover:border-solid hover:border-[#4A533E] hover:shadow-2xl transition-all duration-700 ease-out flex flex-col"
-          style={{ perspective: "1000px" }}
+          onMouseEnter={() => setHoveredHotel(1)}
+          onMouseLeave={() => setHoveredHotel(null)}
+          className="relative w-full max-w-sm mx-auto lg:max-w-none aspect-[3/4] lg:aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#FAF9F6]/95 backdrop-blur-md border border-white/20 group hover:shadow-2xl hover:-translate-y-2 transition-all duration-700 ease-out flex flex-col cursor-pointer"
         >
-          {/* Top: Background Video Container */}
-          <div className="relative w-full aspect-video lg:aspect-[4/3] overflow-hidden bg-[#2F3627]">
-            <div className="absolute inset-0 w-full h-full transform group-hover:scale-110 transition-transform duration-[2s] ease-out">
-              <video
+          {/* Default State: Video Poster */}
+          <div className="absolute inset-0 w-full h-full z-10 transition-all duration-700 ease-out group-hover:opacity-0 group-hover:scale-105 bg-[#2F3627] pointer-events-none">
+             <video
                 src="/videos/hotel-1.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover opacity-90 mix-blend-lighten"
+                className="w-full h-full object-cover opacity-80"
               />
-            </div>
-            {/* Minimal overlays */}
-            <div className="absolute top-4 left-4 flex gap-2 transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-              <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-semibold">Beachfront</span>
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-12 left-0 w-full text-center transform transition-transform duration-700 group-hover:translate-y-4">
+                 <h3 className="text-4xl md:text-5xl font-serif text-white tracking-wide">HOTEL-1</h3>
+                 <span className="text-[10px] tracking-widest text-white/70 uppercase font-bold mt-3 block">Beachfront Sanctuary</span>
+              </div>
           </div>
 
-          {/* Bottom: Content Details */}
-          <div className="p-6 md:p-8 lg:p-10 flex flex-col flex-grow relative z-10 bg-[#FAF9F6]">
-            {/* Subtle numbering */}
-            <span className="absolute top-6 right-6 text-4xl font-serif text-[#8F9E7B]/20 italic pointer-events-none group-hover:text-[#8F9E7B]/40 transition-colors duration-500">01</span>
+          {/* Hover State: Content Details */}
+          <div className="absolute inset-0 w-full h-full z-0 p-8 md:p-10 flex flex-col justify-center opacity-0 group-hover:opacity-100 transform translate-y-8 group-hover:translate-y-0 transition-all duration-700 delay-100 ease-out pointer-events-none group-hover:pointer-events-auto">
+            <span className="absolute top-6 right-6 text-6xl font-serif text-[#8F9E7B]/15 italic pointer-events-none">01</span>
             
-            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-3 group-hover:text-[#8F9E7B] transition-colors duration-500">
+            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-4">
               HOTEL-1
             </h3>
-            <p className="text-[#4A533E]/80 text-xs md:text-sm font-light leading-relaxed mb-6 md:mb-8">
+            <p className="text-[#4A533E]/80 text-sm leading-relaxed mb-8">
               Authentic healing by the Arabian Sea. Surrender to the rhythmic waves of Nattika Beach and restore your mind, body, and spirit.
             </p>
             
             {/* Extra Details */}
-            <div className="space-y-3 mb-8 flex-grow">
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Premium Coastal Ayurveda</span>
+            <div className="space-y-4 mb-10">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">Premium Coastal Ayurveda</span>
               </div>
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-75">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-75"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Traditional Panchakarma Therapies</span>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">Traditional Therapies</span>
               </div>
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-150">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-150"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Oceanfront Yoga Pavilion</span>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">Oceanfront Yoga</span>
               </div>
             </div>
             
             {/* Button */}
-            <Link href="/HOTEL-1" className="relative overflow-hidden inline-flex justify-center w-full items-center gap-3 px-8 py-3.5 md:py-4 bg-[#FAF9F6] border border-[#2F3627] text-[#2F3627] hover:text-[#FAF9F6] text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-all duration-500 group/btn">
-              <span className="relative z-10">Explore Hotel-1</span>
-              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300">
-                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <div className="absolute inset-0 bg-[#2F3627] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
+            <Link href="/HOTEL-1" className="mt-auto inline-flex justify-center w-full items-center gap-3 px-8 py-4 bg-[#2F3627] text-[#FAF9F6] text-xs tracking-widest uppercase rounded-full transition-colors duration-300 hover:bg-[#8F9E7B]">
+              <span>Explore Retreat</span>
             </Link>
           </div>
         </div>
@@ -169,68 +196,62 @@ export default function TheSanctuaries() {
         {/* --- Card 2: HOTEL-2 --- */}
         <div 
           ref={card2Ref} 
-          className="relative w-full max-w-2xl mx-auto lg:max-w-none rounded-[2rem] overflow-hidden bg-[#FAF9F6] border border-dashed border-[#8F9E7B] group hover:border-solid hover:border-[#4A533E] hover:shadow-2xl transition-all duration-700 ease-out flex flex-col lg:mt-16"
-          style={{ perspective: "1000px" }}
+          onMouseEnter={() => setHoveredHotel(2)}
+          onMouseLeave={() => setHoveredHotel(null)}
+          className="relative w-full max-w-sm mx-auto lg:max-w-none aspect-[3/4] lg:aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#FAF9F6]/95 backdrop-blur-md border border-white/20 group hover:shadow-2xl hover:-translate-y-2 transition-all duration-700 ease-out flex flex-col cursor-pointer lg:mt-16"
         >
-          {/* Top: Background Video Container */}
-          <div className="relative w-full aspect-video lg:aspect-[4/3] overflow-hidden bg-[#2F3627]">
-            <div className="absolute inset-0 w-full h-full transform group-hover:scale-110 transition-transform duration-[2s] ease-out">
-              <video
+          {/* Default State: Video Poster */}
+          <div className="absolute inset-0 w-full h-full z-10 transition-all duration-700 ease-out group-hover:opacity-0 group-hover:scale-105 bg-[#2F3627] pointer-events-none">
+             <video
                 src="/videos/greens.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover opacity-90 mix-blend-lighten"
+                className="w-full h-full object-cover opacity-80"
               />
-            </div>
-            {/* Minimal overlays */}
-            <div className="absolute top-4 left-4 flex gap-2 transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-              <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-semibold">Forest Retreat</span>
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-12 left-0 w-full text-center transform transition-transform duration-700 group-hover:translate-y-4">
+                 <h3 className="text-4xl md:text-5xl font-serif text-white tracking-wide">HOTEL-2</h3>
+                 <span className="text-[10px] tracking-widest text-white/70 uppercase font-bold mt-3 block">Forest Sanctuary</span>
+              </div>
           </div>
 
-          {/* Bottom: Content Details */}
-          <div className="p-6 md:p-8 lg:p-10 flex flex-col flex-grow relative z-10 bg-[#FAF9F6]">
-            {/* Subtle numbering */}
-            <span className="absolute top-6 right-6 text-4xl font-serif text-[#8F9E7B]/20 italic pointer-events-none group-hover:text-[#8F9E7B]/40 transition-colors duration-500">02</span>
-
-            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-3 group-hover:text-[#8F9E7B] transition-colors duration-500">
+          {/* Hover State: Content Details */}
+          <div className="absolute inset-0 w-full h-full z-0 p-8 md:p-10 flex flex-col justify-center opacity-0 group-hover:opacity-100 transform translate-y-8 group-hover:translate-y-0 transition-all duration-700 delay-100 ease-out pointer-events-none group-hover:pointer-events-auto">
+            <span className="absolute top-6 right-6 text-6xl font-serif text-[#8F9E7B]/15 italic pointer-events-none">02</span>
+            
+            <h3 className="text-3xl md:text-4xl font-serif text-[#2F3627] mb-4">
               HOTEL-2
             </h3>
-            <p className="text-[#4A533E]/80 text-xs md:text-sm font-light leading-relaxed mb-6 md:mb-8">
+            <p className="text-[#4A533E]/80 text-sm leading-relaxed mb-8">
               Experience profound healing and immersive Ayurvedic study in the tranquil, forest-like sanctuary of Azhiyur.
             </p>
             
             {/* Extra Details */}
-            <div className="space-y-3 mb-8 flex-grow">
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">In-Depth Study Programs</span>
+            <div className="space-y-4 mb-10">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">In-Depth Study Programs</span>
               </div>
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-75">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-75"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Clinical Pharmacy & Gardens</span>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">Clinical Pharmacy</span>
               </div>
-              <div className="flex items-center gap-3 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500 delay-150">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B] group-hover:scale-150 transition-transform duration-500 delay-150"></span>
-                <span className="text-[10px] md:text-xs text-[#2F3627] tracking-wider uppercase font-medium">Authentic Forest Ecosystem</span>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
+                <span className="text-xs text-[#2F3627] tracking-wider uppercase font-medium">Authentic Ecosystem</span>
               </div>
             </div>
             
             {/* Button */}
-            <Link href="/HOTEL-2" className="relative overflow-hidden inline-flex justify-center w-full items-center gap-3 px-8 py-3.5 md:py-4 bg-[#FAF9F6] border border-[#2F3627] text-[#2F3627] hover:text-[#FAF9F6] text-[10px] md:text-xs tracking-widest uppercase rounded-full transition-all duration-500 group/btn">
-              <span className="relative z-10">Explore Hotel-2</span>
-              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300">
-                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <div className="absolute inset-0 bg-[#2F3627] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
+            <Link href="/HOTEL-2" className="mt-auto inline-flex justify-center w-full items-center gap-3 px-8 py-4 bg-[#2F3627] text-[#FAF9F6] text-xs tracking-widest uppercase rounded-full transition-colors duration-300 hover:bg-[#8F9E7B]">
+              <span>Explore Retreat</span>
             </Link>
           </div>
         </div>
 
       </div>
-
     </section>
   );
 }
