@@ -18,9 +18,12 @@ export default function Home() {
         <TheCanvas />
       </div>
 
-      <TheAlchemy />
-      
-      <TheRoots />
+      {/* Wrapper containing both TheAlchemy and TheRoots in their natural positions */}
+      <div id="alchemy-roots-wrapper" className="w-full relative z-20 bg-[#FAF9F6] min-h-screen flex flex-col">
+        <TheAlchemy />
+        <TheRoots />
+      </div>
+
       <WomanSection />
 
       <div className="-mt-[100vh] relative z-40 w-full">

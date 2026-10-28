@@ -15,22 +15,24 @@ export default function WomanSection() {
   const textRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Pin TheRoots when it reaches bottom
+    const target = document.getElementById("alchemy-roots-wrapper") ? "#alchemy-roots-wrapper" : "#theroots";
+
+    // Pin TheAlchemy + TheRoots together when reaching bottom so TheAlchemy doesn't scroll away
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: "#theroots",
+        trigger: target,
         start: "bottom bottom", 
         end: "+=250%",         // Pin for 250vh of scrolling
-        pin: true,             // Pin TheRoots
+        pin: true,             // Pin the container holding both sections in place
         pinSpacing: true,      // Add spacing so the next section waits
         scrub: true,
         onLeave: () => {
-          // Hide TheRoots when it unpins so it doesn't scroll up and cause glitches in the background
-          gsap.set("#theroots", { opacity: 0, visibility: 'hidden' });
+          // Hide when unpinned so it doesn't cause glitches in the background
+          gsap.set(target, { opacity: 0, visibility: 'hidden' });
         },
         onEnterBack: () => {
           // Show it again when scrolling back up
-          gsap.set("#theroots", { opacity: 1, visibility: 'visible' });
+          gsap.set(target, { opacity: 1, visibility: 'visible' });
         }
       }
     });
