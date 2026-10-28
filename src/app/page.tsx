@@ -31,6 +31,10 @@ export default function Home() {
       <div className="relative z-40 w-full bg-[#FAF9F6]">
         <TheCuisine />
         <TheVillage />
+      </div>
+
+      {/* ThePortal sits outside the off-white wrapper to seamlessly connect with the Footer */}
+      <div className="relative z-50 w-full">
         <ThePortal />
       </div>
     </main>

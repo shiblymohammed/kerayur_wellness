@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="w-full relative bg-[#2F3627] pt-12 pb-8 px-6 border-t border-[#FAF9F6]/10 z-20">
+    <footer className="w-full relative bg-[#2F3627] pt-12 pb-8 px-6 border-t border-[#FAF9F6]/10 z-50">
       <div className="max-w-[1400px] mx-auto">
         
         {/* Top Grid */}
