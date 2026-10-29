@@ -106,21 +106,19 @@ export default function TheAlchemy() {
     }
   };
 
-  // Enable mouse wheel horizontal scrolling on hover
+  // On desktop / macbook sizes, prevent trackpad horizontal swipe from sliding the carousel
+  // so it slides ONLY when dragged. Normal vertical page scrolling is untouched.
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        const atStart = el.scrollLeft <= 2;
-        const atEnd = el.scrollLeft >= maxScroll - 2;
-
-        if ((e.deltaY > 0 && !atEnd) || (e.deltaY < 0 && !atStart)) {
+      // Only on desktop/macbook screen sizes (md: 768px and up)
+      if (window.innerWidth >= 768) {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
           e.preventDefault();
-          el.scrollLeft += e.deltaY * 1.4;
         }
+        // Do not intercept vertical scroll (deltaY) so the page scrolls naturally
       }
     };
 
