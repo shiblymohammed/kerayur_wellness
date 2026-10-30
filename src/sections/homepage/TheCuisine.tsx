@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,34 +114,153 @@ const cuisineItems: CuisineItem[] = [
 export default function TheCuisine() {
   const sectionRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const mobileCarouselRef = useRef<HTMLDivElement>(null);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+
+  // Drag State & Refs
+  const isPointerDown = useRef(false);
+  const startX = useRef(0);
+  const startScrollLeft = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const slider = sliderRef.current;
-      if (!slider) return;
+      const mm = gsap.matchMedia();
 
-      // GSAP Horizontal Scroll Setup
-      // Calculates how far the slider needs to move to the left
-      gsap.to(slider, {
-        x: () => -(slider.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          scrub: 1, // Smooth scrubbing
-          end: () => "+=" + (slider.scrollWidth - window.innerWidth),
-          invalidateOnRefresh: true, // Recalculates on resize
-        }
+      // Only enable GSAP Horizontal Scroll Pin on Desktop (≥ 768px)
+      mm.add("(min-width: 768px)", () => {
+        const slider = sliderRef.current;
+        if (!slider) return;
+
+        gsap.to(slider, {
+          x: () => -(slider.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + (slider.scrollWidth - window.innerWidth),
+            invalidateOnRefresh: true,
+          }
+        });
       });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  const scrollToSlide = (index: number) => {
+    const container = mobileCarouselRef.current;
+    if (!container) return;
+    const cards = container.children;
+    if (cards[index]) {
+      (cards[index] as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  };
+
+  const handleMobileScroll = () => {
+    if (isPointerDown.current) return; // ignore during active drag to avoid fighting user gesture
+    const container = mobileCarouselRef.current;
+    if (!container) return;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.offsetWidth;
+    const scrollCenter = scrollLeft + containerWidth / 2;
+
+    const cards = Array.from(container.children) as HTMLElement[];
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(scrollCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    setMobileActiveIndex(closestIndex);
+  };
+
+  // Drag Event Handlers
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const container = mobileCarouselRef.current;
+    if (!container) return;
+
+    isPointerDown.current = true;
+    startX.current = e.clientX;
+    startScrollLeft.current = container.scrollLeft;
+    setIsDragging(true);
+
+    try {
+      container.setPointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown.current) return;
+    const container = mobileCarouselRef.current;
+    if (!container) return;
+
+    const deltaX = e.clientX - startX.current;
+    container.scrollLeft = startScrollLeft.current - deltaX;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown.current) return;
+    isPointerDown.current = false;
+    setIsDragging(false);
+
+    const container = mobileCarouselRef.current;
+    if (!container) return;
+
+    try {
+      container.releasePointerCapture(e.pointerId);
+    } catch {}
+
+    // Snap to nearest slide on release
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.offsetWidth;
+    const scrollCenter = scrollLeft + containerWidth / 2;
+
+    const cards = Array.from(container.children) as HTMLElement[];
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(scrollCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    setMobileActiveIndex(closestIndex);
+    scrollToSlide(closestIndex);
+  };
+
+  const handlePrev = () => {
+    const nextIdx = Math.max(0, mobileActiveIndex - 1);
+    scrollToSlide(nextIdx);
+  };
+
+  const handleNext = () => {
+    const nextIdx = Math.min(cuisineItems.length - 1, mobileActiveIndex + 1);
+    scrollToSlide(nextIdx);
+  };
+
   return (
-    <section ref={sectionRef} id="thecuisine" className="w-full bg-[#FAF9F6] text-[#1A2A2A] overflow-hidden relative z-10">
+    <section ref={sectionRef} id="thecuisine" className="w-full bg-[#FAF9F6] text-[#1A2A2A] relative z-10">
       
-      <div className="h-[100dvh] w-full flex items-center relative">
+      {/* ======================================================== */}
+      {/* DESKTOP VIEW: Pinned Horizontal Scroll (md and up)       */}
+      {/* ======================================================== */}
+      <div className="hidden md:flex h-[100dvh] w-full items-center relative overflow-hidden">
         <div ref={sliderRef} className="flex h-full items-center px-8 md:px-24">
           
           {/* --- Intro Panel --- */}
@@ -224,6 +344,169 @@ export default function TheCuisine() {
         </div>
       </div>
 
+      {/* ======================================================== */}
+      {/* MOBILE VIEW: Interactive Drag & Touch Carousel           */}
+      {/* ======================================================== */}
+      <div className="block md:hidden py-14 px-0 select-none">
+        
+        {/* Intro Header */}
+        <div className="px-6 mb-6">
+          <span className="text-[10px] tracking-[0.35em] uppercase text-[#8F9E7B] font-bold block mb-3">
+            Ayurvedic Culinary Science
+          </span>
+          <h2 className="text-4xl font-serif text-[#1A2A2A] leading-tight mb-4">
+            Food as <span className="italic font-light text-[#8F9E7B]">Medicine</span>
+          </h2>
+          <p className="text-[#1A2A2A]/70 font-light text-sm leading-relaxed">
+            In clinical Ayurveda, the kitchen is the primary pharmacy. Every dish is a prescription formulated to kindle digestive fire and restore metabolic equilibrium.
+          </p>
+        </div>
+
+        {/* Carousel Navigation Bar */}
+        <div className="px-6 mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-1.5 font-mono text-xs text-[#1A2A2A]/60">
+            <span className="font-semibold text-[#8F9E7B]">0{mobileActiveIndex + 1}</span>
+            <span className="text-[#1A2A2A]/30">/</span>
+            <span>0{cuisineItems.length}</span>
+            <span className="text-[#1A2A2A]/20 ml-1">•</span>
+            <span className="text-[11px] font-sans tracking-wide text-[#1A2A2A]/50">
+              {cuisineItems[mobileActiveIndex].category}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={mobileActiveIndex === 0}
+              aria-label="Previous dish"
+              className="w-9 h-9 rounded-full border border-[#1A2A2A]/15 bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1A2A2A] disabled:opacity-30 disabled:cursor-not-allowed active:scale-95 transition-all shadow-sm"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={mobileActiveIndex === cuisineItems.length - 1}
+              aria-label="Next dish"
+              className="w-9 h-9 rounded-full border border-[#1A2A2A]/15 bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1A2A2A] disabled:opacity-30 disabled:cursor-not-allowed active:scale-95 transition-all shadow-sm"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Carousel Track with Mouse & Touch Dragging + Scroll Snap */}
+        <div
+          ref={mobileCarouselRef}
+          onScroll={handleMobileScroll}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          className={`flex gap-4 overflow-x-auto px-6 touch-pan-y [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4 ${
+            isDragging 
+              ? 'cursor-grabbing select-none snap-none scroll-auto' 
+              : 'cursor-grab snap-x snap-mandatory scroll-smooth'
+          }`}
+        >
+          {cuisineItems.map((item, i) => (
+            <div
+              key={item.id}
+              className="w-[84vw] max-w-[340px] shrink-0 snap-center bg-white rounded-3xl border border-[#1A2A2A]/10 overflow-hidden shadow-[0_12px_36px_rgba(26,42,42,0.06)] flex flex-col select-none"
+            >
+              {/* Card Image - Clean & unadorned, no heavy badge pills */}
+              <div className="h-52 relative w-full overflow-hidden bg-stone-100 pointer-events-none select-none">
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  fill
+                  draggable={false}
+                  className="object-cover pointer-events-none select-none"
+                  sizes="(max-width: 768px) 85vw, 340px"
+                />
+              </div>
+
+              {/* Card Body */}
+              <div className="p-5 flex flex-col flex-1 justify-between select-none">
+                <div>
+                  {/* Minimal Category Overline */}
+                  <div className="flex items-center gap-2 mb-1.5 font-mono text-[10px] tracking-[0.25em] uppercase text-[#8F9E7B]">
+                    <span>0{i + 1}</span>
+                    <span className="text-[#1A2A2A]/20">•</span>
+                    <span className="text-[#1A2A2A]/50 font-normal">{item.category}</span>
+                  </div>
+
+                  <h3 className="text-2xl font-serif text-[#1A2A2A] leading-snug">
+                    {item.title}
+                  </h3>
+                  {item.malayalamTitle && (
+                    <p className="text-[#8F9E7B] font-serif text-base italic -mt-0.5 mb-3">
+                      {item.malayalamTitle}
+                    </p>
+                  )}
+
+                  {/* Minimal Clinical Specs Grid */}
+                  <div className="grid grid-cols-2 gap-3 py-3 border-y border-[#1A2A2A]/8 mb-3">
+                    <div>
+                      <span className="text-[9px] uppercase tracking-wider text-[#1A2A2A]/40 font-medium block mb-0.5">
+                        Primary Dosha
+                      </span>
+                      <span className="text-xs text-[#1A2A2A] font-medium leading-tight block">
+                        {item.dosha}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] uppercase tracking-wider text-[#1A2A2A]/40 font-medium block mb-0.5">
+                        Shad Rasa
+                      </span>
+                      <span className="text-xs text-[#1A2A2A] font-medium leading-tight block">
+                        {item.rasa}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Clinical Benefit */}
+                  <div className="mb-4">
+                    <span className="text-[9px] uppercase tracking-wider text-[#1A2A2A]/40 font-medium block mb-1">
+                      Clinical Benefit
+                    </span>
+                    <p className="text-xs text-[#1A2A2A]/75 leading-relaxed font-light">
+                      {item.benefit}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Key Botanicals - Minimalist Delimited Row */}
+                <div className="pt-3 border-t border-[#1A2A2A]/8">
+                  <span className="text-[9px] uppercase tracking-wider text-[#1A2A2A]/40 font-medium block mb-1.5">
+                    Key Botanicals
+                  </span>
+                  <p className="text-xs text-[#8F9E7B] font-medium leading-relaxed">
+                    {item.ingredients.join(" · ")}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Carousel Pagination Dots */}
+        <div className="flex items-center justify-center gap-1.5 mt-2">
+          {cuisineItems.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-1.5 transition-all duration-300 rounded-full ${
+                mobileActiveIndex === idx
+                  ? 'w-6 bg-[#8F9E7B]'
+                  : 'w-1.5 bg-[#1A2A2A]/20 hover:bg-[#1A2A2A]/40'
+              }`}
+            />
+          ))}
+        </div>
+
+      </div>
 
     </section>
   );
