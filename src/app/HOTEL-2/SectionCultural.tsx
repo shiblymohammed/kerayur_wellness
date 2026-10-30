@@ -46,9 +46,41 @@ export default function SectionCultural() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Mobile draggable cultural carousel state
+  const mobileCarouselRef = useRef<HTMLDivElement>(null);
+  const isPointerDown = useRef(false);
+  const startX = useRef(0);
+  const startScrollLeft = useRef(0);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = mobileCarouselRef.current;
+    if (!el) return;
+    isPointerDown.current = true;
+    startX.current = e.clientX;
+    startScrollLeft.current = el.scrollLeft;
+    try { el.setPointerCapture(e.pointerId); } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown.current) return;
+    const el = mobileCarouselRef.current;
+    if (!el) return;
+    const walk = (e.clientX - startX.current) * 1.3;
+    el.scrollLeft = startScrollLeft.current - walk;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    isPointerDown.current = false;
+    const el = mobileCarouselRef.current;
+    if (el) {
+      try { el.releasePointerCapture(e.pointerId); } catch {}
+    }
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Setup ScrollTriggers for each card to update the active index
+      // Setup ScrollTriggers for each card to update the active index (Desktop only)
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
         
@@ -80,12 +112,84 @@ export default function SectionCultural() {
   }, [activeIndex]);
 
   return (
-    <section ref={containerRef} className="w-full bg-[#1A1F16] text-[#F3F4ED] relative border-t border-[#8F9E7B]/20 rounded-t-[3rem] md:rounded-t-[4rem] -mt-12 z-10 pt-12">
+    <section ref={containerRef} className="w-full bg-[#1A1F16] text-[#F3F4ED] relative border-t border-[#8F9E7B]/20 rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-12 z-10 pt-10 md:pt-12">
       
       {/* Subtle Background Texture */}
-      <div className="absolute inset-0 bg-[url('/mandala_watermark.jpg')] bg-repeat opacity-[0.02] mix-blend-overlay pointer-events-none rounded-t-[3rem] md:rounded-t-[4rem] overflow-hidden"></div>
+      <div className="absolute inset-0 bg-[url('/mandala_watermark.jpg')] bg-repeat opacity-[0.02] mix-blend-overlay pointer-events-none rounded-t-[2.5rem] md:rounded-t-[4rem] overflow-hidden"></div>
 
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row relative">
+      {/* ─── MOBILE: COMPACT & DRAGGABLE CULTURAL CAROUSEL (Cuts ~3,000px of dead space) ─── */}
+      <div className="md:hidden max-w-7xl mx-auto px-5 pb-12">
+        <div className="mb-6">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-[#8F9E7B] mb-2 block font-bold">
+            Beyond the Clinic
+          </span>
+          <h2 className="text-3xl font-serif text-[#F3F4ED] leading-[1.15] mb-3">
+            Healing through <br />
+            <span className="italic font-light text-[#8F9E7B]">Cultural Connection</span>
+          </h2>
+          <p className="text-xs text-[#B3C0A4] font-light leading-relaxed">
+            Greens Ayurveda is deeply embedded in North Kerala&apos;s vibrant heritage. True healing occurs not just in therapies, but in the rhythms of our land.
+          </p>
+        </div>
+
+        {/* Draggable Card Track */}
+        <div
+          ref={mobileCarouselRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onScroll={(e) => {
+            const el = e.currentTarget;
+            const cardWidth = el.scrollWidth / experiences.length;
+            const idx = Math.min(experiences.length - 1, Math.max(0, Math.round(el.scrollLeft / cardWidth)));
+            setMobileActiveIndex(idx);
+          }}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 no-scrollbar -mx-5 px-5 pb-3 cursor-grab active:cursor-grabbing touch-pan-x select-none"
+        >
+          {experiences.map((exp, i) => (
+            <div
+              key={i}
+              className="w-[85vw] max-w-[330px] shrink-0 snap-center rounded-2xl overflow-hidden relative shadow-xl border border-white/10 h-[50vh] flex flex-col justify-end"
+            >
+              <Image
+                src={exp.image}
+                alt={exp.title}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent z-10" />
+
+              <div className="relative z-20 p-5 text-white">
+                <span className="text-[9px] tracking-[0.25em] uppercase text-[#8F9E7B] font-bold block mb-1">
+                  {exp.tag}
+                </span>
+                <h3 className="text-xl font-serif text-white mb-1.5 leading-tight">
+                  {exp.title}
+                </h3>
+                <p className="text-xs text-white/75 font-light line-clamp-3 leading-relaxed">
+                  {exp.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Indicator dots */}
+        <div className="flex justify-center items-center gap-1.5 mt-2">
+          {experiences.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === mobileActiveIndex ? 'w-4 bg-[#8F9E7B]' : 'w-1 bg-white/20'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ─── DESKTOP: STICKY OVERLAPPING CARDS (100% Preserved) ─── */}
+      <div className="hidden md:flex max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 flex-col md:flex-row relative">
         
         {/* LEFT COLUMN: Sticky Narrative */}
         <div className="w-full md:w-[45%] lg:w-[40%] md:h-screen md:sticky top-0 pt-24 md:pt-0 flex flex-col justify-center z-20 pb-12 md:pb-0">
@@ -126,10 +230,9 @@ export default function SectionCultural() {
                  if (el) cardsRef.current[i] = el;
               }}
               className="sticky"
-              style={{ top: `max(15vh, ${15 + (i * 2)}vh)` }} // Slight staggered offset for overlapping effect
+              style={{ top: `max(15vh, ${15 + (i * 2)}vh)` }}
             >
               <div className="w-full h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden relative group shadow-2xl border border-white/5 origin-top transition-transform duration-500 hover:border-[#8F9E7B]/40">
-                {/* Image with subtle constant scale */}
                 <Image 
                   src={exp.image} 
                   alt={exp.title} 
@@ -137,11 +240,9 @@ export default function SectionCultural() {
                   className="object-cover transform scale-105 transition-transform duration-[3s] ease-out group-hover:scale-100"
                 />
                 
-                {/* Gradient Overlays for depth */}
                 <div className="absolute inset-0 bg-[#1A1F16]/10 group-hover:bg-transparent transition-colors duration-700"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1F16]/80 via-transparent to-transparent opacity-80"></div>
                 
-                {/* Card Numbering */}
                 <div className="absolute top-6 left-6 md:top-8 md:left-8 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-black/20">
                   <span className="text-xs font-serif italic text-white/80">0{i + 1}</span>
                 </div>

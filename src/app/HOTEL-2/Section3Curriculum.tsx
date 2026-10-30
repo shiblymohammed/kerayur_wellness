@@ -38,7 +38,7 @@ const courses = [
   {
     id: 'GAPP',
     title: 'Ayurveda Pharmacy',
-    duration: '2 Weeks & 4 Weeks',
+    duration: '2 & 4 Weeks',
     image: '/lush_greenery_bg_1789410380618.jpg',
     modules: '16 Modules',
     certification: 'Advanced',
@@ -74,7 +74,7 @@ const courses = [
   {
     id: 'GANC',
     title: 'Ayurveda Nutrition & Cookery',
-    duration: '2 Weeks & 4 Weeks',
+    duration: '2 & 4 Weeks',
     image: '/nattika_gastronomy_1789398583654.jpg',
     modules: '15 Modules',
     certification: 'Level 1',
@@ -99,6 +99,39 @@ export default function Section3Curriculum() {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   const [activeSlide, setActiveSlide] = useState(0);
+
+  // Mobile draggable gallery state
+  const isPointerDown = useRef(false);
+  const startX = useRef(0);
+  const startScrollLeft = useRef(0);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Only handle drag on mobile
+    if (window.innerWidth >= 768) return;
+    const el = galleryTrackRef.current;
+    if (!el) return;
+    isPointerDown.current = true;
+    startX.current = e.clientX;
+    startScrollLeft.current = el.scrollLeft;
+    try { el.setPointerCapture(e.pointerId); } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown.current || window.innerWidth >= 768) return;
+    const el = galleryTrackRef.current;
+    if (!el) return;
+    const walk = (e.clientX - startX.current) * 1.3;
+    el.scrollLeft = startScrollLeft.current - walk;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth >= 768) return;
+    isPointerDown.current = false;
+    const el = galleryTrackRef.current;
+    if (el) {
+      try { el.releasePointerCapture(e.pointerId); } catch {}
+    }
+  };
 
   const philosophySlides = [
     {
@@ -203,11 +236,11 @@ export default function Section3Curriculum() {
       {/* -----------------------------
           PART 1: The Transition Banner (Slider)
           ----------------------------- */}
-      <div ref={bannerRef} className="relative w-full h-[100vh] overflow-hidden bg-[#1A1F16]">
+      <div ref={bannerRef} className="relative w-full h-[70vh] sm:h-[85vh] md:h-[100vh] overflow-hidden bg-[#1A1F16]">
         
         {/* Top Asymmetrical Wavy Edge */}
         <div className="absolute top-0 left-0 w-full z-20 pointer-events-none -translate-y-[1px]">
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-16 md:h-28 fill-[#F5F4EF]">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-14 sm:h-16 md:h-28 fill-[#F5F4EF]">
             <path d="M0,0 L1440,0 L1440,40 C1300,90 1150,10 960,50 C760,90 600,0 380,40 C200,70 80,10 0,30 Z"></path>
           </svg>
         </div>
@@ -232,33 +265,33 @@ export default function Section3Curriculum() {
           ))}
         </div>
 
-        {/* Localized Bottom Gradient for text clarity (instead of darkening the whole image) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 pointer-events-none"></div>
+        {/* Bottom Gradient for text clarity */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent z-10 pointer-events-none"></div>
         
         {/* Slider Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-end pb-32 px-6 text-center z-20">
-          <div className="max-w-4xl transition-all duration-700 transform translate-y-0">
-            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-amber-200 font-bold mb-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 sm:pb-24 md:pb-32 px-5 sm:px-6 text-center z-20">
+          <div className="max-w-4xl transition-all duration-700">
+            <p className="text-[10px] sm:text-xs md:text-sm tracking-[0.3em] uppercase text-amber-200 font-bold mb-2 sm:mb-4">
               {philosophySlides[activeSlide].tagline}
             </p>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] font-light leading-[1.3] drop-shadow-lg mb-6 whitespace-pre-line">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] font-light leading-[1.25] drop-shadow-lg mb-3 sm:mb-6 whitespace-pre-line">
               {philosophySlides[activeSlide].quote}
             </h2>
-            <p className="text-[#F3F4ED]/80 font-light max-w-lg mx-auto text-sm md:text-base">
+            <p className="text-[#F3F4ED]/80 font-light max-w-lg mx-auto text-xs sm:text-sm md:text-base">
               {philosophySlides[activeSlide].desc}
             </p>
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex gap-3 mt-12">
+          <div className="flex gap-2 sm:gap-3 mt-6 sm:mt-12">
             {philosophySlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveSlide(index)}
                 className={`transition-all duration-300 rounded-full ${
                   activeSlide === index 
-                  ? 'w-8 h-1.5 bg-amber-200' 
-                  : 'w-2 h-1.5 bg-white/40 hover:bg-white/70'
+                  ? 'w-6 sm:w-8 h-1.5 bg-amber-200' 
+                  : 'w-1.5 sm:w-2 h-1.5 bg-white/40 hover:bg-white/70'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -268,7 +301,7 @@ export default function Section3Curriculum() {
 
         {/* Bottom Asymmetrical Wavy Edge */}
         <div className="absolute bottom-0 left-0 w-full z-20 pointer-events-none translate-y-[1px]">
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-16 md:h-28 fill-[#F5F4EF]">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-14 sm:h-16 md:h-28 fill-[#F5F4EF]">
             <path d="M0,100 L1440,100 L1440,60 C1250,10 1100,90 880,40 C650,-10 500,80 320,50 C180,30 80,80 0,70 Z"></path>
           </svg>
         </div>
@@ -276,82 +309,84 @@ export default function Section3Curriculum() {
       </div>
 
       {/* -----------------------------
-          PART 2: Soft Floating Gallery (Horizontal Scroll) 
+          PART 2: Soft Floating Gallery (Horizontal Scroll with Drag on Mobile) 
           ----------------------------- */}
-      <div ref={galleryContainerRef} className="w-full h-auto md:h-screen bg-[#F5F4EF] flex flex-col justify-center relative py-20 md:py-0 overflow-hidden">
+      <div ref={galleryContainerRef} className="w-full h-auto md:h-screen bg-[#F5F4EF] flex flex-col justify-center relative py-12 md:py-0 overflow-hidden">
         
-        {/* Gallery Track (Native scroll on mobile, GSAP on desktop) */}
-        <div ref={galleryTrackRef} className="flex gap-6 md:gap-16 px-6 md:px-16 items-center h-full w-full md:w-max overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none hide-scrollbar">
+        {/* Gallery Track (Native drag on mobile, GSAP pin on desktop) */}
+        <div 
+          ref={galleryTrackRef} 
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          className="flex gap-4 sm:gap-6 md:gap-16 px-5 sm:px-6 md:px-16 items-center h-full w-full md:w-max overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none hide-scrollbar cursor-grab active:cursor-grabbing touch-pan-x select-none"
+        >
           
           {/* Slide 0: The Centered Title & Description */}
-          <div className="w-[85vw] md:w-[400px] lg:w-[460px] h-[65vh] md:h-[70vh] flex-shrink-0 flex flex-col justify-center items-center text-center px-4 md:px-8 snap-center">
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#2F3627] leading-[1.1] mb-6">
+          <div className="w-[82vw] sm:w-[85vw] md:w-[400px] lg:w-[460px] h-[55vh] sm:h-[65vh] md:h-[70vh] flex-shrink-0 flex flex-col justify-center items-center text-center px-4 md:px-8 snap-center">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-[#2F3627] leading-[1.1] mb-4 sm:mb-6">
               The <br/><span className="italic font-light text-[#8F9E7B]">Curriculum</span>
             </h2>
-            <div className="w-16 h-px bg-[#8F9E7B]/40 mb-6"></div>
-            <p className="text-sm md:text-base text-[#5C664D] leading-relaxed max-w-sm font-light mb-8">
-              Our academic offerings are designed for the serious seeker. From intensive 10-day immersions to comprehensive 3-month certifications.
+            <div className="w-12 sm:w-16 h-px bg-[#8F9E7B]/40 mb-4 sm:mb-6"></div>
+            <p className="text-xs sm:text-sm md:text-base text-[#5C664D] leading-relaxed max-w-sm font-light mb-6 sm:mb-8">
+              Our academic offerings are designed for the serious seeker. From intensive immersions to comprehensive certifications.
             </p>
-            <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#8F9E7B] px-5 py-2 border border-[#8F9E7B]/30 rounded-full">09 Courses</span>
+            <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#8F9E7B] px-4 sm:px-5 py-1.5 sm:py-2 border border-[#8F9E7B]/30 rounded-full">09 Courses</span>
           </div>
+
           {courses.map((course, index) => (
             <div 
               key={course.id} 
-              // Apothecary Card Style: Light paper background, dashed border, padding.
-              className="w-[85vw] md:w-[400px] lg:w-[420px] h-[65vh] md:h-[70vh] flex-shrink-0 relative rounded-[2rem] bg-[#FAF9F6] border-2 border-dashed border-[#8F9E7B]/40 p-4 md:p-6 flex flex-col shadow-xl group snap-center hover:border-[#8F9E7B]/60 transition-colors duration-500"
+              className="w-[82vw] sm:w-[85vw] md:w-[400px] lg:w-[420px] h-[55vh] sm:h-[65vh] md:h-[70vh] flex-shrink-0 relative rounded-2xl sm:rounded-[2rem] bg-[#FAF9F6] border border-[#8F9E7B]/30 sm:border-2 sm:border-dashed p-4 md:p-6 flex flex-col shadow-lg group snap-center hover:border-[#8F9E7B]/60 transition-colors duration-500"
             >
               
-              {/* Image Section (Top half) */}
-              <div className="relative w-full h-[50%] md:h-[55%] rounded-xl overflow-hidden mb-6 flex-shrink-0">
+              {/* Image Section */}
+              <div className="relative w-full h-[48%] md:h-[55%] rounded-xl overflow-hidden mb-4 sm:mb-6 flex-shrink-0">
                 <Image 
                   src={course.image} 
                   alt={course.title} 
                   fill 
-                  className="object-cover transition-transform duration-[2.5s] group-hover:scale-105 group-hover:rotate-1" 
-                  priority={index < 3}
+                  className="object-cover transition-transform duration-[2.5s] group-hover:scale-105" 
+                  priority={index < 2}
                 />
-                <div className="absolute inset-0 bg-[#2F3627]/10 transition-opacity duration-700 group-hover:opacity-0"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2F3627]/60 via-transparent to-transparent opacity-80"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 
-                {/* Micro-labels floating on image */}
-                <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                  <div className="flex flex-col items-center bg-[#2F3627]/40 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20 text-white">
-                    <span className="text-[8px] tracking-[0.2em] uppercase font-bold opacity-80">No.</span>
-                    <span className="text-xl font-serif italic leading-none mt-1">{`0${index + 1}`.slice(-2)}</span>
-                  </div>
-                  <span className="text-[10px] tracking-widest uppercase font-bold border border-white/30 px-3 py-1 rounded-full backdrop-blur-md bg-[#2F3627]/40 text-white shadow-sm">{course.id}</span>
+                {/* Clean minimal labels */}
+                <div className="absolute top-3 left-3 right-3 flex justify-between items-center text-white text-[10px]">
+                  <span className="font-serif italic opacity-90">{`0${index + 1}`.slice(-2)}</span>
+                  <span className="tracking-widest uppercase font-semibold text-white/80">{course.id}</span>
                 </div>
               </div>
               
-              {/* Text Section (Bottom half) */}
+              {/* Text Section */}
               <div className="flex-grow flex flex-col justify-between">
                 
-                <div className="flex flex-col gap-3">
-                  {/* Subtle divider */}
-                  <div className="w-12 h-px bg-[#8F9E7B]/40 group-hover:w-full transition-all duration-700 ease-out"></div>
+                <div className="flex flex-col gap-2 sm:gap-3">
+                  <div className="w-8 sm:w-12 h-px bg-[#8F9E7B]/40 group-hover:w-full transition-all duration-700 ease-out"></div>
                   
-                  <h3 className="text-2xl md:text-3xl font-serif text-[#2F3627] leading-[1.2] mt-2 group-hover:text-[#4A533E] transition-colors duration-500 line-clamp-2">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-[#2F3627] leading-[1.2] mt-1 group-hover:text-[#4A533E] transition-colors duration-500 line-clamp-2">
                     {course.title}
                   </h3>
                   
                   {course.description && (
-                    <p className="text-[#5C664D] text-[11px] md:text-xs font-light leading-relaxed line-clamp-3 mt-1">
+                    <p className="text-[#5C664D] text-xs font-light leading-relaxed line-clamp-2 sm:line-clamp-3">
                       {course.description}
                     </p>
                   )}
                 </div>
 
                 {/* Footer Data */}
-                <div className="flex items-end justify-between pt-4 border-t border-[#8F9E7B]/20 mt-4">
+                <div className="flex items-end justify-between pt-3 sm:pt-4 border-t border-[#8F9E7B]/20 mt-3">
                   <div className="flex flex-col">
-                    <span className="text-[9px] tracking-[0.2em] uppercase text-[#8F9E7B]">Duration</span>
-                    <span className="text-xs font-bold tracking-widest uppercase text-[#2F3627] mt-1">{course.duration}</span>
+                    <span className="text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-[#8F9E7B]">Duration</span>
+                    <span className="text-[11px] sm:text-xs font-bold tracking-wider uppercase text-[#2F3627] mt-0.5">{course.duration}</span>
                   </div>
                   
-                  <div className="flex flex-col text-right gap-2">
-                    {course.modules && <span className="text-[9px] tracking-[0.2em] uppercase text-[#5C664D]">{course.modules}</span>}
+                  <div className="flex flex-col text-right gap-0.5 sm:gap-1">
+                    {course.modules && <span className="text-[8px] sm:text-[9px] tracking-wider uppercase text-[#5C664D]">{course.modules}</span>}
                     {course.certification && (
-                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#8F9E7B] font-bold">{course.certification}</span>
+                      <span className="text-[8px] sm:text-[9px] tracking-wider uppercase text-[#8F9E7B] font-bold">{course.certification}</span>
                     )}
                   </div>
                 </div>
@@ -365,22 +400,22 @@ export default function Section3Curriculum() {
       {/* -----------------------------
           PART 3: Course Highlights (Marquee)
           ----------------------------- */}
-      <div className="w-full bg-[#1A1F16] py-24 overflow-hidden relative border-t border-[#8F9E7B]/10">
-        <div className="text-center mb-12 relative z-10 px-6">
-          <span className="text-[10px] tracking-[0.4em] uppercase text-[#8F9E7B] font-bold block mb-3">Our Legacy</span>
-          <h3 className="text-3xl md:text-5xl font-serif text-[#F3F4ED]">
+      <div className="w-full bg-[#1A1F16] py-14 md:py-24 overflow-hidden relative border-t border-[#8F9E7B]/10">
+        <div className="text-center mb-8 md:mb-12 relative z-10 px-5 sm:px-6">
+          <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-[#8F9E7B] font-bold block mb-2 sm:mb-3">Our Legacy</span>
+          <h3 className="text-2xl sm:text-3xl md:text-5xl font-serif text-[#F3F4ED]">
             Moments of <span className="italic font-light text-[#8F9E7B]">Mastery</span>
           </h3>
         </div>
         
         {/* Gradients to fade edges */}
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-16 sm:w-32 h-full bg-gradient-to-r from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-16 sm:w-32 h-full bg-gradient-to-l from-[#1A1F16] to-transparent z-10 pointer-events-none"></div>
 
-        {/* Marquee Track (Double the images for seamless loop) */}
+        {/* Marquee Track */}
         <div className="flex w-max" ref={marqueeRef}>
           {[...Array(2)].map((_, arrayIndex) => (
-            <div key={arrayIndex} className="flex gap-6 px-3">
+            <div key={arrayIndex} className="flex gap-4 sm:gap-6 px-2 sm:px-3">
               {[
                 '/hotel-2/courses/6.png',
                 '/hotel-2/courses/86.png',
@@ -389,7 +424,7 @@ export default function Section3Curriculum() {
                 '/hotel-2/courses/index4-1.jpg',
                 '/hotel-2/courses/index5-2.jpg'
               ].map((src, index) => (
-                <div key={index} className="relative w-[300px] md:w-[450px] h-[220px] md:h-[300px] rounded-2xl overflow-hidden border border-[#8F9E7B]/20 shrink-0 filter grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer">
+                <div key={index} className="relative w-[240px] sm:w-[300px] md:w-[450px] h-[170px] sm:h-[220px] md:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden border border-[#8F9E7B]/20 shrink-0 filter grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer">
                   <Image
                     src={src}
                     alt={`Course Highlight ${index + 1}`}

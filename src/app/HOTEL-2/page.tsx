@@ -65,7 +65,7 @@ export default function Hotel2Page() {
     <main className="w-full bg-[#F3F4ED] text-[#2F3627] font-sans selection:bg-[#4A533E] selection:text-white">
       
       {/* Top Navigation Placeholder */}
-      <header className="absolute top-0 w-full px-8 py-8 flex justify-between items-center z-20 mix-blend-difference text-white">
+      <header className="absolute top-0 w-full px-5 sm:px-8 py-6 sm:py-8 flex justify-between items-center z-20 mix-blend-difference text-white">
         <div className="text-xs tracking-[0.2em] uppercase font-semibold">The Sanctuary</div>
         <div className="text-xs tracking-widest uppercase">Menu</div>
       </header>
@@ -90,17 +90,17 @@ export default function Hotel2Page() {
         </div>
 
         {/* Hero Content - Left Aligned, Clean */}
-        <div className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col justify-center px-6 lg:px-12">
-          <div ref={textContainerRef} className="max-w-2xl mt-20">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] leading-[1.15] tracking-wide mb-6">
+        <div className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col justify-center px-5 sm:px-6 lg:px-12">
+          <div ref={textContainerRef} className="max-w-2xl mt-12 sm:mt-20">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#F3F4ED] leading-[1.15] tracking-wide mb-4 sm:mb-6">
               The Wisdom of the Ages,<br/>
               Taught Today.
             </h1>
-            <div className="flex items-end gap-4 mb-8">
-              <span className="text-5xl md:text-6xl font-light text-[#8F9E7B] leading-none">25</span>
-              <span className="text-sm md:text-base text-[#D0D4C5] tracking-wider uppercase mb-1">Years of<br/>Healing</span>
+            <div className="flex items-end gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <span className="text-4xl sm:text-5xl md:text-6xl font-light text-[#8F9E7B] leading-none">25</span>
+              <span className="text-xs sm:text-sm md:text-base text-[#D0D4C5] tracking-wider uppercase mb-0.5 sm:mb-1">Years of<br/>Healing</span>
             </div>
-            <p className="text-sm md:text-base text-[#B3C0A4] max-w-md font-light leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-[#B3C0A4] max-w-md font-light leading-relaxed">
               Experience profound healing and immersive Ayurvedic study in the tranquil sanctuary of Azhiyur. Authentic Panchakarma therapies and certification programs.
             </p>
           </div>
@@ -108,20 +108,18 @@ export default function Hotel2Page() {
 
         {/* Curved Bottom Edge (SVG Valley) */}
         <div className="absolute bottom-0 left-0 w-full z-20 pointer-events-none translate-y-[1px]">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-16 md:h-24 fill-[#F3F4ED]">
-            {/* Creates a subtle U-shaped valley in the center */}
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-14 sm:h-16 md:h-24 fill-[#F3F4ED]">
             <path d="M0,120 L0,0 C320,0 520,120 720,120 C920,120 1120,0 1440,0 L1440,120 Z"></path>
           </svg>
         </div>
 
-        {/* Central Circular UI Element (Nested in the valley) */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
+        {/* Central Circular UI Element */}
+        <div className="absolute bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
           <button 
             onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
-            className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-[#4A533E]/60 bg-transparent text-[#4A533E] flex items-center justify-center hover:bg-[#4A533E] hover:text-[#F3F4ED] hover:border-[#4A533E] hover:scale-105 transition-all duration-500 shadow-sm group"
+            className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-[#4A533E]/60 bg-transparent text-[#4A533E] flex items-center justify-center hover:bg-[#4A533E] hover:text-[#F3F4ED] hover:border-[#4A533E] hover:scale-105 transition-all duration-500 shadow-sm group"
             aria-label="Scroll down to explore"
           >
-            {/* Ultra-elegant thin downward arrow */}
             <svg 
               className="w-5 h-5 md:w-6 md:h-6 transform group-hover:translate-y-1 transition-transform duration-500 ease-out" 
               fill="none" 

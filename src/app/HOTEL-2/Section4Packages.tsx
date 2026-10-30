@@ -42,7 +42,7 @@ const propertiesData = [
     id: 'main-block',
     name: 'Main Block',
     desc: 'Centrally located with easy access to all therapeutic facilities, dining areas, and lush pathways.',
-    building: '/hotel-2/varantha thaniyas.jpg', // Using this as a representative image
+    building: '/hotel-2/varantha thaniyas.jpg',
     rooms: [
       { type: 'Single Room', src: '/hotel-2/Main-Block-Single-Room.jpg' },
       { type: 'Double Room', src: '/hotel-2/Main-Block-Double-Room.jpg' }
@@ -53,7 +53,7 @@ const propertiesData = [
     name: 'Akkies',
     desc: 'A secluded sanctuary offering the utmost privacy for focused and uninterrupted healing journeys.',
     building: '/hotel-2/BUILDING-AKKIES.jpg',
-    rooms: [] // Shows just the building
+    rooms: []
   }
 ];
 
@@ -89,7 +89,7 @@ export default function Section4Packages() {
   }, [activePropertyId]);
 
   return (
-    <section className="w-full bg-[#1A1F16] text-[#F3F4ED] relative z-20 pb-32">
+    <section className="w-full bg-[#1A1F16] text-[#F3F4ED] relative z-20 pb-16 md:pb-32">
       
       {/* Background Texture & Glow */}
       <div className="absolute inset-0 bg-[url('/mandala_watermark.jpg')] bg-repeat opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
@@ -97,112 +97,112 @@ export default function Section4Packages() {
       {/* -------------------------------------
           PART 1: THE SANCTUARY BENTO (Amenities)
           ------------------------------------- */}
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pt-32 pb-12 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-6 md:px-12 lg:px-24 pt-16 md:pt-32 pb-8 md:pb-12 relative z-10">
         
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Sanctuary</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-6">
+        <div className="text-center mb-10 md:mb-16 max-w-3xl mx-auto">
+          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-3 md:mb-4 block font-bold">The Sanctuary</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-3 md:mb-6">
             An Ecosystem of <span className="italic font-light text-[#8F9E7B]">Care</span>
           </h2>
-          <p className="text-[#B3C0A4] font-light leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-[#B3C0A4] font-light leading-relaxed">
             Every detail of your stay is meticulously curated to support profound healing. From deeply traditional therapies to the food you eat and the air you breathe.
           </p>
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           
           {/* Main Card: Medical Care */}
-          <div className="md:col-span-2 bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-3xl p-8 md:p-12 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
+          <div className="md:col-span-2 bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-700 hidden sm:block">
               <Stethoscope size={120} className="text-[#8F9E7B]" />
             </div>
             
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-full bg-[#8F9E7B]/20 flex items-center justify-center text-[#8F9E7B]">
-                <HeartPulse size={24} />
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#8F9E7B]/20 flex items-center justify-center text-[#8F9E7B]">
+                <HeartPulse size={22} />
               </div>
-              <h3 className="text-2xl font-serif text-[#F3F4ED]">Clinical Excellence</h3>
+              <h3 className="text-xl sm:text-2xl font-serif text-[#F3F4ED]">Clinical Excellence</h3>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 relative z-10">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-1 shrink-0" />
-                <span className="text-sm text-[#D0D4C5] font-light leading-relaxed">Complete 5-fold Panchakarma detoxification</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-4 gap-x-8 relative z-10">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-0.5 shrink-0" />
+                <span className="text-xs sm:text-sm text-[#D0D4C5] font-light leading-relaxed">Complete 5-fold Panchakarma detoxification</span>
               </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-1 shrink-0" />
-                <span className="text-sm text-[#D0D4C5] font-light leading-relaxed">Traditional Kerala oil therapies (Shirodhara, Abhyangam)</span>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-0.5 shrink-0" />
+                <span className="text-xs sm:text-sm text-[#D0D4C5] font-light leading-relaxed">Traditional Kerala oil therapies (Shirodhara, Abhyangam)</span>
               </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-1 shrink-0" />
-                <span className="text-sm text-[#D0D4C5] font-light leading-relaxed">Detailed Doctor Consultations & Dosha Assessment</span>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-0.5 shrink-0" />
+                <span className="text-xs sm:text-sm text-[#D0D4C5] font-light leading-relaxed">Detailed Doctor Consultations & Dosha Assessment</span>
               </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-1 shrink-0" />
-                <span className="text-sm text-[#D0D4C5] font-light leading-relaxed">Chakra Marma & Clinical Yoga Therapies</span>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-0.5 shrink-0" />
+                <span className="text-xs sm:text-sm text-[#D0D4C5] font-light leading-relaxed">Chakra Marma & Clinical Yoga Therapies</span>
               </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-1 shrink-0" />
-                <span className="text-sm text-[#D0D4C5] font-light leading-relaxed">24/7 Resident Doctors & 6-month follow up</span>
+              <div className="flex items-start gap-2.5 sm:col-span-2">
+                <CheckCircle2 size={16} className="text-[#8F9E7B] mt-0.5 shrink-0" />
+                <span className="text-xs sm:text-sm text-[#D0D4C5] font-light leading-relaxed">24/7 Resident Doctors & 6-month follow up</span>
               </div>
             </div>
           </div>
 
           {/* Side Card: The Residency (Accommodation & Dining) */}
-          <div className="bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-3xl p-8 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm flex flex-col justify-between">
+          <div className="bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 rounded-full bg-[#8F9E7B]/20 flex items-center justify-center text-[#8F9E7B]">
-                  <Utensils size={20} />
+              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#8F9E7B]/20 flex items-center justify-center text-[#8F9E7B]">
+                  <Utensils size={18} />
                 </div>
-                <h3 className="text-xl font-serif text-[#F3F4ED]">Nourishment</h3>
+                <h3 className="text-lg sm:text-xl font-serif text-[#F3F4ED]">Nourishment</h3>
               </div>
-              <ul className="space-y-4">
-                <li className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
                   Traditional Indian & Kerala meals
                 </li>
-                <li className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
+                <li className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
                   Customized Ayurvedic Diet
                 </li>
-                <li className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
+                <li className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8F9E7B]"></span>
                   Daily herbal teas & mineral water
                 </li>
               </ul>
             </div>
-            <div className="mt-8 pt-6 border-t border-[#8F9E7B]/20">
-              <div className="flex items-center gap-3">
-                <BedDouble size={18} className="text-[#8F9E7B]" />
-                <span className="text-sm text-[#F3F4ED]">Private En-suite Rooms</span>
+            <div className="mt-6 pt-4 border-t border-[#8F9E7B]/20">
+              <div className="flex items-center gap-2.5">
+                <BedDouble size={16} className="text-[#8F9E7B]" />
+                <span className="text-xs sm:text-sm text-[#F3F4ED]">Private En-suite Rooms</span>
               </div>
             </div>
           </div>
 
           {/* Bottom Card: The Rhythm (Wellness) */}
-          <div className="md:col-span-3 bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-3xl p-6 md:p-8 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm">
-             <div className="flex flex-wrap items-center justify-between gap-6 md:gap-12">
+          <div className="md:col-span-3 bg-[#2F3627]/40 border border-[#8F9E7B]/20 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 hover:border-[#8F9E7B]/50 transition-colors duration-500 backdrop-blur-sm">
+             <div className="grid grid-cols-2 md:flex md:flex-wrap items-center justify-between gap-4 md:gap-12">
                 <div className="flex items-center gap-4 border-r border-[#8F9E7B]/20 pr-12 hidden md:flex">
                   <h3 className="text-xl font-serif text-[#F3F4ED] italic">The Rhythm</h3>
                 </div>
                 
-                <div className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
-                  <Leaf size={18} className="text-[#8F9E7B]" />
-                  Yoga classes (alternate days)
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
+                  <Leaf size={16} className="text-[#8F9E7B] shrink-0" />
+                  <span>Yoga (alternate days)</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
-                  <Library size={18} className="text-[#8F9E7B]" />
-                  Extensive Library access
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
+                  <Library size={16} className="text-[#8F9E7B] shrink-0" />
+                  <span>Extensive Library</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
-                  <Wifi size={18} className="text-[#8F9E7B]" />
-                  Complimentary Wi-Fi
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
+                  <Wifi size={16} className="text-[#8F9E7B] shrink-0" />
+                  <span>Complimentary Wi-Fi</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-[#D0D4C5] font-light">
-                  <span className="text-[#8F9E7B] font-serif italic text-lg leading-none">~</span>
-                  Hammocks & Gardens
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[#D0D4C5] font-light">
+                  <span className="text-[#8F9E7B] font-serif italic text-base leading-none">~</span>
+                  <span>Hammocks & Gardens</span>
                 </div>
              </div>
           </div>
@@ -212,25 +212,25 @@ export default function Section4Packages() {
       {/* -------------------------------------
           PART 2: THE ACCOMMODATIONS SHOWCASE
           ------------------------------------- */}
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 py-16 relative z-10 border-t border-[#8F9E7B]/10 mt-8">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-6 md:px-12 lg:px-24 py-10 md:py-16 relative z-10 border-t border-[#8F9E7B]/10 mt-4 md:mt-8">
         
-        <div className="text-center mb-12">
-          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Residency</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-6">
+        <div className="text-center mb-8 md:mb-12">
+          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-2 md:mb-4 block font-bold">The Residency</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-3 md:mb-6">
             Private <span className="italic font-light text-[#8F9E7B]">Sanctuaries</span>
           </h2>
-          <p className="text-[#B3C0A4] font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-[#B3C0A4] font-light leading-relaxed max-w-2xl mx-auto">
             Choose from our beautifully appointed heritage blocks and villas, each designed to harmonize with the surrounding nature.
           </p>
         </div>
 
-        {/* Property Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        {/* Property Tabs (Horizontally scrollable on mobile) */}
+        <div className="flex overflow-x-auto no-scrollbar justify-start sm:justify-center gap-2 sm:gap-3 mb-6 md:mb-12 -mx-5 px-5 sm:mx-0 sm:px-0 pb-2">
           {propertiesData.map((prop) => (
             <button
               key={prop.id}
               onClick={() => setActivePropertyId(prop.id)}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase transition-all duration-300 border ${
+              className={`shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all duration-300 border ${
                 activePropertyId === prop.id 
                 ? 'bg-[#8F9E7B] text-[#1A1F16] border-[#8F9E7B] shadow-[0_0_15px_rgba(143,158,123,0.3)]' 
                 : 'bg-transparent text-[#B3C0A4] border-[#8F9E7B]/30 hover:border-[#8F9E7B]/60 hover:text-[#F3F4ED]'
@@ -242,46 +242,46 @@ export default function Section4Packages() {
         </div>
 
         {/* Interactive Gallery for Active Property */}
-        <div ref={galleryRef} className="bg-[#2F3627]/20 border border-[#8F9E7B]/20 rounded-3xl p-6 md:p-8 backdrop-blur-md">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div ref={galleryRef} className="bg-[#2F3627]/20 border border-[#8F9E7B]/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 backdrop-blur-md">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
             
             {/* Building Image & Description (Left Side) */}
             <div className={`col-span-1 flex flex-col ${activeProperty.rooms.length > 0 ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
-              <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden group">
+              <div className="relative w-full h-[260px] sm:h-[360px] md:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden group">
                 <Image 
                   src={activeProperty.building} 
                   alt={`${activeProperty.name} Building`} 
                   fill 
                   className="object-cover transition-transform duration-[2s] group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="text-3xl font-serif text-white mb-2">{activeProperty.name}</h3>
-                  <p className="text-sm text-white/80 font-light">{activeProperty.desc}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                  <h3 className="text-2xl sm:text-3xl font-serif text-white mb-1.5">{activeProperty.name}</h3>
+                  <p className="text-xs sm:text-sm text-white/80 font-light leading-relaxed">{activeProperty.desc}</p>
                 </div>
               </div>
             </div>
 
             {/* Room Images (Right Side - if available) */}
             {activeProperty.rooms.length > 0 && (
-              <div className="col-span-1 lg:col-span-5 flex flex-col gap-6 justify-center">
-                <h4 className="text-xs tracking-[0.2em] uppercase text-[#8F9E7B] font-semibold border-b border-[#8F9E7B]/20 pb-2">
+              <div className="col-span-1 lg:col-span-5 flex flex-col gap-4 sm:gap-6 justify-center">
+                <h4 className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-[#8F9E7B] font-semibold border-b border-[#8F9E7B]/20 pb-2">
                   Available Room Types
                 </h4>
                 
-                <div className={`grid grid-cols-1 ${activeProperty.rooms.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} gap-6`}>
+                <div className={`grid grid-cols-1 ${activeProperty.rooms.length > 1 ? 'grid-cols-2 lg:grid-cols-1' : ''} gap-3 sm:gap-6`}>
                   {activeProperty.rooms.map((room, idx) => (
-                    <div key={idx} className="relative w-full h-[220px] rounded-xl overflow-hidden group border border-white/5">
+                    <div key={idx} className="relative w-full h-[140px] sm:h-[200px] md:h-[220px] rounded-xl overflow-hidden group border border-white/5">
                       <Image 
                         src={room.src} 
                         alt={`${activeProperty.name} ${room.type}`} 
                         fill 
                         className="object-cover transition-transform duration-[2s] group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
-                      <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                        <BedDouble size={16} className="text-[#8F9E7B]" />
-                        <span className="text-sm text-white font-medium">{room.type}</span>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent pointer-events-none" />
+                      <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                        <BedDouble size={14} className="text-[#8F9E7B]" />
+                        <span className="text-xs sm:text-sm text-white font-medium">{room.type}</span>
                       </div>
                     </div>
                   ))}
@@ -296,19 +296,19 @@ export default function Section4Packages() {
       {/* -------------------------------------
           PART 3: THE MENU OF HEALING (Pricing)
           ------------------------------------- */}
-      <div className="max-w-[1000px] mx-auto px-6 md:px-12 pt-16 relative z-10">
+      <div className="max-w-[1000px] mx-auto px-5 sm:px-6 md:px-12 pt-10 md:pt-16 relative z-10">
         
-        <div className="text-center mb-12">
-          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-4 block font-bold">The Offering</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-8">
+        <div className="text-center mb-8 md:mb-12">
+          <span className="text-xs tracking-[0.3em] uppercase text-[#8F9E7B] mb-2 md:mb-4 block font-bold">The Offering</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#F3F4ED] mb-5 md:mb-8">
             Menu of <span className="italic font-light text-[#8F9E7B]">Healing</span>
           </h2>
 
-          {/* Elegant Toggle */}
-          <div className="inline-flex items-center p-1.5 bg-[#2F3627]/40 border border-[#8F9E7B]/30 rounded-full backdrop-blur-sm">
+          {/* Toggle */}
+          <div className="inline-flex items-center p-1 bg-[#2F3627]/40 border border-[#8F9E7B]/30 rounded-full backdrop-blur-sm max-w-full overflow-x-auto no-scrollbar">
             <button 
               onClick={() => setPricingMode('residential')}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all duration-300 ${
                 pricingMode === 'residential' 
                 ? 'bg-[#8F9E7B] text-[#1A1F16] shadow-lg' 
                 : 'text-[#B3C0A4] hover:text-[#F3F4ED]'
@@ -318,7 +318,7 @@ export default function Section4Packages() {
             </button>
             <button 
               onClick={() => setPricingMode('group')}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide uppercase transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all duration-300 ${
                 pricingMode === 'group' 
                 ? 'bg-[#8F9E7B] text-[#1A1F16] shadow-lg' 
                 : 'text-[#B3C0A4] hover:text-[#F3F4ED]'
@@ -329,32 +329,56 @@ export default function Section4Packages() {
           </div>
         </div>
 
-        {/* Pricing Display */}
-        <div className="bg-[#2F3627]/20 border border-[#8F9E7B]/20 rounded-3xl p-2 backdrop-blur-md">
+        {/* Pricing Display — 100% Fully Visible on Mobile (Single & Sharing both shown) */}
+        <div className="bg-[#2F3627]/25 border border-[#8F9E7B]/20 rounded-2xl sm:rounded-3xl p-1 sm:p-2 backdrop-blur-md overflow-hidden">
           
           {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-[#8F9E7B]/20 text-xs tracking-[0.2em] uppercase text-[#8F9E7B] font-bold">
-            <div className="col-span-6 md:col-span-6">{pricingMode === 'residential' ? 'Intensity / Tier' : 'Retreat Tier'}</div>
-            <div className="col-span-3 text-right hidden md:block">{pricingMode === 'residential' ? 'Single' : 'Configuration'}</div>
-            <div className="col-span-6 md:col-span-3 text-right">{pricingMode === 'residential' ? 'Sharing' : 'Rate (Per Day)'}</div>
+          <div className="grid grid-cols-12 gap-2 sm:gap-4 px-3 sm:px-6 py-3.5 border-b border-[#8F9E7B]/20 text-[10px] sm:text-xs tracking-wider uppercase text-[#8F9E7B] font-bold">
+            <div className="col-span-6 md:col-span-6">
+              {pricingMode === 'residential' ? 'Intensity / Tier' : 'Retreat Tier'}
+            </div>
+            <div className="col-span-3 text-right">
+              {pricingMode === 'residential' ? 'Single Room' : 'Configuration'}
+            </div>
+            <div className="col-span-3 text-right">
+              {pricingMode === 'residential' ? 'Sharing Room' : 'Daily Rate'}
+            </div>
           </div>
 
-          {/* Table Body - Residential */}
+          {/* Table Body - Residential (Both Single & Sharing fully visible on all mobile screens) */}
           {pricingMode === 'residential' && (
             <div className="flex flex-col">
                {residentialPackages.map((pkg, i) => (
-                <div key={i} className="grid grid-cols-12 gap-4 px-6 py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
-                  <div className="col-span-7 md:col-span-6 flex flex-col">
-                    <span className={`text-xl md:text-2xl font-serif mb-1 ${pkg.color}`}>{pkg.name}</span>
-                    <span className="text-xs text-[#B3C0A4] font-light uppercase tracking-widest">{pkg.treatments}</span>
+                <div key={i} className="grid grid-cols-12 gap-2 sm:gap-4 px-3 sm:px-6 py-4 sm:py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
+                  
+                  {/* Name & Treatments */}
+                  <div className="col-span-6 md:col-span-6 flex flex-col pr-1">
+                    <span className={`text-base sm:text-xl md:text-2xl font-serif mb-0.5 leading-snug ${pkg.color}`}>
+                      {pkg.name}
+                    </span>
+                    <span className="text-[10px] sm:text-xs text-[#B3C0A4] font-light tracking-wide">
+                      {pkg.treatments}
+                    </span>
                   </div>
-                  <div className="col-span-2 text-right hidden md:flex flex-col justify-center">
-                    <span className="text-2xl font-light text-[#F3F4ED]">€{pkg.single}</span>
-                    <span className="text-[9px] text-[#8F9E7B] uppercase tracking-widest mt-1 group-hover:opacity-100 opacity-50">Per Day</span>
+
+                  {/* Single Room Price — ALWAYS VISIBLE ON MOBILE */}
+                  <div className="col-span-3 text-right flex flex-col justify-center items-end">
+                    <span className="text-base sm:text-xl md:text-2xl font-serif font-light text-[#F3F4ED]">
+                      €{pkg.single}
+                    </span>
+                    <span className="text-[8px] sm:text-[9px] text-[#8F9E7B] uppercase tracking-wider opacity-75">
+                      / Day
+                    </span>
                   </div>
-                  <div className="col-span-5 md:col-span-4 text-right flex flex-col justify-center items-end">
-                    <span className="text-2xl font-light text-[#F3F4ED]">€{pkg.sharing}</span>
-                    <span className="text-[9px] text-[#8F9E7B] uppercase tracking-widest mt-1 group-hover:opacity-100 opacity-50">Per Day (Sharing)</span>
+
+                  {/* Sharing Room Price — ALWAYS VISIBLE ON MOBILE */}
+                  <div className="col-span-3 text-right flex flex-col justify-center items-end">
+                    <span className="text-base sm:text-xl md:text-2xl font-serif font-light text-amber-100">
+                      €{pkg.sharing}
+                    </span>
+                    <span className="text-[8px] sm:text-[9px] text-[#8F9E7B] uppercase tracking-wider opacity-75">
+                      / Day (Share)
+                    </span>
                   </div>
                 </div>
               ))}
@@ -365,16 +389,16 @@ export default function Section4Packages() {
           {pricingMode === 'group' && (
              <div className="flex flex-col">
               {groupPackages.map((pkg, i) => (
-                <div key={i} className="grid grid-cols-12 gap-4 px-6 py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
-                  <div className="col-span-6 md:col-span-4 flex flex-col">
-                    <span className="text-xl md:text-2xl font-serif mb-1 text-slate-200">{pkg.name}</span>
+                <div key={i} className="grid grid-cols-12 gap-2 sm:gap-4 px-3 sm:px-6 py-4 sm:py-6 border-b border-[#8F9E7B]/10 hover:bg-[#2F3627]/40 transition-colors duration-300 group items-center">
+                  <div className="col-span-4 flex flex-col">
+                    <span className="text-base sm:text-xl md:text-2xl font-serif text-slate-200">{pkg.name}</span>
                   </div>
-                  <div className="col-span-6 md:col-span-5 text-right md:text-left flex items-center justify-end md:justify-start">
-                    <span className="text-sm text-[#B3C0A4] font-light tracking-wide">{pkg.desc}</span>
+                  <div className="col-span-5 text-right md:text-left flex items-center justify-end md:justify-start">
+                    <span className="text-xs sm:text-sm text-[#B3C0A4] font-light">{pkg.desc}</span>
                   </div>
-                  <div className="col-span-12 md:col-span-3 text-right flex flex-col justify-center items-end mt-2 md:mt-0 pt-4 md:pt-0 border-t border-[#8F9E7B]/10 md:border-0">
-                    <span className="text-2xl font-light text-[#F3F4ED]">€{pkg.price}</span>
-                    <span className="text-[9px] text-[#8F9E7B] uppercase tracking-widest mt-1 group-hover:opacity-100 opacity-50">Per Person / Day</span>
+                  <div className="col-span-3 text-right flex flex-col justify-center items-end">
+                    <span className="text-base sm:text-xl md:text-2xl font-serif font-light text-amber-100">€{pkg.price}</span>
+                    <span className="text-[8px] sm:text-[9px] text-[#8F9E7B] uppercase tracking-wider opacity-75">/ Person</span>
                   </div>
                 </div>
               ))}
@@ -384,9 +408,9 @@ export default function Section4Packages() {
         </div>
 
         {/* Upgrades & Transfers (Fine Print) */}
-        <div className="mt-12 flex flex-col md:flex-row gap-8 justify-between items-start pt-8 border-t border-[#8F9E7B]/20 text-sm">
-          <div className="flex-1">
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[#8F9E7B] mb-4">Room Upgrades</h4>
+        <div className="mt-8 md:mt-12 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start pt-6 md:pt-8 border-t border-[#8F9E7B]/20 text-xs sm:text-sm">
+          <div className="w-full md:flex-1">
+            <h4 className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-[#8F9E7B] mb-3 md:mb-4">Room Upgrades</h4>
             <ul className="space-y-2 text-[#B3C0A4] font-light">
               <li className="flex justify-between max-w-xs hover:text-white transition-colors cursor-pointer group">
                 <span className="border-b border-transparent group-hover:border-white/30">Standard AC</span> <span>+€10 / day</span>
@@ -399,13 +423,13 @@ export default function Section4Packages() {
               </li>
             </ul>
           </div>
-          <div className="flex-1 md:text-right">
-             <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[#8F9E7B] mb-4">Logistics & Extras</h4>
+          <div className="w-full md:flex-1 md:text-right">
+             <h4 className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-[#8F9E7B] mb-3 md:mb-4">Logistics & Extras</h4>
              <ul className="space-y-2 text-[#B3C0A4] font-light md:ml-auto">
-               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-8"><span>Extra Guest (Sharing + Food)</span> <span>+€20 / day</span></li>
-               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-8"><span>Kannur Airport Transfer (Round-trip)</span> <span>€50</span></li>
-               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-8"><span>Calicut Airport Transfer (Round-trip)</span> <span>€80</span></li>
-               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-8"><span>Cochin Airport Transfer (Round-trip)</span> <span>€220</span></li>
+               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-4 sm:gap-8"><span>Extra Guest (Sharing + Food)</span> <span>+€20 / day</span></li>
+               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-4 sm:gap-8"><span>Kannur Airport Transfer (Round-trip)</span> <span>€50</span></li>
+               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-4 sm:gap-8"><span>Calicut Airport Transfer (Round-trip)</span> <span>€80</span></li>
+               <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-4 sm:gap-8"><span>Cochin Airport Transfer (Round-trip)</span> <span>€220</span></li>
              </ul>
           </div>
         </div>
