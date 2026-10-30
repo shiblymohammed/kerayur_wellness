@@ -107,22 +107,22 @@ export default function Hotel1Page() {
           </div>
 
           {/* Hero Content - Left Aligned, Clean */}
-          <div className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col justify-center px-6 lg:px-12">
-            <div ref={heroContentRef} className="max-w-2xl mt-20">
-              <p className="text-amber-300 font-medium tracking-[0.2em] uppercase text-sm mb-6 drop-shadow-md">
+          <div className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col justify-center px-5 sm:px-6 lg:px-12">
+            <div ref={heroContentRef} className="max-w-2xl mt-12 sm:mt-20">
+              <p className="text-amber-300 font-medium tracking-[0.2em] uppercase text-xs sm:text-sm mb-3 sm:mb-6 drop-shadow-md">
                 Authentic Healing by the Arabian Sea
               </p>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-tight drop-shadow-lg">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white mb-4 sm:mb-6 leading-tight drop-shadow-lg">
                 Where the<br/>Ocean Heals
               </h1>
-              <p className="text-lg md:text-xl text-stone-200 mb-10 max-w-xl font-light drop-shadow">
+              <p className="text-sm sm:text-lg md:text-xl text-stone-200 mb-6 sm:mb-10 max-w-xl font-light drop-shadow">
                 Surrender to the rhythmic waves of Nattika Beach. Restore your mind, body, and spirit through authentic Panchakarma and beachfront luxury.
               </p>
 
-              <div className="mt-8">
+              <div className="mt-4 sm:mt-8">
                 <MagneticElement strength={40}>
                   <button
-                    className="inline-block border border-white/40 text-white px-10 py-4 hover:bg-white hover:text-stone-900 transition-all duration-500 backdrop-blur-sm tracking-widest text-sm uppercase group overflow-hidden relative"
+                    className="inline-block border border-white/40 text-white px-7 sm:px-10 py-3.5 sm:py-4 hover:bg-white hover:text-stone-900 transition-all duration-500 backdrop-blur-sm tracking-widest text-xs sm:text-sm uppercase group overflow-hidden relative"
                   >
                     <span className="relative z-10">Discover the Sanctuary</span>
                     <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
@@ -147,7 +147,7 @@ export default function Hotel1Page() {
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
           <button
             onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
-            className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-[#4A533E]/60 bg-[#F3F4ED] text-[#4A533E] flex items-center justify-center hover:bg-[#4A533E] hover:text-[#F3F4ED] hover:scale-105 transition-all duration-500 shadow-sm group"
+            className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-[#4A533E]/60 bg-[#F3F4ED] text-[#4A533E] flex items-center justify-center hover:bg-[#4A533E] hover:text-[#F3F4ED] hover:scale-105 transition-all duration-500 shadow-sm group"
             aria-label="Scroll down to explore"
           >
             <svg

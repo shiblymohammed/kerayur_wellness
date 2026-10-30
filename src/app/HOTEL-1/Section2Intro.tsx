@@ -181,10 +181,10 @@ export default function Section2Intro() {
       </div>
 
       {/* ─── Main content block ─── */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-28 md:pt-40 pb-20">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-16 md:pt-40 pb-12 md:pb-20">
 
         {/* Eyebrow */}
-        <div ref={eyebrowRef} className="flex items-center gap-5 mb-14">
+        <div ref={eyebrowRef} className="flex items-center gap-5 mb-6 md:mb-14">
           <div className="w-10 h-[1px] bg-[#4A533E]/50" />
           <span className="text-[10px] tracking-[0.45em] uppercase text-[#4A533E]/60 font-semibold">
             A Living Tradition
@@ -193,13 +193,13 @@ export default function Section2Intro() {
         </div>
 
         {/* ─── Two-column: left text / right images ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-24 items-start">
 
           {/* ── LEFT ── */}
           <div>
 
             {/* Headline with mask-reveal per line */}
-            <h2 ref={headlineRef} className="text-5xl md:text-6xl xl:text-[4.5rem] font-serif leading-[1.08] tracking-wide mb-12">
+            <h2 ref={headlineRef} className="text-4xl sm:text-5xl md:text-6xl xl:text-[4.5rem] font-serif leading-[1.08] tracking-wide mb-6 md:mb-12">
               <div className="reveal-line overflow-hidden pb-1">
                 <span className="block">Where the body</span>
               </div>
@@ -215,13 +215,13 @@ export default function Section2Intro() {
             </h2>
 
             {/* Body copy */}
-            <div ref={bodyRef} className="space-y-5 mb-16 max-w-md">
-              <p className="text-base md:text-[17px] text-[#4A533E] font-light leading-relaxed">
+            <div ref={bodyRef} className="space-y-4 md:space-y-5 mb-8 md:mb-16 max-w-md">
+              <p className="text-sm sm:text-base md:text-[17px] text-[#4A533E] font-light leading-relaxed">
                 Your stay is a holistic healing journey to restore balance, calm the mind, and
                 rejuvenate the body. Each guest is under the direct care of experienced Ayurvedic
                 physicians — with daily consultations and fully personalised treatment plans.
               </p>
-              <p className="text-base md:text-[17px] text-[#4A533E] font-light leading-relaxed">
+              <p className="text-sm sm:text-base md:text-[17px] text-[#4A533E] font-light leading-relaxed">
                 The structured daily routine supports natural detoxification through personalised
                 therapies, yoga, meditation, and mindful nutrition — enhanced by a serene coastal
                 environment that encourages deep, lasting relaxation.
@@ -231,7 +231,7 @@ export default function Section2Intro() {
             {/* Stats */}
             <div
               ref={statsRowRef}
-              className="relative grid grid-cols-4 gap-0 border-t border-[#4A533E]/15 pt-10"
+              className="relative grid grid-cols-4 gap-0 border-t border-[#4A533E]/15 pt-6 md:pt-10"
             >
               {/* Faint vertical dividers */}
               {stats.map((stat, i) => (
@@ -239,18 +239,18 @@ export default function Section2Intro() {
                   key={i}
                   className={`flex flex-col pr-4 ${i !== 0 ? 'border-l border-[#4A533E]/10 pl-4' : ''}`}
                 >
-                  <div className="flex items-end gap-0.5 mb-2">
+                  <div className="flex items-end gap-0.5 mb-1.5 md:mb-2">
                     <span
                       ref={el => { statValues.current[i] = el; }}
-                      className="text-4xl md:text-5xl font-serif text-[#2F3627] leading-none tabular-nums"
+                      className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#2F3627] leading-none tabular-nums"
                     >
                       0
                     </span>
-                    <span className="text-2xl font-serif text-[#8F9E7B] leading-none mb-0.5">
+                    <span className="text-xl sm:text-2xl font-serif text-[#8F9E7B] leading-none mb-0.5">
                       {stat.suffix}
                     </span>
                   </div>
-                  <p className="text-[9px] md:text-[10px] tracking-[0.35em] uppercase text-[#4A533E]/55 leading-snug whitespace-pre-line">
+                  <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-[0.25em] sm:tracking-[0.35em] uppercase text-[#4A533E]/55 leading-snug whitespace-pre-line">
                     {stat.label}
                   </p>
                 </div>
@@ -260,7 +260,7 @@ export default function Section2Intro() {
           </div>
 
           {/* ── RIGHT: Creative image trio ── */}
-          <div className="relative flex gap-4 md:gap-5 h-[520px] md:h-[640px] lg:h-[720px]">
+          <div className="relative flex gap-3 sm:gap-4 md:gap-5 h-[360px] sm:h-[480px] md:h-[640px] lg:h-[720px]">
 
             {/* Main tall image */}
             <div
@@ -287,7 +287,7 @@ export default function Section2Intro() {
             </div>
 
             {/* Right stack */}
-            <div className="flex flex-col gap-4 md:gap-5 flex-1">
+            <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 flex-1">
 
               <div
                 ref={img2Ref}
@@ -343,7 +343,7 @@ export default function Section2Intro() {
         .ticker-animate { animation: ticker-scroll 32s linear infinite; }
       `}</style>
 
-      <div className="relative overflow-hidden border-t border-b border-[#4A533E]/12 py-[18px] mt-8">
+      <div className="relative overflow-hidden border-t border-b border-[#4A533E]/12 py-3 md:py-[18px] mt-4 md:mt-8">
         <div
           className="ticker-animate flex whitespace-nowrap"
           style={{ width: 'max-content' }}

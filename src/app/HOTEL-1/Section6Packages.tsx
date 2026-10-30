@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const resortSlides = [
-  { src: '/hotel-1/resort-bedroom.webp',  label: 'Resort Bedroom',   sub: 'Serene Interiors' },
-  { src: '/hotel-1/resort-bedroom-5.webp', label: 'Deluxe Suite',     sub: 'Premium Comfort' },
-  { src: '/hotel-1/resort-bathroom-4_1bf2e62d.webp', label: 'Private Bathroom', sub: 'Thoughtful Details' },
+  { src: '/hotel-1/resort-bedroom.webp',  label: 'Ayur Villa Bedroom', sub: 'Traditional Woodwork & King Bed' },
+  { src: '/hotel-1/resort-bedroom-5.webp', label: 'Deluxe Suite Villa', sub: 'Spacious Veranda & Garden View' },
+  { src: '/hotel-1/resort-bathroom-4_1bf2e62d.webp', label: 'Private Bathroom', sub: 'Open-Air Herbal Bath & Shower' },
 ];
 
 const pricingData = {
@@ -24,9 +24,9 @@ const pricingData = {
       { nights: 28, single: "€4900", double: "€7700" }
     ],
     offers: [
-      "14 night's package — 14th night will be provided complimentary. (1 Night)",
-      "21 night's package — 20th & 21st night will be provided complimentary. (2 Nights)",
-      "28 night's package — 27th & 28th night will be provided complimentary. (2 Nights)"
+      "14 night's package — 14th night will be provided complimentary. (1 Night Free)",
+      "21 night's package — 20th & 21st night will be provided complimentary. (2 Nights Free)",
+      "28 night's package — 27th & 28th night will be provided complimentary. (2 Nights Free)"
     ]
   },
   peakSeason: {
@@ -42,22 +42,30 @@ const pricingData = {
   }
 };
 
+const roomHighlights = [
+  "Private shaded veranda facing tropical gardens",
+  "Eco-crafted teakwood king or twin bedding",
+  "Traditional open-air en-suite botanical bathroom",
+  "Natural coastal ventilation & whisper-quiet climate control",
+  "Handcrafted organic herbal toiletries & cotton robes"
+];
+
 const inclusions = [
-  "Accommodation in Ayur Villa",
-  "Full board Ayurveda meals",
-  "Daily 120 minutes Ayurveda treatments",
-  "Daily Yoga except on arrival and detoxification days (in group)",
-  "Doctor's consultation",
-  "Internal medicines",
-  "Complimentary Wi-Fi",
-  "Cab pick-up and drop-off to nearest airport",
-  "All applicable taxes"
+  "Accommodation in private Ayur Villa",
+  "Full board personalized Ayurvedic meals (3 times daily)",
+  "Daily 120 minutes prescribed Ayurveda treatments",
+  "Daily guided Yoga & Pranayama meditation (in group)",
+  "Initial & ongoing Physician consultations",
+  "All internal Ayurvedic medicines during stay",
+  "Complimentary Wi-Fi throughout resort",
+  "Cab airport pick-up & drop-off (nearest airport)",
+  "All statutory taxes & resort service fees"
 ];
 
 const exclusions = [
-  "Translator",
-  "Peak Season supplement charge from 20th Dec to 31st Dec @ €10 per room per night",
-  "New Year supplement charge on 31st Dec @ €25 per pax"
+  "Translator service (available on request)",
+  "Peak Season supplement: 20th Dec to 31st Dec @ €10 per room per night",
+  "New Year Eve Gala supplement on 31st Dec @ €25 per person"
 ];
 
 export default function Section6Packages() {
@@ -81,7 +89,7 @@ export default function Section6Packages() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Existing package fade-in
+      // Package fade-in
       gsap.from(".pkg-fade", {
         opacity: 0,
         y: 30,
@@ -114,48 +122,37 @@ export default function Section6Packages() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#1A1F16] text-[#F3F4ED] pt-24 pb-32 overflow-hidden border-t border-[#8F9E7B]/20">
+    <section ref={sectionRef} className="relative w-full bg-[#1A1F16] text-[#F3F4ED] pt-12 md:pt-24 pb-16 md:pb-32 overflow-hidden border-t border-[#8F9E7B]/20">
       
       {/* Background Texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay">
         <Image src="/mandala_watermark.jpg" alt="" fill className="object-cover" />
       </div>
 
-      <div ref={contentRef} className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex flex-col lg:flex-row gap-16">
+      <div ref={contentRef} className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20 flex flex-col lg:flex-row gap-10 lg:gap-16">
         
-        {/* LEFT COLUMN: Intro & Parallax Slideshow */}
+        {/* LEFT COLUMN: Room Showcase & Parallax Slideshow */}
         <div className="w-full lg:w-[40%] flex flex-col pkg-fade">
           
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-4 md:mb-6">
             <div className="w-8 h-[1px] bg-[#8F9E7B]/40" />
             <span className="text-[10px] tracking-[0.5em] uppercase text-[#8F9E7B] font-semibold">
-              Revival
+              Accommodation & Rates
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-serif leading-[1.1] mb-6">
-            The Ayurveda <br />
-            <span className="italic text-[#8F9E7B] font-light">Centre</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-[1.1] mb-3 md:mb-5">
+            The Ayur Villa <br />
+            <span className="italic text-[#8F9E7B] font-light">Sanctuary</span>
           </h2>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 w-max mb-8">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[9px] tracking-widest uppercase font-bold text-white/80">Green Leaf Certified</span>
-          </div>
-
-          <p className="text-sm text-[#B3C0A4] font-light leading-relaxed mb-6">
-            Aimed at purifying and de-toxifying 7 elements that constitute the human body. A perfect balance of tridoshas and pancha mahabhuta is achieved with this program. Includes snehapana, swedana and Sodhana / Panchakarma treatments.
+          <p className="text-xs sm:text-sm text-[#B3C0A4] font-light leading-relaxed mb-4 md:mb-6">
+            Private standalone villas designed according to traditional Kerala Vaastu architecture.
+            Nestled amid coconut groves, each villa provides a secluded haven for healing, reflection, and restorative rest.
           </p>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-10">
-            <h3 className="text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-3">Holistic Benefits</h3>
-            <p className="text-sm text-[#F3F4ED] font-medium leading-relaxed">
-              Consistent BMR, enhanced immunity, healthier nervous and muscular co-ordination, improved body nourishment, memory and intelligence, prolonged life span and physical endurance.
-            </p>
-          </div>
-
-          {/* ─── PARALLAX IMAGE SLIDESHOW ─── */}
-          <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+          {/* ─── PARALLAX ROOM SLIDESHOW ─── */}
+          <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 group mb-6">
 
             {/* Parallax-wrapped images */}
             <div ref={slideWrapperRef} className="absolute inset-[-12%] w-[124%] h-[124%]">
@@ -177,27 +174,27 @@ export default function Section6Packages() {
             </div>
 
             {/* Dark gradient for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
 
             {/* Slide caption */}
-            <div className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-6 flex items-end justify-between">
+            <div className="absolute bottom-0 left-0 right-0 z-20 px-4 sm:px-6 pb-4 sm:pb-6 flex items-end justify-between">
               <div>
-                <span className="text-xs uppercase tracking-[0.3em] font-semibold text-white block leading-tight">
+                <span className="text-xs uppercase tracking-[0.25em] font-semibold text-white block leading-tight">
                   {resortSlides[activeSlide].label}
                 </span>
-                <p className="text-[10px] text-white/60 tracking-wider mt-0.5">
+                <p className="text-[10px] text-white/70 tracking-wider mt-0.5">
                   {resortSlides[activeSlide].sub}
                 </p>
               </div>
 
               {/* Slide counter */}
-              <span className="text-[10px] tabular-nums text-white/40 font-mono tracking-widest">
+              <span className="text-[10px] tabular-nums text-white/50 font-mono tracking-widest">
                 {String(activeSlide + 1).padStart(2, '0')}/{String(resortSlides.length).padStart(2, '0')}
               </span>
             </div>
 
             {/* Navigation indicator bars */}
-            <div className="absolute bottom-0 left-0 right-0 z-30 flex gap-1.5 px-6 pb-[2px]">
+            <div className="absolute bottom-0 left-0 right-0 z-30 flex gap-1.5 px-4 sm:px-6 pb-[2px]">
               {resortSlides.map((_, i) => (
                 <button
                   key={i}
@@ -212,24 +209,39 @@ export default function Section6Packages() {
               ))}
             </div>
           </div>
+
+          {/* Room Features List */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
+            <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#8F9E7B] font-bold mb-3">
+              Villa Features & Amenities
+            </h3>
+            <ul className="space-y-2">
+              {roomHighlights.map((hl, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-[#B3C0A4] font-light">
+                  <span className="w-1 h-1 rounded-full bg-[#8F9E7B] mt-1.5 shrink-0" />
+                  <span>{hl}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
 
-        {/* RIGHT COLUMN: Pricing & Details */}
+        {/* RIGHT COLUMN: Pricing Table & Details */}
         <div className="w-full lg:w-[60%] flex flex-col pkg-fade">
           
-          {/* Season Toggle */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 bg-white/5 p-2 rounded-2xl border border-white/10">
-            <div className="flex relative w-full md:w-auto p-1 bg-black/40 rounded-xl">
+          {/* Season Toggle & Validity */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 md:mb-6 gap-3 sm:gap-4 bg-white/5 p-2 rounded-2xl border border-white/10">
+            <div className="flex relative w-full sm:w-auto p-1 bg-black/40 rounded-xl">
               <button 
                 onClick={() => setIsPeak(false)}
-                className={`relative z-10 flex-1 px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-lg transition-colors duration-300 ${!isPeak ? 'text-[#1A1F16]' : 'text-white/60 hover:text-white'}`}
+                className={`relative z-10 flex-1 px-4 sm:px-6 py-2 text-xs uppercase tracking-widest font-semibold rounded-lg transition-colors duration-300 ${!isPeak ? 'text-[#1A1F16]' : 'text-white/60 hover:text-white'}`}
               >
                 Off-Season
               </button>
               <button 
                 onClick={() => setIsPeak(true)}
-                className={`relative z-10 flex-1 px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-lg transition-colors duration-300 ${isPeak ? 'text-[#1A1F16]' : 'text-white/60 hover:text-white'}`}
+                className={`relative z-10 flex-1 px-4 sm:px-6 py-2 text-xs uppercase tracking-widest font-semibold rounded-lg transition-colors duration-300 ${isPeak ? 'text-[#1A1F16]' : 'text-white/60 hover:text-white'}`}
               >
                 Peak Season
               </button>
@@ -240,47 +252,81 @@ export default function Section6Packages() {
               />
             </div>
             
-            <div className="px-4 text-right">
-              <span className="block text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-0.5">Valid From</span>
+            <div className="px-2 sm:px-4 text-left sm:text-right">
+              <span className="block text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-0.5">Validity Period</span>
               <span className="text-xs text-white/80 font-medium">{activeData.date}</span>
             </div>
           </div>
 
-          {/* Pricing Table */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-8">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[500px]">
-                <thead>
-                  <tr className="border-b border-white/10 bg-black/20">
-                    <th className="py-4 px-6 text-[10px] uppercase tracking-widest text-[#8F9E7B] font-semibold w-1/4">Duration</th>
-                    <th className="py-4 px-6 text-[10px] uppercase tracking-widest text-[#8F9E7B] font-semibold text-center w-3/8">Single</th>
-                    <th className="py-4 px-6 text-[10px] uppercase tracking-widest text-[#8F9E7B] font-semibold text-center w-3/8">Double</th>
+          {/* Room Details Banner Above Price Table */}
+          <div className="bg-[#8F9E7B]/10 border border-[#8F9E7B]/25 rounded-2xl p-4 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+            <div>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-[#8F9E7B] font-bold block mb-0.5">
+                Included Accommodation
+              </span>
+              <h4 className="text-base font-serif text-[#F3F4ED]">Ayur Villa (Private Standalone)</h4>
+              <p className="text-xs text-[#B3C0A4] font-light mt-0.5">
+                All packages include private villa stay, full board Ayurvedic dining, and daily 120min treatment.
+              </p>
+            </div>
+            <div className="shrink-0 text-left sm:text-right pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
+              <span className="text-[10px] text-white/60 block uppercase tracking-wider">Currency</span>
+              <span className="text-xs text-amber-300 font-semibold">Euro (€) Net</span>
+            </div>
+          </div>
+
+          {/* Pricing Table — 100% Fully Visible on Mobile (table-fixed, no horizontal cutoff) */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-5 md:mb-7">
+            <table className="w-full table-fixed text-left border-collapse">
+              <thead>
+                <tr className="border-b border-white/10 bg-black/30">
+                  <th className="py-3 sm:py-4 pl-3.5 sm:pl-6 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold w-[34%]">
+                    Duration
+                  </th>
+                  <th className="py-3 sm:py-4 px-2 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold text-center w-[33%]">
+                    Single Room
+                    <span className="block text-[8px] sm:text-[9px] font-normal text-white/50 tracking-normal mt-0.5">1 Guest</span>
+                  </th>
+                  <th className="py-3 sm:py-4 pr-3.5 sm:pr-6 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold text-center w-[33%]">
+                    Double Room
+                    <span className="block text-[8px] sm:text-[9px] font-normal text-white/50 tracking-normal mt-0.5">2 Guests</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {activeData.packages.map((pkg, idx) => (
+                  <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td className="py-3.5 sm:py-4 pl-3.5 sm:pl-6 text-xs sm:text-sm font-medium text-[#F3F4ED]">
+                      {pkg.nights} Nights
+                    </td>
+                    <td className="py-3.5 sm:py-4 px-2 text-center text-sm sm:text-base md:text-lg font-serif font-medium text-amber-100">
+                      {pkg.single}
+                    </td>
+                    <td className="py-3.5 sm:py-4 pr-3.5 sm:pr-6 text-center text-sm sm:text-base md:text-lg font-serif font-medium text-amber-100">
+                      {pkg.double}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {activeData.packages.map((pkg, idx) => (
-                    <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                      <td className="py-4 px-6 text-sm font-medium">{pkg.nights} Nights</td>
-                      <td className="py-4 px-6 text-center text-lg font-serif text-[#F3F4ED]">{pkg.single}</td>
-                      <td className="py-4 px-6 text-center text-lg font-serif text-[#F3F4ED]">{pkg.double}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                ))}
+              </tbody>
+            </table>
+            
+            <div className="px-3.5 sm:px-6 py-2.5 bg-black/20 text-[10px] text-white/50 flex justify-between items-center">
+              <span>All statutory taxes & resort fees included</span>
+              <span className="italic">{isPeak ? 'Peak Season Rates' : 'Off-Season Rates'}</span>
             </div>
           </div>
 
           {/* Conditional Offers */}
           {!isPeak && activeData.offers.length > 0 && (
-            <div className="mb-10 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-6">
-              <h4 className="text-xs uppercase tracking-widest font-bold text-amber-500 mb-4">
-                Exclusive Value-Added Offers
+            <div className="mb-5 md:mb-8 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 sm:p-5">
+              <h4 className="text-xs uppercase tracking-widest font-bold text-amber-500 mb-2.5">
+                Complimentary Night Offers
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {activeData.offers.map((offer, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm text-amber-500/90 font-light">
-                    <span className="mt-1 text-[8px]">✦</span>
-                    {offer}
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-amber-200/90 font-light">
+                    <span className="mt-0.5 text-[8px] text-amber-400">✦</span>
+                    <span>{offer}</span>
                   </li>
                 ))}
               </ul>
@@ -288,30 +334,30 @@ export default function Section6Packages() {
           )}
 
           {/* Inclusions & Exclusions Split */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             <div>
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-4 pb-2 border-b border-white/10">
-                Inclusions
+              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-3 pb-2 border-b border-white/10">
+                Package Inclusions
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {inclusions.map((inc, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-xs text-[#B3C0A4] font-light">
+                  <li key={idx} className="flex items-start gap-2 text-xs text-[#B3C0A4] font-light">
                     <span className="w-1 h-1 rounded-full bg-[#8F9E7B] mt-1.5 shrink-0" />
-                    {inc}
+                    <span>{inc}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
             <div>
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-4 pb-2 border-b border-white/10">
-                Exclusions (Net/Non-Comm.)
+              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-3 pb-2 border-b border-white/10">
+                Exclusions & Supplements
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {exclusions.map((exc, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-xs text-white/50 font-light">
+                  <li key={idx} className="flex items-start gap-2 text-xs text-white/55 font-light">
                     <span className="w-1 h-1 rounded-full bg-white/30 mt-1.5 shrink-0" />
-                    {exc}
+                    <span>{exc}</span>
                   </li>
                 ))}
               </ul>
