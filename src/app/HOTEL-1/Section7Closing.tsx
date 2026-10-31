@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -148,7 +150,7 @@ export default function Section7Closing() {
         </div>
       </div>
 
-      {/* 3. Immersive Resort Grid — 2 columns on mobile to halve vertical scroll */}
+      {/* 3. Immersive Resort Grid — 2 columns on mobile instead of 1 long column */}
       <div ref={galleryRef} className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20 mb-12 md:mb-32">
         <div className="text-center mb-6 md:mb-12">
           <span className="text-[10px] tracking-[0.4em] uppercase text-[#4A533E]/60 font-semibold block mb-2 md:mb-3">
@@ -159,7 +161,7 @@ export default function Section7Closing() {
           </h3>
         </div>
 
-        {/* CSS Columns (Masonry effect): 2 columns on mobile instead of 1 long column */}
+        {/* CSS Columns (Masonry effect): 2 columns on mobile */}
         <div className="columns-2 lg:columns-3 gap-2.5 sm:gap-6 space-y-2.5 sm:space-y-6">
           {gridImages.map((img, idx) => (
             <div 
@@ -199,64 +201,19 @@ export default function Section7Closing() {
             Reserve your sanctuary and allow us to guide you back to perfect balance.
           </p>
           
-          <button className="group relative overflow-hidden rounded-full bg-[#F3F4ED] text-[#2F3627] px-8 sm:px-10 py-3.5 sm:py-4 font-semibold tracking-widest uppercase text-xs transition-all hover:scale-105">
+          <Link 
+            href="/booking"
+            className="group relative overflow-hidden rounded-full bg-[#F3F4ED] text-[#2F3627] px-8 sm:px-12 py-4 sm:py-5 font-semibold tracking-widest uppercase text-xs transition-all hover:scale-105 shadow-xl inline-flex items-center gap-3"
+          >
             <span className="relative z-10">Reserve Your Stay</span>
+            <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             <div className="absolute inset-0 h-full w-0 bg-[#8F9E7B] transition-all duration-500 ease-out group-hover:w-full z-0" />
-            <span className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-[#F3F4ED]">
-              Reserve Your Stay
+            <span className="absolute inset-0 z-10 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-[#F3F4ED]">
+              Reserve Your Stay <ArrowRight size={15} />
             </span>
-          </button>
+          </Link>
         </div>
       </div>
-
-      {/* ─── FOOTER ─── */}
-      <footer className="w-full bg-[#1A1F16] text-[#B3C0A4] py-12 sm:py-16 px-5 sm:px-6 md:px-12 lg:px-20 border-t border-white/5 relative z-10">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-10">
-          
-          {/* Brand */}
-          <div className="flex flex-col">
-            <h3 className="text-2xl sm:text-3xl font-serif text-[#F3F4ED] mb-1 sm:mb-2 tracking-wide">Revival</h3>
-            <span className="text-[9px] uppercase tracking-[0.4em] text-[#8F9E7B] font-bold">The Ayurveda Centre</span>
-          </div>
-
-          {/* Links */}
-          <div className="flex gap-8 sm:gap-12 text-xs uppercase tracking-widest font-semibold">
-            <div className="flex flex-col gap-3 sm:gap-4">
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Programs</a>
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Treatments</a>
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Accommodation</a>
-            </div>
-            <div className="flex flex-col gap-3 sm:gap-4">
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Our Philosophy</a>
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Contact</a>
-              <a href="#" className="hover:text-[#F3F4ED] transition-colors">Privacy</a>
-            </div>
-          </div>
-
-          {/* Contact & Socials */}
-          <div className="flex flex-col items-start md:items-end gap-5 sm:gap-6 text-sm font-light">
-            <div className="text-left md:text-right">
-              <p>North Kerala, India</p>
-              <p className="hover:text-[#F3F4ED] transition-colors cursor-pointer mt-1">heal@revivalayurveda.com</p>
-            </div>
-            <div className="flex gap-4">
-              {/* Dummy Social Icons */}
-              <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
-                <span className="text-[10px]">IG</span>
-              </div>
-              <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
-                <span className="text-[10px]">FB</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="max-w-[1400px] mx-auto mt-10 md:mt-16 pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-white/30">
-          <p>© 2026 Revival Ayurveda. All Rights Reserved.</p>
-          <p className="mt-3 md:mt-0">Green Leaf Certified Resort</p>
-        </div>
-      </footer>
 
     </section>
   );

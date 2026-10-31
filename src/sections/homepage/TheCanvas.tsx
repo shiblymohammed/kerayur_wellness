@@ -67,6 +67,13 @@ export default function TheCanvas() {
   const [activeId, setActiveId] = useState("blue");
   const [prevId, setPrevId] = useState("blue");
 
+  const scrollToSanctuaries = () => {
+    const el = document.getElementById('thesanctuaries');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleSetImage = (newId: string) => {
     if (newId === activeId) return;
     setPrevId(activeId);
@@ -254,7 +261,10 @@ export default function TheCanvas() {
             True healing requires the perfect environment. Across the serene backwaters, the pristine coastlines, and the silent altitudes of Kerala, we have curated the ultimate sanctuaries for your Ayurvedic transformation.
           </p>
         </div>
-        <button className="px-8 py-3 bg-[#333333] text-white rounded-full font-medium tracking-widest text-sm pointer-events-auto shadow-lg">
+        <button 
+          onClick={scrollToSanctuaries}
+          className="px-8 py-3 bg-[#333333] hover:bg-black text-white rounded-full font-medium tracking-widest text-sm pointer-events-auto shadow-lg transition-colors cursor-pointer"
+        >
           DISCOVER SANCTUARIES
         </button>
       </div>
@@ -327,7 +337,10 @@ export default function TheCanvas() {
                 True healing requires the perfect environment. Across the serene backwaters, the pristine coastlines, and the silent altitudes of Kerala, we have curated the ultimate sanctuaries for your Ayurvedic transformation.
               </p>
             </div>
-            <button className="px-8 py-3 bg-white text-black rounded-full font-medium tracking-widest text-sm hover:bg-gray-100 transition-all pointer-events-auto shadow-lg">
+            <button 
+              onClick={scrollToSanctuaries}
+              className="px-8 py-3 bg-white text-black rounded-full font-medium tracking-widest text-sm hover:bg-gray-100 transition-all pointer-events-auto shadow-lg cursor-pointer"
+            >
               DISCOVER SANCTUARIES
             </button>
           </div>

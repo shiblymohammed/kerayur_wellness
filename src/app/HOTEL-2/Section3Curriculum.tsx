@@ -231,7 +231,7 @@ export default function Section3Curriculum() {
   }, []);
 
   return (
-    <section className="relative w-full bg-[#F5F4EF] text-[#2F3627]">
+    <section id="curriculum-section" className="relative w-full bg-[#F5F4EF] text-[#2F3627]">
       
       {/* -----------------------------
           PART 1: The Transition Banner (Slider)

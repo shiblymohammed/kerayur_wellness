@@ -63,12 +63,6 @@ export default function Hotel2Page() {
 
   return (
     <main className="w-full bg-[#F3F4ED] text-[#2F3627] font-sans selection:bg-[#4A533E] selection:text-white">
-      
-      {/* Top Navigation Placeholder */}
-      <header className="absolute top-0 w-full px-5 sm:px-8 py-6 sm:py-8 flex justify-between items-center z-20 mix-blend-difference text-white">
-        <div className="text-xs tracking-[0.2em] uppercase font-semibold">The Sanctuary</div>
-        <div className="text-xs tracking-widest uppercase">Menu</div>
-      </header>
 
       {/* Section 1: Architectural Hero */}
       <section ref={heroRef} className="relative w-full h-screen overflow-hidden bg-[#1A1F16]">

@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight, Phone, Mail } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -288,18 +289,21 @@ export default function SectionClosing() {
             Whether seeking profound physical rejuvenation through Panchakarma or clinical mastery through our curriculum, your path begins here.
           </p>
 
-          <button className="bg-[#8F9E7B] text-[#1A1F16] px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#F3F4ED] hover:scale-105 transition-all duration-300 shadow-[0_10px_30px_rgba(143,158,123,0.3)] flex items-center gap-3 group">
-            Reserve Your Journey
+          <Link
+            href="/booking"
+            className="bg-[#8F9E7B] text-[#1A1F16] px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#F3F4ED] hover:scale-105 transition-all duration-300 shadow-[0_10px_30px_rgba(143,158,123,0.3)] inline-flex items-center gap-3 group"
+          >
+            <span>Reserve Your Journey</span>
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
         </div>
 
       </div>
 
       {/* -------------------------------------
-          PART 3: EXPANDED EDITORIAL FOOTER
+          PART 3: DIRECT ENQUIRIES & ACCREDITATIONS
           ------------------------------------- */}
-      <footer className="w-full bg-[#12160F] border-t border-[#8F9E7B]/10 py-12 md:py-16 text-[#B3C0A4] text-xs">
+      <div className="w-full bg-[#12160F] border-t border-[#8F9E7B]/10 py-12 md:py-16 text-[#B3C0A4] text-xs">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-24 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           
           <div className="col-span-1 md:col-span-2">
@@ -323,24 +327,19 @@ export default function SectionClosing() {
           <div>
             <span className="text-[10px] tracking-[0.2em] uppercase text-[#F3F4ED] font-bold block mb-4">Direct Communication</span>
             <div className="space-y-3 opacity-70">
-              <div className="flex items-center gap-2">
+              <a href="tel:+914962504334" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Phone size={14} className="text-[#8F9E7B]" />
                 <span>+91 496 2504334</span>
-              </div>
-              <div className="flex items-center gap-2">
+              </a>
+              <a href="mailto:contact@greensayurveda.com" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Mail size={14} className="text-[#8F9E7B]" />
                 <span>contact@greensayurveda.com</span>
-              </div>
+              </a>
             </div>
           </div>
 
         </div>
-
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-24 mt-10 md:mt-12 pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] opacity-40 gap-4">
-          <span>&copy; {new Date().getFullYear()} Greens Ayurveda Sanctuary. All rights reserved.</span>
-          <span>Azhiyur &bull; Calicut &bull; Kerala</span>
-        </div>
-      </footer>
+      </div>
 
     </section>
   );

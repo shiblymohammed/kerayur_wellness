@@ -170,6 +170,7 @@ export default function Section2Intro() {
   return (
     <section
       ref={sectionRef}
+      id="section-intro"
       className="relative w-full bg-[#F3F4ED] text-[#2F3627] overflow-hidden"
     >
       {/* ─── Decorative large background numeral ─── */}

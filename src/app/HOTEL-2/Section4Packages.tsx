@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Stethoscope, Utensils, Wifi, Leaf, BedDouble, Library, CheckCircle2, HeartPulse } from 'lucide-react';
+import Link from 'next/link';
+import { Stethoscope, Utensils, Wifi, Leaf, BedDouble, Library, CheckCircle2, HeartPulse, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -89,7 +90,7 @@ export default function Section4Packages() {
   }, [activePropertyId]);
 
   return (
-    <section className="w-full bg-[#1A1F16] text-[#F3F4ED] relative z-20 pb-16 md:pb-32">
+    <section id="hotel2-packages" className="w-full bg-[#1A1F16] text-[#F3F4ED] relative z-20 pb-16 md:pb-32">
       
       {/* Background Texture & Glow */}
       <div className="absolute inset-0 bg-[url('/mandala_watermark.jpg')] bg-repeat opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
@@ -432,6 +433,21 @@ export default function Section4Packages() {
                <li className="flex md:justify-end justify-between max-w-xs md:max-w-none gap-4 sm:gap-8"><span>Cochin Airport Transfer (Round-trip)</span> <span>€220</span></li>
              </ul>
           </div>
+        </div>
+
+        {/* Clean Booking CTA Bar */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-[#2F3627]/40 border border-[#8F9E7B]/20">
+          <div>
+            <h4 className="text-[#F3F4ED] font-serif text-base sm:text-lg">Ready to begin your journey at Greens Ayurveda?</h4>
+            <p className="text-xs text-[#B3C0A4] font-light">Specialized clinical admissions, doctor consultations, and certified courses.</p>
+          </div>
+          <Link
+            href="/booking"
+            className="shrink-0 bg-[#8F9E7B] text-[#1A1F16] px-7 py-3.5 rounded-full text-xs tracking-widest uppercase font-bold hover:bg-[#F3F4ED] transition-all duration-300 shadow-md hover:scale-105 inline-flex items-center gap-2"
+          >
+            Reserve Greens Retreat
+            <ArrowRight size={14} />
+          </Link>
         </div>
 
       </div>

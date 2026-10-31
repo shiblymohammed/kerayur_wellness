@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -150,8 +151,14 @@ export default function Section2Ecosystem() {
             <p className="text-[#5C664D] leading-relaxed font-light mb-6 md:mb-8 text-xs sm:text-sm md:text-base">
               Our unique GTS model combines rigorous clinical healing with profound academic instruction. We provide an immersive environment for the serious seeker looking to master traditional Kerala Ayurveda.
             </p>
-            <button className="border border-[#8F9E7B]/50 text-[#4A533E] px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#F3F4ED] transition-all duration-300 shadow-[0_5px_15px_rgba(143,158,123,0.1)]">
-              Discover GTS
+            <button 
+              onClick={() => {
+                const el = document.getElementById('curriculum-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="border border-[#8F9E7B]/50 text-[#4A533E] px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#F3F4ED] hover:border-[#8F9E7B] transition-all duration-300 shadow-[0_5px_15px_rgba(143,158,123,0.1)] cursor-pointer"
+            >
+              Discover GTS Curriculum
             </button>
           </div>
         </div>
@@ -211,13 +218,16 @@ export default function Section2Ecosystem() {
                         {pillar.specs}
                       </p>
                       
-                      <button className="w-full py-2.5 px-4 border border-[#E5DECD] rounded-full text-[9px] tracking-[0.2em] uppercase text-[#4A533E] font-bold hover:bg-[#F5F4EF] transition-colors flex items-center justify-center gap-2 mt-auto">
+                      <Link 
+                        href="/booking"
+                        className="w-full py-2.5 px-4 border border-[#E5DECD] rounded-full text-[9px] tracking-[0.2em] uppercase text-[#4A533E] font-bold hover:bg-[#F5F4EF] hover:border-[#8F9E7B] transition-colors flex items-center justify-center gap-2 mt-auto"
+                      >
                         <svg className="w-3 h-3 text-[#8F9E7B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                         Explore
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 ))}
@@ -269,13 +279,16 @@ export default function Section2Ecosystem() {
                     </p>
                     
                     {/* Delicate Pill Button with Eye Icon */}
-                    <button className="w-full py-3.5 px-6 border border-[#E5DECD] rounded-full text-[10px] tracking-[0.2em] uppercase text-[#4A533E] font-bold hover:bg-[#F5F4EF] hover:border-[#8F9E7B]/50 transition-all duration-300 flex items-center justify-center gap-3">
+                    <Link 
+                      href="/booking"
+                      className="w-full py-3.5 px-6 border border-[#E5DECD] rounded-full text-[10px] tracking-[0.2em] uppercase text-[#4A533E] font-bold hover:bg-[#F5F4EF] hover:border-[#8F9E7B]/50 transition-all duration-300 flex items-center justify-center gap-3"
+                    >
                       <svg className="w-3.5 h-3.5 text-[#8F9E7B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                       Explore
-                    </button>
+                    </Link>
 
                     {/* Centered Number at bottom */}
                     <div className="w-full flex justify-center mt-6">

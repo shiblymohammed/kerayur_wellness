@@ -122,7 +122,11 @@ export default function Hotel1Page() {
               <div className="mt-4 sm:mt-8">
                 <MagneticElement strength={40}>
                   <button
-                    className="inline-block border border-white/40 text-white px-7 sm:px-10 py-3.5 sm:py-4 hover:bg-white hover:text-stone-900 transition-all duration-500 backdrop-blur-sm tracking-widest text-xs sm:text-sm uppercase group overflow-hidden relative"
+                    onClick={() => {
+                      const el = document.getElementById('section-intro');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-block border border-white/40 text-white px-7 sm:px-10 py-3.5 sm:py-4 hover:bg-white hover:text-stone-900 transition-all duration-500 backdrop-blur-sm tracking-widest text-xs sm:text-sm uppercase group overflow-hidden relative cursor-pointer"
                   >
                     <span className="relative z-10">Discover the Sanctuary</span>
                     <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
@@ -181,7 +185,7 @@ export default function Hotel1Page() {
       {/* Section 6: Pricing & Packages */}
       <Section6Packages />
 
-      {/* Section 7: Final Gallery, CTA & Footer */}
+      {/* Section 7: Final Gallery & Booking CTA */}
       <Section7Closing />
     </main>
   );

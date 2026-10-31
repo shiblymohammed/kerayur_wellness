@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,7 +124,7 @@ export default function Section6Packages() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#1A1F16] text-[#F3F4ED] pt-12 md:pt-24 pb-16 md:pb-32 overflow-hidden border-t border-[#8F9E7B]/20">
+    <section ref={sectionRef} id="packages" className="relative w-full bg-[#1A1F16] text-[#F3F4ED] pt-12 md:pt-24 pb-16 md:pb-32 overflow-hidden border-t border-[#8F9E7B]/20">
       
       {/* Background Texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay">
@@ -251,81 +253,74 @@ export default function Section6Packages() {
                 style={{ transform: isPeak ? 'translateX(calc(100% + 4px))' : 'translateX(0)' }}
               />
             </div>
-            
-            <div className="px-2 sm:px-4 text-left sm:text-right">
-              <span className="block text-[10px] uppercase tracking-[0.2em] text-[#8F9E7B] font-bold mb-0.5">Validity Period</span>
-              <span className="text-xs text-white/80 font-medium">{activeData.date}</span>
+
+            <div className="text-left sm:text-right px-2 sm:px-4">
+              <span className="text-[10px] uppercase tracking-widest text-[#8F9E7B] font-bold block">Validity Period</span>
+              <span className="text-xs text-[#B3C0A4] font-light">{activeData.date}</span>
             </div>
           </div>
 
-          {/* Room Details Banner Above Price Table */}
-          <div className="bg-[#8F9E7B]/10 border border-[#8F9E7B]/25 rounded-2xl p-4 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
-            <div>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#8F9E7B] font-bold block mb-0.5">
-                Included Accommodation
-              </span>
-              <h4 className="text-base font-serif text-[#F3F4ED]">Ayur Villa (Private Standalone)</h4>
-              <p className="text-xs text-[#B3C0A4] font-light mt-0.5">
-                All packages include private villa stay, full board Ayurvedic dining, and daily 120min treatment.
-              </p>
-            </div>
-            <div className="shrink-0 text-left sm:text-right pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
-              <span className="text-[10px] text-white/60 block uppercase tracking-wider">Currency</span>
-              <span className="text-xs text-amber-300 font-semibold">Euro (€) Net</span>
-            </div>
-          </div>
-
-          {/* Pricing Table — 100% Fully Visible on Mobile (table-fixed, no horizontal cutoff) */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-5 md:mb-7">
-            <table className="w-full table-fixed text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white/10 bg-black/30">
-                  <th className="py-3 sm:py-4 pl-3.5 sm:pl-6 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold w-[34%]">
-                    Duration
-                  </th>
-                  <th className="py-3 sm:py-4 px-2 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold text-center w-[33%]">
-                    Single Room
-                    <span className="block text-[8px] sm:text-[9px] font-normal text-white/50 tracking-normal mt-0.5">1 Guest</span>
-                  </th>
-                  <th className="py-3 sm:py-4 pr-3.5 sm:pr-6 text-[10px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest text-[#8F9E7B] font-semibold text-center w-[33%]">
-                    Double Room
-                    <span className="block text-[8px] sm:text-[9px] font-normal text-white/50 tracking-normal mt-0.5">2 Guests</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {activeData.packages.map((pkg, idx) => (
-                  <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="py-3.5 sm:py-4 pl-3.5 sm:pl-6 text-xs sm:text-sm font-medium text-[#F3F4ED]">
-                      {pkg.nights} Nights
-                    </td>
-                    <td className="py-3.5 sm:py-4 px-2 text-center text-sm sm:text-base md:text-lg font-serif font-medium text-amber-100">
-                      {pkg.single}
-                    </td>
-                    <td className="py-3.5 sm:py-4 pr-3.5 sm:pr-6 text-center text-sm sm:text-base md:text-lg font-serif font-medium text-amber-100">
-                      {pkg.double}
-                    </td>
+          {/* Pricing Table (100% fully visible and mobile-responsive) */}
+          <div className="w-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-6 md:mb-8">
+            <div className="w-full">
+              <table className="w-full text-left border-collapse table-fixed">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/[0.02]">
+                    <th className="w-[36%] py-3.5 sm:py-4 px-3 sm:px-6 text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold text-[#8F9E7B]">Package</th>
+                    <th className="w-[32%] py-3.5 sm:py-4 px-2 sm:px-6 text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold text-[#8F9E7B] text-center">Single</th>
+                    <th className="w-[32%] py-3.5 sm:py-4 px-2 sm:px-6 text-[10px] sm:text-xs tracking-[0.2em] uppercase font-bold text-[#8F9E7B] text-center">Double</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            
-            <div className="px-3.5 sm:px-6 py-2.5 bg-black/20 text-[10px] text-white/50 flex justify-between items-center">
-              <span>All statutory taxes & resort fees included</span>
-              <span className="italic">{isPeak ? 'Peak Season Rates' : 'Off-Season Rates'}</span>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {activeData.packages.map((pkg, idx) => (
+                    <tr key={idx} className="hover:bg-white/[0.04] transition-colors group">
+                      <td className="py-3.5 sm:py-4 px-3 sm:px-6">
+                        <span className="text-xs sm:text-base font-serif text-white group-hover:text-amber-200 transition-colors block">
+                          {pkg.nights} Nights
+                        </span>
+                        <span className="text-[9px] sm:text-[10px] text-[#8F9E7B]/70 tracking-widest uppercase block mt-0.5">
+                          {pkg.nights * 2} Treatments
+                        </span>
+                      </td>
+                      <td className="py-3.5 sm:py-4 px-2 sm:px-6 text-center">
+                        <span className="text-xs sm:text-base font-mono font-medium text-[#F3F4ED] block">
+                          {pkg.single}
+                        </span>
+                        <span className="text-[8px] sm:text-[9px] text-[#B3C0A4]/60 uppercase tracking-widest block mt-0.5">
+                          1 Person
+                        </span>
+                      </td>
+                      <td className="py-3.5 sm:py-4 px-2 sm:px-6 text-center">
+                        <span className="text-xs sm:text-base font-mono font-medium text-[#F3F4ED] block">
+                          {pkg.double}
+                        </span>
+                        <span className="text-[8px] sm:text-[9px] text-[#B3C0A4]/60 uppercase tracking-widest block mt-0.5">
+                          2 Sharing
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Note banner below table */}
+            <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-black/30 border-t border-white/5 flex items-center justify-between text-[10px] sm:text-xs text-[#B3C0A4]/70">
+              <span>Prices in Euros (€) per room</span>
+              <span className="text-[#8F9E7B]">All inclusive full-board</span>
             </div>
           </div>
 
-          {/* Conditional Offers */}
-          {!isPeak && activeData.offers.length > 0 && (
-            <div className="mb-5 md:mb-8 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 sm:p-5">
-              <h4 className="text-xs uppercase tracking-widest font-bold text-amber-500 mb-2.5">
-                Complimentary Night Offers
-              </h4>
-              <ul className="space-y-2">
+          {/* Promotional Offers Box */}
+          {activeData.offers.length > 0 && (
+            <div className="bg-[#8F9E7B]/10 border border-[#8F9E7B]/30 rounded-2xl p-4 sm:p-5 mb-6 md:mb-8">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#8F9E7B] font-bold block mb-2 sm:mb-3">
+                Seasonal Complimentary Bonus
+              </span>
+              <ul className="space-y-1.5 sm:space-y-2">
                 {activeData.offers.map((offer, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-amber-200/90 font-light">
-                    <span className="mt-0.5 text-[8px] text-amber-400">✦</span>
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-[#F3F4ED] font-light">
+                    <span className="text-[#8F9E7B] font-bold">✓</span>
                     <span>{offer}</span>
                   </li>
                 ))}
@@ -362,6 +357,21 @@ export default function Section6Packages() {
                 ))}
               </ul>
             </div>
+          </div>
+
+          {/* Clean Booking CTA Bar */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/10">
+            <div>
+              <h4 className="text-white font-serif text-base sm:text-lg">Ready to begin your oceanfront healing?</h4>
+              <p className="text-xs text-[#B3C0A4] font-light">Custom durations and personalized medical care available.</p>
+            </div>
+            <Link
+              href="/booking"
+              className="shrink-0 bg-[#8F9E7B] text-[#1A1F16] px-7 py-3.5 rounded-full text-xs tracking-widest uppercase font-bold hover:bg-white transition-all duration-300 shadow-md hover:scale-105 inline-flex items-center gap-2"
+            >
+              Reserve This Package
+              <ArrowRight size={14} />
+            </Link>
           </div>
 
         </div>
