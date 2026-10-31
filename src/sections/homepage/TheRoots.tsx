@@ -14,56 +14,56 @@ const rootsCards = [
     title: "THEYYAM",
     subtitle: "RITUAL TRANCE",
     desc: "Witness the fiery trance of the divine.",
-    img: "/carousel/theyyam.jpeg"
+    img: "/carousel/theyyam.webp"
   },
   {
     id: 2,
     title: "KALARIPAYATTU",
     subtitle: "MARTIAL ART",
     desc: "The ancient martial art of the warriors.",
-    img: "/carousel/kalaripppayattu.png"
+    img: "/carousel/kalaripppayattu.webp"
   },
   {
     id: 3,
     title: "SPICE TRAILS",
     subtitle: "HIGHLAND FLORA",
     desc: "Walk through the aromatic hills of Wayanad.",
-    img: "/carousel/soice%20trials.jpeg"
+    img: "/carousel/soice%20trials.webp"
   },
   {
     id: 4,
     title: "MALABAR",
     subtitle: "COASTAL SHORES",
     desc: "Discover the untouched beaches of the North.",
-    img: "/carousel/varkala.jpeg"
+    img: "/carousel/varkala.webp"
   },
   {
     id: 5,
     title: "KATHAKALI",
     subtitle: "SACRED THEATRE",
     desc: "The classical dance drama of the gods.",
-    img: "/carousel/kathakali.jpeg"
+    img: "/carousel/kathakali.webp"
   },
   {
     id: 6,
     title: "BACKWATERS",
     subtitle: "EMERALD LAGOONS",
     desc: "Glide through the emerald veins of Alleppey.",
-    img: "/carousel/backwaters.jpeg"
+    img: "/carousel/backwaters.webp"
   },
   {
     id: 7,
     title: "MUNNAR",
     subtitle: "MIST & TEA",
     desc: "Mist-covered tea estates rolling into infinity.",
-    img: "/carousel/munnar.jpeg"
+    img: "/carousel/munnar.webp"
   },
   {
     id: 8,
     title: "VARKALA",
     subtitle: "CLIFFS & OCEAN",
     desc: "Red cliffs diving into the Arabian Sea.",
-    img: "/carousel/varkala.jpeg"
+    img: "/carousel/varkala.webp"
   }
 ];
 
@@ -226,7 +226,7 @@ export default function TheRoots() {
         <div ref={cutoutRef} className="w-full flex justify-center relative">
           <SectionCutout 
             fillColor="#1A2A2A"
-            imageUrl="/northSideart.png"
+            imageUrl="/northSideart.webp"
             imageOpacity={0.5}
             className="w-[280vw] md:w-[180vw] lg:w-[120vw] lg:min-w-[1400px]"
             svgClassName="scale-110"
@@ -372,7 +372,7 @@ export default function TheRoots() {
       {/* Bottom Mask */}
       <div className="hidden md:flex absolute bottom-0 left-0 w-full z-50 pointer-events-none justify-center translate-y-[2vw]">
         <img 
-          src="/sectioncutoutWhite.avif" 
+          src="/sectioncutoutWhite.webp" 
           alt="Section Transition" 
           className="w-[120vw] min-w-[1400px] h-auto object-cover" 
         />

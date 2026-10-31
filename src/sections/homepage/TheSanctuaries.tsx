@@ -53,16 +53,16 @@ export default function TheSanctuaries() {
       }
 
       // ---------------------------------------------
-      // 2. Hotel 1 Scroll Motion & Mask Reveals
+      // 2. Premium Clinic Scroll Motion & Mask Reveals
       // ---------------------------------------------
       if (hotel1Ref.current) {
         // Video parallax
         const video1 = hotel1Ref.current.querySelector(".hotel1-video");
         if (video1) {
           gsap.fromTo(video1,
-            { scale: 1.15, yPercent: -5 },
+            { scale: 1.45, yPercent: -5 },
             {
-              scale: 1,
+              scale: 1.3,
               yPercent: 5,
               ease: "none",
               scrollTrigger: {
@@ -105,7 +105,7 @@ export default function TheSanctuaries() {
           "-=0.6"
         );
 
-        // Transition out as Hotel 2 covers it
+        // Transition out as Luxury Clinic covers it
         if (hotel2Ref.current) {
           gsap.to(".hotel1-content-wrapper", {
             yPercent: -15,
@@ -122,7 +122,7 @@ export default function TheSanctuaries() {
       }
 
       // ---------------------------------------------
-      // 3. Hotel 2 Scroll Motion & Mask Reveals
+      // 3. Luxury Clinic Scroll Motion & Mask Reveals
       // ---------------------------------------------
       if (hotel2Ref.current) {
         // Video parallax
@@ -230,7 +230,7 @@ export default function TheSanctuaries() {
         </div>
 
         {/* ------------------------------------------------------------- */}
-        {/* PANEL 2: SANCTUARY 01 — THE COASTAL RETREAT (HOTEL-1)           */}
+        {/* PANEL 2: SANCTUARY 01 — PREMIUM AYURVEDIC WELLNESS CLINIC       */}
         {/* ------------------------------------------------------------- */}
         <div
           ref={hotel1Ref}
@@ -239,13 +239,13 @@ export default function TheSanctuaries() {
           {/* Edge-to-edge Video Atmosphere with Filmic Tonal Grade */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <video
-              src="/videos/hotel-1.mp4"
+              src="https://res.cloudinary.com/dqxyp7emm/video/upload/f_auto,q_auto/v1793444422/hotel-1_fgmgyt.mp4"
               autoPlay
               loop
               muted
               playsInline
-              preload="auto"
-              className="hotel1-video w-full h-full object-cover opacity-85 origin-center"
+              preload="metadata"
+              className="hotel1-video w-full h-full object-cover opacity-85 origin-center scale-[1.3]"
             />
             {/* Architectural Gradient: delicate top vignette, deep minimal bottom fade */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/35 pointer-events-none" />
@@ -260,7 +260,7 @@ export default function TheSanctuaries() {
               {/* Moniker */}
               <div className="overflow-hidden mb-1 sm:mb-2">
                 <span className="hotel1-mask-text block font-mono text-[10px] sm:text-xs tracking-[0.35em] uppercase text-amber-300/90 font-medium">
-                  HOTEL-1 — THE NATTIKA BEACH
+                  PREMIUM AYURVEDIC WELLNESS CLINIC
                 </span>
               </div>
 
@@ -291,11 +291,11 @@ export default function TheSanctuaries() {
               {/* Minimalist Architectural Link CTA */}
               <div className="hotel1-meta">
                 <Link
-                  href="/HOTEL-1"
+                  href="/premium"
                   className="group inline-flex items-center gap-4 text-xs sm:text-sm font-mono tracking-[0.25em] uppercase text-white hover:text-amber-200 transition-colors duration-300"
                 >
                   <span className="border-b border-white/40 group-hover:border-amber-200 pb-1 transition-colors">
-                    Explore Beachfront Sanctuary
+                    Explore Premium Clinic
                   </span>
                   <span className="w-6 sm:w-10 h-[1px] bg-white/50 group-hover:bg-amber-200 group-hover:w-14 transition-all duration-300" />
                   <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -312,7 +312,7 @@ export default function TheSanctuaries() {
                   activeProperty === 0 ? 'text-white font-medium' : 'text-white/40 hover:text-white'
                 }`}
               >
-                NATTIKA BEACH
+                PREMIUM CLINIC
               </button>
               <div className="hidden sm:block flex-1 max-w-xs mx-6 h-[1px] bg-white/10 relative overflow-hidden">
                 <div className="sanctuary-scrub-line absolute top-0 left-0 h-full w-full bg-white/60 origin-left" />
@@ -323,7 +323,7 @@ export default function TheSanctuaries() {
                   activeProperty === 1 ? 'text-white font-medium' : 'text-white/40 hover:text-white'
                 }`}
               >
-                AZHIYUR FOREST
+                LUXURY CLINIC
               </button>
             </div>
 
@@ -331,7 +331,7 @@ export default function TheSanctuaries() {
         </div>
 
         {/* ------------------------------------------------------------- */}
-        {/* PANEL 3: SANCTUARY 02 — THE FOREST SANCTUARY (HOTEL-2)          */}
+        {/* PANEL 3: SANCTUARY 02 — LUXURY AYURVEDIC WELLNESS CLINIC        */}
         {/* ------------------------------------------------------------- */}
         <div
           ref={hotel2Ref}
@@ -340,12 +340,12 @@ export default function TheSanctuaries() {
           {/* Edge-to-edge Video Atmosphere with Filmic Tonal Grade */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <video
-              src="/videos/greens.mp4"
+              src="https://res.cloudinary.com/dqxyp7emm/video/upload/f_auto,q_auto/v1793444419/greens_l1b3rz.mp4"
               autoPlay
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               className="hotel2-video w-full h-full object-cover opacity-85 origin-center"
             />
             {/* Architectural Gradient: delicate top vignette, deep minimal bottom fade */}
@@ -361,7 +361,7 @@ export default function TheSanctuaries() {
               {/* Moniker */}
               <div className="overflow-hidden mb-1 sm:mb-2">
                 <span className="hotel2-mask-text block font-mono text-[10px] sm:text-xs tracking-[0.35em] uppercase text-emerald-300/90 font-medium">
-                  HOTEL-2 — AZHIYUR FOREST HAVEN
+                  LUXURY AYURVEDIC WELLNESS CLINIC
                 </span>
               </div>
 
@@ -392,11 +392,11 @@ export default function TheSanctuaries() {
               {/* Minimalist Architectural Link CTA */}
               <div className="hotel2-meta">
                 <Link
-                  href="/HOTEL-2"
+                  href="/luxury"
                   className="group inline-flex items-center gap-4 text-xs sm:text-sm font-mono tracking-[0.25em] uppercase text-white hover:text-emerald-200 transition-colors duration-300"
                 >
                   <span className="border-b border-white/40 group-hover:border-emerald-200 pb-1 transition-colors">
-                    Explore Forest Sanctuary
+                    Explore Luxury Clinic
                   </span>
                   <span className="w-6 sm:w-10 h-[1px] bg-white/50 group-hover:bg-emerald-200 group-hover:w-14 transition-all duration-300" />
                   <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -413,7 +413,7 @@ export default function TheSanctuaries() {
                   activeProperty === 0 ? 'text-white font-medium' : 'text-white/40 hover:text-white'
                 }`}
               >
-                NATTIKA BEACH
+                PREMIUM CLINIC
               </button>
               <div className="hidden sm:block flex-1 max-w-xs mx-6 h-[1px] bg-white/10 relative overflow-hidden">
                 <div className="sanctuary-scrub-line absolute top-0 left-0 h-full w-full bg-white/60 origin-left" />
@@ -424,7 +424,7 @@ export default function TheSanctuaries() {
                   activeProperty === 1 ? 'text-white font-medium' : 'text-white/40 hover:text-white'
                 }`}
               >
-                AZHIYUR FOREST
+                LUXURY CLINIC
               </button>
             </div>
 

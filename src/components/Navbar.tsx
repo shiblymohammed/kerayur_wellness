@@ -74,8 +74,8 @@ export default function Navbar() {
   }, [pathname]);
 
   const navLinks = [
-    { name: "Premium Retreat", href: "/HOTEL-1" },
-    { name: "Clinical Ayurveda", href: "/HOTEL-2" },
+    { name: "Premium", href: "/premium" },
+    { name: "Luxury", href: "/luxury" },
   ];
 
   // Dynamic Styles

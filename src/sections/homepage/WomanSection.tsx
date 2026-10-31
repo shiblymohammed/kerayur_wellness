@@ -113,7 +113,7 @@ export default function WomanSection() {
       {/* Background Layer with RippleDistortion */}
       <div className="absolute inset-0 w-full h-full">
         <RippleDistortion
-          src="/womanbg/bg.png"
+          src="/womanbg/bg.webp"
           brushSize={50}
           strength={0.135}
           swirl={2.2}
@@ -150,7 +150,7 @@ export default function WomanSection() {
           
           {/* Mobile/Tablet Image */}
           <Image 
-            src="/womanbg/womanmobile.png"
+            src="/womanbg/womanmobile.webp"
             alt="Ayurveda Wellness Woman Mobile"
             fill
             className="object-contain object-left-bottom drop-shadow-[0_0_50px_rgba(0,0,0,0.5)] lg:hidden"
@@ -159,7 +159,7 @@ export default function WomanSection() {
 
           {/* Desktop Image */}
           <Image 
-            src="/womanbg/woman.png"
+            src="/womanbg/woman.webp"
             alt="Ayurveda Wellness Woman"
             fill
             className="hidden lg:block object-contain object-left-bottom drop-shadow-[0_0_50px_rgba(0,0,0,0.5)]"

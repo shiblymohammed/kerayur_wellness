@@ -52,7 +52,7 @@ export default function TheAwakening() {
           loop
           playsInline
           className="w-[110vw] h-[130vh] object-cover absolute scale-[1.15]"
-          src="/videos/hero.mp4"
+          src="https://res.cloudinary.com/dqxyp7emm/video/upload/f_auto,q_auto/v1793444428/hero_ystmqy.mp4"
         />
       </div>
 

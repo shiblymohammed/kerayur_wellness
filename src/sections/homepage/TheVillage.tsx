@@ -18,7 +18,7 @@ const villageCards = [
       "Natural laterite stone cooling",
       "Harmonious energetic alignment"
     ],
-    img: "/villagesection/Traditional_Kerala_village_house…_20260914053151.jpeg"
+    img: "/villagesection/Traditional_Kerala_village_house…_20260914053151.webp"
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const villageCards = [
       "Traditional pottery making",
       "Supporting local heritage"
     ],
-    img: "/villagesection/Artisan_weaving_fabric_on_handloom_20260914053142.jpeg"
+    img: "/villagesection/Artisan_weaving_fabric_on_handloom_20260914053142.webp"
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const villageCards = [
       "Medicinal spice gardens",
       "Ayurvedic culinary mastery"
     ],
-    img: "/villagesection/Serving_Kerala_village_meal_20260914053136.jpeg"
+    img: "/villagesection/Serving_Kerala_village_meal_20260914053136.webp"
   }
 ];
 

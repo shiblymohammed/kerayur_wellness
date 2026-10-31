@@ -26,16 +26,16 @@ export default function Footer() {
 
           {/* Retreats */}
           <div className="col-span-1 md:col-span-2 md:col-start-7">
-            <h5 className="text-[#8F9E7B] text-[10px] tracking-[0.2em] uppercase mb-6 font-bold">Retreats</h5>
+            <h5 className="text-[#8F9E7B] text-[10px] tracking-[0.2em] uppercase mb-6 font-bold">Sanctuaries</h5>
             <ul className="space-y-3.5">
               <li>
-                <Link href="/HOTEL-1" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
-                  Nattika Beach
+                <Link href="/premium" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
+                  Premium Clinic (Nattika Beach)
                 </Link>
               </li>
               <li>
-                <Link href="/HOTEL-2" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
-                  Greens Ayurveda
+                <Link href="/luxury" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
+                  Luxury Clinic (Greens Ayurveda)
                 </Link>
               </li>
               <li>
@@ -51,17 +51,17 @@ export default function Footer() {
             <h5 className="text-[#8F9E7B] text-[10px] tracking-[0.2em] uppercase mb-6 font-bold">Journeys</h5>
             <ul className="space-y-3.5">
               <li>
-                <Link href="/HOTEL-1" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
+                <Link href="/premium" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
                   Panchakarma Detox
                 </Link>
               </li>
               <li>
-                <Link href="/HOTEL-1" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
+                <Link href="/premium" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
                   Stress Management
                 </Link>
               </li>
               <li>
-                <Link href="/HOTEL-2" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
+                <Link href="/luxury" className="text-[#FAF9F6]/80 hover:text-[#FAF9F6] text-sm font-light transition-colors">
                   Ayurvedic Academy
                 </Link>
               </li>

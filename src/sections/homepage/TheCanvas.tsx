@@ -16,8 +16,8 @@ const landscapes = [
     thumbTitle: "The Backwaters",
     thumbSub: "Alleppey",
     index: "01",
-    image: "/backwatersBG.jpg",
-    thumb: "/backwatersBG.jpg"
+    image: "/backwatersBG.webp",
+    thumb: "/backwatersBG.webp"
   },
   {
     id: "green",
@@ -27,8 +27,8 @@ const landscapes = [
     thumbTitle: "The Green Hills",
     thumbSub: "Munnar",
     index: "02",
-    image: "/munnarBG.jpg",
-    thumb: "/munnarBG.jpg"
+    image: "/munnarBG.webp",
+    thumb: "/munnarBG.webp"
   },
   {
     id: "gold",
@@ -38,8 +38,8 @@ const landscapes = [
     thumbTitle: "The Golden Shores",
     thumbSub: "Nattika",
     index: "03",
-    image: "/nattikaBG.jpg",
-    thumb: "/nattikaBG.jpg"
+    image: "/nattikaBG.webp",
+    thumb: "/nattikaBG.webp"
   }
 ];
 

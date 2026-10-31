@@ -13,49 +13,49 @@ const treatmentCards = [
     id: 1,
     title: "STRESS & BURNOUT RELIEF",
     desc: "Regain tranquillity of mind, body, and soul through purification and restoring treatments.",
-    img: "/hotel-1/p1_stress.jpg"
+    img: "/premium/p1_stress.webp"
   },
   {
     id: 2,
     title: "SPINE & NECK CARE",
     desc: "Specialized care for neck pain and low back pain arising from muscular and neural conditions.",
-    img: "/hotel-1/p2_spine.jpg"
+    img: "/premium/p2_spine.webp"
   },
   {
     id: 3,
     title: "THERAPEUTIC & CURATIVE",
     desc: "A comprehensive, intensive program addressing chronic systemic conditions through deep Ayurvedic protocols.",
-    img: "/hotel-1/p3_curative.jpg"
+    img: "/premium/p3_curative.webp"
   },
   {
     id: 4,
     title: "KARKKIDAKA PACKAGE",
     desc: "Monsoon detoxification to rejuvenate cells, maintain doshic equilibrium, and enhance natural immunity.",
-    img: "/hotel-1/p4_karkkidaka.jpg"
+    img: "/premium/p4_karkkidaka.webp"
   },
   {
     id: 5,
     title: "PANCHAKARMA REJUVENATION",
     desc: "The complete 5-fold detoxification process. Experience the science of internal cleansing.",
-    img: "/room_garden.jpg"
+    img: "/room_garden.webp"
   },
   {
     id: 6,
     title: "AYURVEDA BEAUTY",
     desc: "Ancient formulations for skin and hair care using organic herbs and specialized facial massage.",
-    img: "/program_antiaging.jpg"
+    img: "/program_antiaging.webp"
   },
   {
     id: 7,
     title: "MARMA & MASSAGE",
     desc: "Master the fundamental principles of Abhyanga and vital energy cleansing techniques.",
-    img: "/hotel-2/marma_massage.jpg"
+    img: "/luxury/marma_massage.webp"
   },
   {
     id: 8,
     title: "CLINICAL YOGA",
     desc: "A clinical approach to asanas and pranayama, focusing on therapeutic applications for ailments.",
-    img: "/hotel-2/clinical_yoga.jpg"
+    img: "/luxury/clinical_yoga.webp"
   }
 ];
 
@@ -217,7 +217,7 @@ export default function TheAlchemy() {
       <div className="hidden md:flex w-full relative z-50 pointer-events-none justify-center -mt-[20vw] md:-mt-[15vw] lg:-mt-[15vw] -translate-y-[20vw] md:-translate-y-[10vw] lg:translate-y-0">
           <SectionCutout 
             fillColor="#2A1A1A"
-            imageUrl="/southSideart.png"
+            imageUrl="/southSideart.webp"
             imageOpacity={0.5}
             className="w-[280vw] md:w-[180vw] lg:w-[120vw] lg:min-w-[1400px]"
             svgClassName="-scale-y-110"

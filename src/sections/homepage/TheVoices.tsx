@@ -13,7 +13,7 @@ const testimonials = [
     name: 'Helena Weber',
     location: 'Munich, Germany',
     quote: "The deep Panchakarma cleanse at Nattika was entirely transformative. I arrived exhausted and left with a renewed sense of clarity and boundless energy. The Vaidyas are true masters of their craft.",
-    image: '/portrait_germany.jpg',
+    image: '/portrait_germany.webp',
     top: '30%',
     left: '52%',
   },
@@ -22,7 +22,7 @@ const testimonials = [
     name: 'Arthur Pendelton',
     location: 'London, UK',
     quote: "I sought out Greens Ayurveda to study their classical texts and experience true healing. The authenticity, the discipline, and the profound wisdom of the practitioners exceeded every expectation.",
-    image: '/portrait_uk.jpg',
+    image: '/portrait_uk.webp',
     top: '25%',
     left: '48%',
   }
@@ -101,7 +101,7 @@ export default function TheVoices() {
         {/* World Map Container */}
         <div ref={mapRef} className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[2.5/1] overflow-hidden rounded-3xl opacity-0">
           <Image 
-            src="/world_map_clean.jpg" 
+            src="/world_map_clean.webp" 
             alt="Global Client Map" 
             fill 
             className="object-cover md:object-contain object-center opacity-40 mix-blend-screen"

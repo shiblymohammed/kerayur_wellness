@@ -30,7 +30,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Tridoshic Equilibrium",
     ingredients: ["Organic Red Matta Rice", "24+ Herb Curries", "Cultured Buttermilk", "Pure Ghee"],
     benefit: "Optimizes digestive enzyme secretion, prevents post-meal lethargy, and restores metabolic harmony.",
-    img: "/cuisine/cuisine_sadhya_1789569172295.jpg"
+    img: "/cuisine/cuisine_sadhya_1789569172295.webp"
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Pacifies Pitta & Vata",
     ingredients: ["Fermented Rice Batter", "First-press Coconut Milk", "Green Cardamom", "Ceylon Cinnamon"],
     benefit: "Natural probiotics from fermentation nourish gut microbiome while raw coconut fat soothes gastric heat.",
-    img: "/cuisine/cuisine_appam_1789569187821.jpg"
+    img: "/cuisine/cuisine_appam_1789569187821.webp"
   },
   {
     id: 3,
@@ -52,7 +52,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Grounds Vata & Balances Kapha",
     ingredients: ["Steam-ground Red Rice", "Fresh Coconut Shreds", "Black Chickpeas", "Mustard Seeds"],
     benefit: "Delivers sustained complex carbohydrates and bio-available plant proteins for morning endurance.",
-    img: "/cuisine/cuisine_puttu_1789569202607.jpg"
+    img: "/cuisine/cuisine_puttu_1789569202607.webp"
   },
   {
     id: 4,
@@ -63,7 +63,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Deeply Pacifies Pitta",
     ingredients: ["Elephant Foot Yam", "Raw Plantain", "Drumstick", "Ash Gourd", "Sour Curd"],
     benefit: "Rich in bio-available micro-minerals, electrolyte-balancing potassium, and soluble dietary fibers.",
-    img: "/cuisine/cuisine_avial_1789569215935.jpg"
+    img: "/cuisine/cuisine_avial_1789569215935.webp"
   },
   {
     id: 5,
@@ -74,7 +74,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Balances Kapha & Pitta",
     ingredients: ["Shredded Organic Cabbage", "Grated Coconut", "Black Mustard Seeds", "Turmeric"],
     benefit: "Cruciferous compounds support liver enzyme activity and boost cellular detoxification.",
-    img: "/cuisine/cuisine_thoran_1789569229306.jpg"
+    img: "/cuisine/cuisine_thoran_1789569229306.webp"
   },
   {
     id: 6,
@@ -85,7 +85,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Pacifies Vata & Ignites Agni",
     ingredients: ["Wild Oyster Mushrooms", "Roasted Shallot Masala", "Malabar Tamarind", "Banana Leaf"],
     benefit: "Leaf steaming seals essential oils, optimizing nutrient absorption while stoking sluggish digestion.",
-    img: "/cuisine/cuisine_leaf_wrap_1789569397230.jpg"
+    img: "/cuisine/cuisine_leaf_wrap_1789569397230.webp"
   },
   {
     id: 7,
@@ -96,7 +96,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Nourishes Ojas",
     ingredients: ["Rice Flour Flakes", "Whole Farm Milk", "Raw Cane Sugar", "Green Cardamom", "Ghee"],
     benefit: "Builds Ojas (vital vigor), calms the nervous system, and induces psychological contentment.",
-    img: "/cuisine/cuisine_payasam_1789569410249.jpg"
+    img: "/cuisine/cuisine_payasam_1789569410249.webp"
   },
   {
     id: 8,
@@ -107,7 +107,7 @@ const cuisineItems: CuisineItem[] = [
     dosha: "Tridoshic Rejuvenation",
     ingredients: ["Medicinal Njavara Rice", "Sprouted Mung Beans", "Desi Cow Ghee", "Coconut Chutney"],
     benefit: "Restores deep tissue strength (Dhatu Poshana) and gently cleanses metabolic waste.",
-    img: "/cuisine/cuisine_kanji_1789569422383.jpg"
+    img: "/cuisine/cuisine_kanji_1789569422383.webp"
   }
 ];
 
