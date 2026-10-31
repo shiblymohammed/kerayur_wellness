@@ -38,11 +38,6 @@ export default function Footer() {
                   Luxury Clinic (Greens Ayurveda)
                 </Link>
               </li>
-              <li>
-                <span className="text-[#FAF9F6]/40 text-sm font-light flex items-center gap-2">
-                  Carnoustie <span className="text-[9px] uppercase tracking-wider text-[#8F9E7B]/70 border border-[#8F9E7B]/30 px-1.5 py-0.5 rounded">Upcoming</span>
-                </span>
-              </li>
             </ul>
           </div>
 
